@@ -18,13 +18,21 @@
   width: 90%;
   margin: 10px 5%;
 }
-.article-editor-form__success, .article-editor-form__error, .section-editor-form__success, .section-editor-form__error, .comment-editor-form__success, .comment-editor-form__error {
+.article-editor-form__success, .article-editor-form__error, .section-editor-form__success, .section-editor-form__error, .comment-editor-form__success, .comment-editor-form__error, .user-editor-form__success, .user-editor-form__error {
 	display: none;
+}
+.article-editor-form h5 {
+	margin-top: 20px;
+	margin-bottom: 0;
 }
 
 .epiceditors {
   margin: 20px 0 30px 0;
   min-height: 400px;
+}
+.gradient-input {
+	display: inline-block;
+	width: 140px;
 }
 
 .article__textarea {
@@ -34,21 +42,24 @@
 
 .article-pagination {
 	text-align: center;
+	padding: 20px 0 10px 0;
 }
 .article-counter {
 	position: relative;
-	bottom: 6px;
 	padding: 0 10px;
+	bottom: 6px;
 }
 
-.link-color__green a {
+.link-color__green, .link-color__green:hover {
 	color: #1b926c;
+	cursor: pointer;
 }
 .link-color__red {
 	color: #dd0000;
 }
 .link-color__red:hover {
 	color: #ff0000;
+	cursor: pointer;
 }
 
 
@@ -61,4 +72,15 @@
 }
 .section-area--disabled, .comment-text-area {
 	height: 300px;
+}
+
+.comment-table {
+	width: 100%;
+	
+}
+.comment-table > tbody > tr {
+	border-bottom: 1px solid #ddd;
+}
+.comment-table > tbody > tr > td, .comment-table > thead > tr > th {
+	padding: 10px;
 }

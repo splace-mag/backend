@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSectionTable extends Migration {
+class CreateBooktipsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,17 +12,12 @@ class CreateSectionTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sections', function($table)
-		{
-			$table->increments('section_id');
-			$table->integer('magazine_id');
+		Schema::create('booktips', function($table) {
+			$table->increments('booktip_id');
 			$table->integer('article_id');
-			$table->string('key');
+			$table->integer('number');
 			$table->text('textDE');
 			$table->text('textEN');
-			$table->text('noteDE');
-			$table->text('noteEN');
-			$table->timestamps();
 		});
 	}
 
@@ -33,7 +28,7 @@ class CreateSectionTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sections');
+		Schema::drop('booktips');
 	}
 
 }

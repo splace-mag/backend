@@ -31,4 +31,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+	public static function editUser($user) {
+		User::where('id', $user['id'])
+			->update([
+				'name' => $user['name'], 
+				'email' => $user['email']]);
+	}
+
 }

@@ -30,12 +30,20 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Splace Magazin</a>
+				<a class="navbar-brand" href="/">Splace Magazin</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
+					<li>
+						@if(Auth::guest())
+						<a href="{{ url('/') }}">Home</a>
+						@elseif(Auth::user()->is_admin == '1') 
+						<a href="{{ url('/admin') }}">Home</a>
+						@else
+						<a href="{{ url('/user') }}">Home</a>
+						@endif
+					</li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -44,8 +52,9 @@
 						<li><a href="{{ url('/auth/register') }}">Register</a></li>
 					@else
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+							<a href="/user" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
+								<li><a href="/user">Profil ändern</a></li>
 								<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
 							</ul>
 						</li>

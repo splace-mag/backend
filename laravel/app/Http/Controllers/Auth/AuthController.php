@@ -40,40 +40,4 @@ class AuthController extends Controller {
 		return view('register');
 	}
 
-	/*
-	*
-	* Login with Facebook
-	*
-	*/
-
-	public function redirectToProviderFacebook()
-	{
-	    return \Socialize::with('facebook')->redirect();
-	}
-
-	public function handleProviderCallbackFacebook()
-	{
-	    $user = \Socialize::with('facebook')->user();
-
-	    // $user->token;
-	}
-
-	/*
-	*
-	* Login with Facebook
-	*
-	*/
-
-	public function redirectToProviderTwitter()
-	{
-	    return \Socialize::with('twitter')->redirect();
-	}
-
-	public function handleProviderCallbackTwitter()
-	{
-	    $user = \Socialize::with('twitter')->user();
-
-	    // $user->token;
-	}
-
 }

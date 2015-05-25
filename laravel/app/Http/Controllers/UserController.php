@@ -1,6 +1,9 @@
 <?php namespace App\Http\Controllers;
 
-class WelcomeController extends Controller {
+use Illuminate\Support\Facades\Input;
+use App\User;
+
+class UserController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -20,7 +23,7 @@ class WelcomeController extends Controller {
 	 */
 	public function __construct()
 	{
-		//$this->middleware('guest');
+		$this->middleware('auth');
 	}
 
 	/**
@@ -30,7 +33,22 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('welcome');
+		$user = \Auth::user();
+
+		return view('user')
+			->with('user', $user);
+	}
+
+	public function saveUser() {
+		$user = Input::get('user');
+
+		\Log::info($user['id'].' + '.\Auth::user()->id);
+		if($user['id'] != \Auth::user()->id) {
+			return response()->json(['success' => 'false'], 404);
+		}
+
+		User::editUser($user);
+		return response()->json(['success' => 'true'], 200);
 	}
 
 }

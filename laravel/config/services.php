@@ -37,7 +37,7 @@ return [
 	'facebook' => [
 		'client_id' => '1576537259300886',
 	    'client_secret' => '7ba64803d098cd18b1df289eb64aadc2',
-	    'redirect' => 'http://www.splace.local/admin',
+	    'redirect' => 'http://www.splace.local/account/facebook',
 	], 
 
 	'twitter' => [

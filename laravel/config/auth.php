@@ -59,7 +59,7 @@ return [
 	*/
 
 	'password' => [
-		'email' => 'ehrenmueller@applics.at qdyjgskbnimscwui',
+		'email' => 'emails.password',
 		'table' => 'password_resets',
 		'expire' => 60,
 	],

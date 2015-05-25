@@ -15,10 +15,11 @@ class CreateCommentTable extends Migration {
 		Schema::create('comments', function($table)
 		{
 			$table->increments('comment_id');
-			$table->integer('user_id')->references('id')->on('users');
-			$table->integer('section_id')->references('section_id')->on('sections');
-			$table->integer('article_id')->references('article_id')->on('articles');
-			$table->string('text');
+			$table->integer('magazine_id');
+			$table->integer('user_id');
+			$table->integer('section_id');
+			$table->integer('article_id');
+			$table->text('text');
 			$table->boolean('read');
 			$table->boolean('marked');
 			$table->timestamps();
