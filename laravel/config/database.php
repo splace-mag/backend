@@ -54,10 +54,10 @@ return [
 
 		'mysql' => [
 			'driver'    => 'mysql',
-			'host'      => env('DB_HOST', 'localhost'), //env('DB_HOST', 'http://zidler-03.dmz.ufg.ac.at/.phpAdminmY'),
+			'host'      => env('DB_HOST', 'localhost'),
 			'database'  => env('DB_DATABASE', 'splace'),
 			'username'  => env('DB_USERNAME', 'splace.at'),
-			'password'  => env('DB_PASSWORD', 'GF8Zu3Kdw'),
+			'password'  => env('DB_PASSWORD', ''),
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
