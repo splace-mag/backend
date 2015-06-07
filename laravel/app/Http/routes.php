@@ -43,12 +43,14 @@ Route::get('account/twitter', 'Auth\AccountController@twitterLogin');
 */
 Route::group(['prefix' =>'admin'], function() {
 	Route::get('/', 'Admin\AdminController@index');
-	Route::get('/fb', 'Auth\AuthController@redirectToProviderFacebook');
 
 	Route::get('article', 'Admin\ArticleController@index');
+	Route::post('article/sort', 'Admin\ArticleController@sortArticles');
 	Route::get('article/create', 'Admin\ArticleController@newArticle');
+	Route::post('article/fileupload/{id}', 'Admin\ArticleController@fileUpload');
 	Route::get('article/{id}', 'Admin\ArticleController@editArticle');
 	Route::post('article/{id}', 'Admin\ArticleController@saveArticle');
+
 	Route::get('article/delete/{id}', 'Admin\ArticleController@deleteArticle');
 
 	Route::get('article/sections/{article_id}', 'Admin\SectionsController@showArticleSections');
@@ -63,6 +65,9 @@ Route::group(['prefix' =>'admin'], function() {
 	Route::get('comments/{id}', 'Admin\CommentsController@editComment');
 	Route::post('comments/{id}', 'Admin\CommentsController@saveComment');
 	Route::get('comments/delete/{id}', 'Admin\CommentsController@deleteComment');
+
+	Route::get('user', 'Admin\AdminController@showUser');
+	Route::get('user/delete/{id}', 'Admin\AdminController@deleteUser');
 
 });
 

@@ -15,6 +15,7 @@ class CreateMagazinesTable extends Migration {
 		Schema::create('magazines', function($table) {
 			$table->increments('magazine_id');
 			$table->string('version');
+			$table->string('title');
 			$table->boolean('active')->default(false);
 		});
 	}

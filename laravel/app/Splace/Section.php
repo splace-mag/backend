@@ -36,32 +36,45 @@ class Section extends Model implements AuthenticatableContract {
 	}
 
 	public static function insertSections($article_id, $sectionsDE, $sectionsEN) {
-		Section::where('article_id', $article_id)->delete();
 
 		if($sectionsDE != null) {
 			foreach($sectionsDE as $section) {
-				Section::insert([
-					'article_id' => $article_id, 
-					'key' => $section['id'], 
-					'textDE' => $section['html'], 
-					'created_at' => new Carbon]);
+				if(Section::where('article_id', $article_id)->where('key', $section['id'])->count() >= '1') {
+					Section::where('article_id', $article_id)->where('key', $section['id'])
+						->update([
+							'textDE' => $section['html'], 
+							'updated_at' => Carbon::now()]);
+				}
+				else {
+					\Log::info($section['id'].': insert');
+					Section::insert([
+						'article_id' => $article_id, 
+						'key' => $section['id'], 
+						'textDE' => $section['html'], 
+						'created_at' => Carbon::now(), 
+						'updated_at' => Carbon::now()]);
+				}
 			}
 		}
 		if($sectionsEN != null) { 
 			foreach ($sectionsEN as $section) {
 				if(Section::where('article_id', $article_id)->where('key', $section['id'])->count() >= '1') {
 					Section::where('article_id', $article_id)->where('key', $section['id'])
-						->update(['textEN' => $section['html']]);
+						->update([
+							'textEN' => $section['html'], 
+							'updated_at' => Carbon::now()]);
 				}
 				else {
 					Section::insert([
-					'article_id' => $article_id, 
-					'key' => $section['id'], 
-					'textEN' => $section['html'], 
-					'created_at' => new Carbon]);
+						'article_id' => $article_id, 
+						'key' => $section['id'], 
+						'textEN' => $section['html'], 
+						'created_at' => Carbon::now(), 
+						'updated_at' => Carbon::now()]);
 				}
 			}
 		}
+		Section::where('article_id', $article_id)->where('updated_at', '<', Carbon::now()->subSecond())->delete();
 	}
 
 	public static function editSection($section) {

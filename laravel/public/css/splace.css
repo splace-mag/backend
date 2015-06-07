@@ -6,6 +6,10 @@
   height: 20px;
 }
 
+.form-file {
+	padding: 15px 0;
+}
+
 .panel-body > ul > li.important {
 	border: 0;
 	margin: 10px;

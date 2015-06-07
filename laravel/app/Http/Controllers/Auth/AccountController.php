@@ -22,18 +22,18 @@ class AccountController extends Controller {
 	{
 	    $user = Socialize::with('facebook')->user();
 
-	    // OAuth Two Providers
 		$token = $user->token;
 
-		// OAuth One Providers
-		$token = $user->token;
-
+		/*
 		// All Providers
 		$user->getId();
 		$user->getNickname();
 		$user->getName();
 		$user->getEmail();
 		$user->getAvatar();
+		*/
+
+		//\Log::info($user->getId().': '.$user->getName());
 
 		return redirect('home')->send();
 	}
@@ -53,18 +53,16 @@ class AccountController extends Controller {
 	{
 	    $user = Socialize::with('twitter')->user();
 
-	    // OAuth Two Providers
 		$token = $user->token;
 
-		// OAuth One Providers
-		$token = $user->token;
-
+		/*
 		// All Providers
 		$user->getId();
 		$user->getNickname();
 		$user->getName();
 		$user->getEmail();
 		$user->getAvatar();
+		*/
 
 	    return redirect('home')->send();
 	}

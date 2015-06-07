@@ -42,8 +42,15 @@
 								<a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
 							</div>
 						</div>
+
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<a href="/facebook"><i class="fa fa-facebook"></i> Login with Facebook</a>
+							</div>
+						</div>
+						
 					</form>
-					<a href="{!!URL::to('facebook')!!}">Login with Facebook</a>
+					
 				</div>
 			</div>
 		</div>

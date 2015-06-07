@@ -1,4 +1,4 @@
-var editorDE, editorEN, linkCount = 1, booktipCount = 1;
+var editorDE, editorEN, count, linkCount = 1, booktipCount = 1;
 
 function editorLanguageSwitch(add, remove) {
 	$('#language-switch--'+remove).removeClass('active');
@@ -39,11 +39,7 @@ function parseSections(text) {
 
 function saveArticle(e) {
 	e.preventDefault();
-
 	token = $('[name="_token"]').val();
-
-	//save cover_image & bio_image
-	//check gradient1 & 2
 
 	var article = {
 		'id': $('[name="id"]').val(), 
@@ -52,8 +48,12 @@ function saveArticle(e) {
 		'spitzmarke': $('[name="spitzmarke"]').val(), 
 		'page_titleDE': $('[name="page_titleDE"]').val(), 
 		'page_titleEN': $('[name="page_titleEN"]').val(), 
+		'page_title_padding_left': $('[name="page_title_padding_left"]').val(), 
+		'page_title_padding_top': $('[name="page_title_padding_top"]').val(), 
 		'page_subtitleDE': $('[name="page_subtitleDE"]').val(), 
 		'page_subtitleEN': $('[name="page_subtitleEN"]').val(),
+		'page_sub_title_padding_left': $('[name="page_sub_title_padding_left"]').val(), 
+		'page_sub_title_padding_top': $('[name="page_sub_title_padding_top"]').val(), 
 		'reading_time': $('[name="reading_time"]').val(),  
 		'introductionDE': $('[name="introductionDE"]').val(), 
 		'introductionEN': $('[name="introductionEN"]').val(), 
@@ -70,9 +70,9 @@ function saveArticle(e) {
 		'used_materialEN': $('[name="used_materialEN"]').val(), 
 		'gradient_1': $('[name="gradient_1"]').val(), 
 		'gradient_2': $('[name="gradient_2"]').val(), 
-
-		'cover_image_url': $('[name="cover_image"]').val(), 
-		'bio_image_url': $('[name="bio_image"]').val()
+		'link_color': $('[name="link_color"]').val(), 
+		'cover_image_padding_left': $('[name="cover_image_padding_left"]').val(), 
+		'cover_image_padding_top': $('[name="cover_image_padding_top"]').val()
 	};
 	
 	var links = {}; 
@@ -109,14 +109,35 @@ function saveArticle(e) {
 	var sectionsEN = editorEN.getElement('previewer');
 	sectionsEN = parseSections($(sectionsEN).find('#epiceditor-preview').html());
 
+	var cover_file = $('#cover_image')[0].files[0];
+	var bio_file = $('#bio_image')[0].files[0];
+
+	if(cover_file != undefined || bio_file != undefined) {
+		formdata = new FormData();
+		formdata.append("cover_image", cover_file);
+		formdata.append("bio_image", bio_file);
+        formdata.append("_token", token);
+
+	    $.ajax({
+	        type: "POST",
+	        url: "fileupload/"+article['id'],
+	        enctype: 'multipart/form-data',
+	        contentType: false, 
+	        processData: false, 
+	        data: formdata, 
+	        success: function () {
+	            console.log('Images successful uploaded');
+	        }
+	    });
+    }
 
 	$.post(article['id'], { _token: token, article: article, sectionsDE: sectionsDE, sectionsEN: sectionsEN, links: links, booktips: booktips })
         .success(function(response){
         	showSuccess('article');
-/*        	setTimeout(function() { 
+        	setTimeout(function() { 
         		history.back() 
         	}, 2000);
-*/        })
+        })
         .error(function(response){
             showError('article');
         });
@@ -202,15 +223,53 @@ function epiceditor() {
 }
 
 function addLinkContent() {
-	var html = '<div class="link-input" data-key="'+linkCount+'"><h4>Link '+linkCount+'</h4><input type="hidden" name="link-id" value="-1"><input class="form-control" type="text" name="link" placeholder="Link"><h5>Beschreibung Deutsch</h5><input class="form-control" type="text" name="link_descriptionDE" placeholder="Beschreibung Deutsch"><h5>Beschreibung Englisch</h5><input class="form-control" type="text" name="link_descriptionEN" placeholder="Beschreibung Englisch"><hr></div>';
+	var html = '<a class="link-head" data-key="'+linkCount+'"><h4>Link '+linkCount+'</h4></a><div class="link-input" data-key="'+linkCount+'"><input type="hidden" name="link-id" value="-1"><input class="form-control" type="text" name="link" placeholder="Link"><h5>Beschreibung Deutsch</h5><input class="form-control" type="text" name="link_descriptionDE" placeholder="Beschreibung Deutsch"><h5>Beschreibung Englisch</h5><input class="form-control" type="text" name="link_descriptionEN" placeholder="Beschreibung Englisch"><hr></div>';
 	$('.link-box').append(html);
 	linkCount += 1;
 }
 
 function addBooktipContent() {
-	var html = '<div class="booktip-input" data-key="'+booktipCount+'"><h4>Buchtipp '+booktipCount+'</h4><input type="hidden" name="link-id" value="-1"><input class="form-control" type="text" name="booktip_descriptionDE" placeholder="Buchtipp Deutsch"><input class="form-control" type="text" name="booktip_descriptionEN" placeholder="Buchtipp Englisch"><hr></div>';
+	var html = '<a class="booktip-head" data-key="'+booktipCount+'"><h4>Buchtipp '+booktipCount+'</h4></a><div class="booktip-input" data-key="'+booktipCount+'"><input type="hidden" name="link-id" value="-1"><input class="form-control" type="text" name="booktip_descriptionDE" placeholder="Buchtipp Deutsch"><input class="form-control" type="text" name="booktip_descriptionEN" placeholder="Buchtipp Englisch"><hr></div>';
 	$('.booktip-box').append(html);
 	booktipCount += 1;
+}
+
+function valueInput(value) {
+	$('.delete-'+value+'').on('click', function() {
+		var key = $(this).attr('data-key');
+		$('.'+value+'-head[data-key="'+key+'"]').remove();
+		$('.'+value+'-input[data-key="'+key+'"]').remove();
+	});
+	$('.'+value+'-head').on('click', function() {
+		var key = $(this).attr('data-key');
+		if($('.'+value+'-input[data-key="'+key+'"]').hasClass('hidden')) {
+			$('.'+value+'-input[data-key="'+key+'"]').removeClass('hidden');
+		}
+		else {
+			$('.'+value+'-input[data-key="'+key+'"]').addClass('hidden');
+		}
+	});
+}
+
+function sorted(listId) {
+	var articles = {};
+	if(listId == 'article-list') {
+		$('#article-list').find('li').each(function(i) {
+			if($(this).hasClass('important')) {
+				return;
+			}
+			$(this).attr('number', (i+1));
+
+			articles[i] = {};
+			articles[i]['id'] = $(this).attr('id');
+			articles[i]['number'] = $(this).attr('number');
+		});
+
+		$.post('article/sort', { articles: articles, _token: $('#_token').text() })
+        .success(function(response){ })
+        .error(function(response){ });
+
+	}
 }
 
 function init() {
@@ -218,28 +277,28 @@ function init() {
 	
 	if($('form').hasClass('article-editor-form')) {
 		epiceditor();
+
 		if($('.link-input').val() != undefined) {
 			linkCount = Number($('.link-input').last().attr('data-key'))+1;
 		}
 		$('.add-link').on('click', addLinkContent);
-		$('.delete-link').on('click', function() {
-			var key = $(this).attr('data-key');
-			$('.link-input[data-key="'+key+'"]').remove();
-		});
+		valueInput('link');
 
 		if($('.booktip-input').val() != undefined) {
 			booktipCount = Number($('.booktip-input').last().attr('data-key'))+1;
 		}
 		$('.add-booktip').on('click', addBooktipContent);
+		valueInput('booktip');
+	}
 
-		$('.delete-booktip').on('click', function() {
-			var key = $(this).attr('data-key');
-			$('.delete-booktip').each(function() {
-			console.log('lalala');
-		});
-			$('.booktip-input[data-key="'+key+'"]').remove();
+	if($('ul').hasClass('sortable')) {
+		$('.sortable').sortable({
+		    items: ':not(.important)'
+		}).bind('sortupdate', function() {
+			sorted($(this).attr('id'));
 		});
 	}
+	    
 
 
 	$('.article-editor-form').on('submit', saveArticle);

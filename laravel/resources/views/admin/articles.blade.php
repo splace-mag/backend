@@ -20,9 +20,10 @@
 				<div class="panel-heading">Artikel</div>
 
 				<div class="panel-body">
-					<ul class="articles">
+					<div id="_token" class="hidden">{{{ csrf_token() }}}</div>
+					<ul class="articles sortable" id="article-list">
 						@foreach ($articles as $article)
-						<li>
+						<li id="{{$article->article_id}}" number="{{$article->number}}">
 							<a href="/admin/article/{{ $article->article_id }}">{{ $article->titleDE }}</a>
 							<a class="article-delete link-color__red" href="/admin/article/delete/{{ $article->article_id }}"><i class="fa fa-times"></i> Löschen</a>
 						</li>
@@ -50,3 +51,5 @@
 	</div>
 </div>
 @endsection
+
+

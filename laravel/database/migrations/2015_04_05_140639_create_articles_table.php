@@ -16,18 +16,26 @@ class CreateArticlesTable extends Migration {
 		{
 			$table->increments('article_id');
 			$table->integer('magazine_id');
+			$table->integer('number');
 			$table->string('spitzmarke');
 			$table->string('titleDE');
 			$table->string('titleEN');
 			$table->text('page_titleDE');
 			$table->text('page_titleEN');
+			$table->integer('page_title_padding_left');
+			$table->integer('page_title_padding_top');
 			$table->text('page_sub_titleDE');
 			$table->text('page_sub_titleEN');
+			$table->integer('page_sub_title_padding_left');
+			$table->integer('page_sub_title_padding_top');
 			$table->string('reading_time');
 			$table->string('cover_image');
-			$table->string('cover_image_mime');
+			$table->string('cover_image_name');
+			$table->integer('cover_image_padding_left');
+			$table->integer('cover_image_padding_top');
 			$table->string('gradient_1');
 			$table->string('gradient_2');
+			$table->string('link_color');
 			$table->text('introductionDE');
 			$table->text('introductionEN');
 			$table->text('h2DE');
@@ -36,7 +44,7 @@ class CreateArticlesTable extends Migration {
 			$table->text('h3EN');
 			$table->string('author_name');
 			$table->string('bio_image');
-			$table->string('bio_image_mime');
+			$table->string('bio_image_name');
 			$table->text('bio_textDE');
 			$table->text('bio_textEN');
 

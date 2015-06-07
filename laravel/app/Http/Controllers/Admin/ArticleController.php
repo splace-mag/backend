@@ -3,10 +3,12 @@
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Auth\Registrar;
+use Request;
 use App\Splace\Article;
 use App\Splace\Section;
 use App\Splace\Links;
 use App\Splace\Booktips;
+use App\Splace\UploadHandler;
 
 class ArticleController extends Controller {
 
@@ -107,8 +109,10 @@ class ArticleController extends Controller {
 
 		Links::deleteLinksByArticle($article['id']);
 		$links = Input::get('links');
-		foreach ($links as $link) {
-			Links::createLink($link);
+		if($links != 0) {
+			foreach ($links as $link) {
+				Links::createLink($link);
+			}
 		}
 
 		Booktips::deleteBooktipsByArticle($article['id']);
@@ -132,6 +136,42 @@ class ArticleController extends Controller {
 		Article::deleteArticle($id);
 
 		return redirect('admin/article');
+	}
+
+	public function sortArticles() 
+	{
+		$articles = Input::get('articles');
+
+		if(count($articles) > 0) {
+			foreach($articles as $article) {
+				Article::sortArticle($article);
+			}
+		}
+			
+		
+		return response()->json(['success' => 'true']);
+	}
+
+	public function fileUpload($id) 
+	{
+
+		if(Request::hasFile('cover_image')) {
+			$file = Request::file('cover_image');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('images'), $filename);
+			
+			Article::saveCoverImage($id, $filename, $file->getClientOriginalName());
+		}
+
+		if(Request::hasFile('bio_image')) {
+			$file = Request::file('bio_image');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('images'), $filename);
+			
+			Article::saveBioImage($id, $filename, $file->getClientOriginalName());
+		}
+		
+		return response()->json(['success' => 'true']);
 	}
 
 }

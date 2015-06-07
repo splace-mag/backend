@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Auth\Registrar;
 use App\Splace\Article;
 use App\Splace\Comments;
-use App\Splace\User;
+use App\User;
 
 class AdminController extends Controller {
 
@@ -70,5 +70,17 @@ class AdminController extends Controller {
 			->with('warning', $warning);
 	}
 
+	public function showUser() {
+		$user = User::paginate(20);
 
+		return view('admin/user')
+			->with('user', $user);
+	}
+	public function deleteUser($id) {
+		if($id != \Auth::user()->id) {
+			User::find($id)->delete();
+		}
+
+		return redirect('admin/user')->send();
+	}
 }
