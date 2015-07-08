@@ -20,6 +20,9 @@ function changeLanguage() {
 
 function parseSections(text) {
 	var sections = {};
+	text = text.replace(/<p>/g, '');
+	text = text.replace(/<\/p>/g, '');
+	console.log(text);
 	var parts = text.split('[--');
 
 	i = 0;
@@ -57,10 +60,8 @@ function saveArticle(e) {
 		'reading_time': $('[name="reading_time"]').val(),  
 		'introductionDE': $('[name="introductionDE"]').val(), 
 		'introductionEN': $('[name="introductionEN"]').val(), 
-		'h2DE': $('[name="h2DE"]').val(), 
-		'h2EN': $('[name="h2EN"]').val(), 
-		'h3DE': $('[name="h3DE"]').val(), 
-		'h3EN': $('[name="h3EN"]').val(), 
+		'summaryDE': $('[name="summaryDE"]').val(), 
+		'summaryEN': $('[name="summaryEN"]').val(), 
 		'editor_section_codeDE': $('[name="textDE"]').val(), 
 		'editor_section_codeEN': $('[name="textEN"]').val(), 
 		'author_name': $('[name="author_name"]').val(), 
@@ -134,9 +135,9 @@ function saveArticle(e) {
 	$.post(article['id'], { _token: token, article: article, sectionsDE: sectionsDE, sectionsEN: sectionsEN, links: links, booktips: booktips })
         .success(function(response){
         	showSuccess('article');
-        	setTimeout(function() { 
-        		history.back() 
-        	}, 2000);
+        	//setTimeout(function() { 
+        	//	history.back();
+        	//}, 2500);
         })
         .error(function(response){
             showError('article');
@@ -150,18 +151,63 @@ function saveSection(e) {
 
 	var section = {
 		'id': $('[name="id"]').val(), 
-		'textDE': $('[name="textDE"]').val(), 
-		'textEN': $('[name="textEN"]').val(), 
 		'noteDE': $('[name="noteDE"]').val(), 
 		'noteEN': $('[name="noteEN"]').val(), 
+		'media_type': $('#media-type-select option:selected').val()
 	};
 
-	$.post(section['id'], { _token: token, section: section })
+	var media = false;
+	formdata = new FormData();
+
+	if($('#media-type-select option:selected').val() == 'image' && $('#media-file-image')[0].files[0] != undefined) {
+		formdata.append("media-file-image", $('#media-file-image')[0].files[0]);
+		media = 'image';
+	}
+	else if($('#media-type-select option:selected').val() == 'video' && $('#media-file-video')[0].files[0] != undefined) {
+		formdata.append("media-file-video", $('#media-file-video')[0].files[0]);
+		media = 'video';
+	}
+	else if($('#media-type-select option:selected').val() == 'gallery' && $('#media-file-image-multiple')[0].files[0] != undefined) {
+		formdata.append('media-file-image-cover', $('#media-file-image-cover')[0].files[0]);
+
+		i = 0;
+		for(file in $('#media-file-image-multiple')[0].files) {
+			formdata.append('media-file-gallery-'+i, $('#media-file-image-multiple')[0].files[i]);
+			i++;
+		}
+		formdata.append('gallery_items', i);
+	
+		media = 'gallery';
+	}
+		
+	if(media != 'false') {
+		formdata.append("media_type", media);
+        formdata.append("_token", token);
+
+	    $.ajax({
+	        type: "POST",
+	        url: "fileupload/"+section['id'],
+	        enctype: 'multipart/form-data',
+	        contentType: false, 
+	        processData: false, 
+	        data: formdata, 
+	        success: function () {
+	            console.log('Media successful uploaded');
+	        }
+	    });
+    }
+
+    mediacontent = {};
+    $('input.media-input').each(function(index) {
+    	mediacontent[index] = {};
+    	mediacontent[index]['id'] = $(this).attr('data-key');
+    	mediacontent[index]['description'] = $(this).val();
+    });
+
+	$.post(section['id'], { _token: token, section: section, media: mediacontent })
         .success(function(response){
+        	//location.reload();
         	showSuccess('section');
-        	setTimeout(function() { 
-        		history.back() 
-        	}, 2000);
         })
         .error(function(response){
             showError('section');
@@ -180,21 +226,49 @@ function saveComment(e) {
 
 	$.post(comment['id'], { _token: token, comment: comment })
         .success(function(response){
+        	//location.reload();
         	showSuccess('comment');
-        	setTimeout(function() { 
-        		history.back() 
-        	}, 2000);
         })
         .error(function(response){
             showError('comment');
         });
 }
 
+function saveMagazine(e) {
+	e.preventDefault();
+	
+	token = $('[name="_token"]').val();
+
+	var magazine = {
+		'id': $('[name="id"]').val(), 
+		'active': $('[name="active"]:checked').val(), 
+		'title': $('[name="title"]').val(), 
+		'version': $('[name="version"]').val()
+	};
+
+	$.post(magazine['id'], { _token: token, magazine: magazine })
+        .success(function(response){
+        	showSuccess('magazine');
+        	//setTimeout(function() { 
+        	//	$(location).attr('href', '/admin/magazines');
+        	//}, 2500);
+        })
+        .error(function(response){
+            showError('magazine');
+        });
+}
+
 function showSuccess(form){
-	$('.'+form+'-editor-form__success').css('display', 'block');
+	$('.'+form+'-editor-form__success').removeClass('hidden');
+	setTimeout(function() { 
+        $('.'+form+'-editor-form__success').addClass('hidden');
+    }, 10000);
 }
 function showError(form){
-	$('.'+form+'-editor-form__error').css('display', 'block');
+	$('.'+form+'-editor-form__error').removeClass('hidden');
+	setTimeout(function() { 
+        $('.'+form+'-editor-form__error').addClass('hidden');
+    }, 10000);
 }
 
 function epiceditor() {
@@ -272,11 +346,35 @@ function sorted(listId) {
 	}
 }
 
-function init() {
-	changeLanguage();
-	
+function setActiveMagazine() {
+	var selected = $('#active-magazine option:selected').val();
+	token = $('[name="_token"]').val();
+
+	$.post('admin/magazine', { _token: token, active: selected })
+        .success(function(response){ 
+        	location.reload(); 
+        })
+        .error(function(response){ 
+        	console.log('Fehler!'); 
+        });
+}
+
+function initializeForms() {
 	if($('form').hasClass('article-editor-form')) {
 		epiceditor();
+
+		$('.show-sections').click(function() {
+			$('.section-content').removeClass('hidden');
+		})
+		$('.section-header').click(function() {
+			var section = $(this).attr('data-key');
+			if($('.section-content[data-key="'+section+'"]').hasClass('hidden')) {
+				$('.section-content[data-key="'+section+'"]').removeClass('hidden');
+			}
+			else {
+				$('.section-content[data-key="'+section+'"]').addClass('hidden');
+			}
+		});
 
 		if($('.link-input').val() != undefined) {
 			linkCount = Number($('.link-input').last().attr('data-key'))+1;
@@ -289,6 +387,18 @@ function init() {
 		}
 		$('.add-booktip').on('click', addBooktipContent);
 		valueInput('booktip');
+	}
+	else if($('form').hasClass('section-editor-form')) {
+		$('#media-type-select').change(function() { 
+			var selected = $('#media-type-select option:selected').val();
+			$('.media-type').addClass('hidden');
+			$('#media-'+selected).removeClass('hidden');
+		});
+	}
+	else if($('form').hasClass('magazine-form')) {
+		$('#active-magazine').change(function() { 
+			setActiveMagazine();
+		});
 	}
 
 	if($('ul').hasClass('sortable')) {
@@ -304,6 +414,14 @@ function init() {
 	$('.article-editor-form').on('submit', saveArticle);
 	$('.section-editor-form').on('submit', saveSection);
 	$('.comment-editor-form').on('submit', saveComment);
+	$('.magazine-editor-form').on('submit', saveMagazine);
+}
+
+
+function init() {
+	changeLanguage();
+	initializeForms();
+
 }
 
 

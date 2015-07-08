@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use Redirect;
 use Socialize;
+use App;
 
 class AccountController extends Controller {
 
@@ -65,6 +66,16 @@ class AccountController extends Controller {
 		*/
 
 	    return redirect('home')->send();
+	}
+
+	public function changeLocale($lang) {
+		if($lang == 'de') {
+			App::setLocale('de');
+		}
+		else {
+			App::setLocale('en');
+		}
+		return;
 	}
 
 }

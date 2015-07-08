@@ -3,9 +3,11 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Contracts\Auth\Registrar;
 use App\Splace\Article;
 use App\Splace\Comments;
+use App\Splace\Magazines;
 use App\User;
 
 class AdminController extends Controller {
@@ -45,7 +47,10 @@ class AdminController extends Controller {
 	 */
 	public function index()
 	{
-		$article = Article::getFirst(5);
+		if(Session::get('active', 'error') == 'error') {
+			Session::put('active', Magazines::getActive());
+		} 
+		$article = Article::getFirst(5, Session::get('active'));
 		if(count($article) == '0') {
 			$warning['article'] = 'noarticleexists';
 		}
@@ -67,7 +72,9 @@ class AdminController extends Controller {
 		return view('admin/admin')
 			->with('articles', $article)
 			->with('comments', $comments)
-			->with('warning', $warning);
+			->with('warning', $warning)
+			->with('magazines', Magazines::getAll())
+			->with('active', Session::get('active', Magazines::getActive()));
 	}
 
 	public function showUser() {
@@ -83,4 +90,5 @@ class AdminController extends Controller {
 
 		return redirect('admin/user')->send();
 	}
+
 }

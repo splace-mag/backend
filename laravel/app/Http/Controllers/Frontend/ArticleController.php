@@ -1,0 +1,181 @@
+<?php namespace App\Http\Controllers\Frontend;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Contracts\Auth\Registrar;
+use Request;
+use App\Splace\Article;
+use App\Splace\Section;
+use App\Splace\Links;
+use App\Splace\Booktips;
+use App\Splace\Comments;
+use App\Splace\Magazines;
+
+class ArticleController extends Controller {
+
+	/*
+	|--------------------------------------------------------------------------
+	| Article Controller
+	|--------------------------------------------------------------------------
+	|
+	| This controller renders your application's "dashboard" for users that
+	| are authenticated. Of course, you are free to change or remove the
+	| controller as you wish. It is just here to get your app started!
+	|
+	*/
+
+	/**
+	 * Show the application dashboard to the user.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{		
+		return view('frontend/splace');
+	}
+
+
+	/**
+	 * Show the application dashboard to the user.
+	 *
+	 * @return Response
+	 */
+	public function showArticle($magazineid, $number)
+	{		
+		$article = Article::getByNumber($magazineid, $number);
+		\Log::info('['.$article.']');
+		if($article == '') {
+			$article = Article::getByNumber(Magazines::getActive(), 1);
+		}
+
+		$sections = Section::getByArticle($article->article_id);
+		\Log::info('{'.$sections.'}');
+		foreach($sections as $s) {
+			$s->comments = Comments::getBySectionForArticle($s->section_id);
+		}
+		return view('frontend/article')
+			->with('article', $article)
+			->with('sections', $sections)
+			->with('links', Links::getByArticle($article->article_id))
+			->with('booktips', Booktips::getByArticle($article->article_id))
+			->with('language', \App::getLocale());
+	}
+
+	/**
+	 * Show the article markdown editor with new article
+	 *
+	 * @return Response
+	 */
+	public function newArticle()
+	{
+		return view('admin/articleeditor')
+			->with('new', true);
+	}
+
+	/**
+	 * Show the article markdown editor with specified article
+	 *
+	 * @return Response
+	 */
+	public function editArticle($id)
+	{
+		if(!Article::exists($id)) {
+			return view('admin/articles')
+				->with('articles', Article::getAll(Session::get('active')))
+				->with('warning', 'noarticlewiththisid');
+		}
+
+		return view('admin/articleeditor')
+			->with('article', Article::getById($id))
+			->with('links', Links::getByArticle($id))
+			->with('booktips', Booktips::getByArticle($id))
+			->with('new', false);
+	}
+
+	/**
+	 * Save new or edited article
+	 *
+	 * @return Response
+	 */
+	public function saveArticle()
+	{
+		$article = Input::get('article');
+		$id = $article['id'];
+		
+		if(Article::exists($article['id'])) {
+			Article::editArticle($article);
+		}
+		else {
+			$id = Article::createArticle($article);
+		}
+		Section::insertSections($id, Input::get('sectionsDE'), Input::get('sectionsEN'));
+
+		Links::deleteLinksByArticle($id);
+		$links = Input::get('links');
+		if($links != 0) {
+			foreach ($links as $link) {
+				Links::createLink($link, $id);
+			}
+		}
+
+		Booktips::deleteBooktipsByArticle($id);
+		$booktips = Input::get('booktips', 0);
+		if($booktips != 0) {
+			foreach ($booktips as $booktip) {
+				Booktips::createBooktip($booktip, $id);
+			}
+		}
+
+		return response()->json(['success' => 'true']);
+	}
+
+	/**
+	 * Delete article by id
+	 *
+	 * @return Response
+	 */
+	public function deleteArticle($id)
+	{
+		Article::deleteArticle($id);
+
+		return redirect('admin/article');
+	}
+
+	public function sortArticles() 
+	{
+		$articles = Input::get('articles');
+
+		if(count($articles) > 0) {
+			foreach($articles as $article) {
+				Article::sortArticle($article);
+			}
+		}
+			
+		
+		return response()->json(['success' => 'true']);
+	}
+
+	public function fileUpload($id) 
+	{
+
+		if(Request::hasFile('cover_image')) {
+			$file = Request::file('cover_image');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('images'), $filename);
+			
+			Article::saveCoverImage($id, $filename, $file->getClientOriginalName());
+		}
+
+		if(Request::hasFile('bio_image')) {
+			$file = Request::file('bio_image');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('images'), $filename);
+			
+			Article::saveBioImage($id, $filename, $file->getClientOriginalName());
+		}
+		
+		return response()->json(['success' => 'true']);
+	}
+
+}

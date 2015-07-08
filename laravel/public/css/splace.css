@@ -2,12 +2,24 @@
   float: right;
 }
 
+.section-header, .section-header:hover {
+	color: #000;
+}
+
+.magazine-form {
+	float: right;
+}
+
 .form .divider {
   height: 20px;
 }
 
 .form-file {
 	padding: 15px 0;
+}
+
+.show-section {
+	margin-bottom: 50px;
 }
 
 .panel-body > ul > li.important {
@@ -21,9 +33,6 @@
 .article-editor-form, .section-editor-form {
   width: 90%;
   margin: 10px 5%;
-}
-.article-editor-form__success, .article-editor-form__error, .section-editor-form__success, .section-editor-form__error, .comment-editor-form__success, .comment-editor-form__error, .user-editor-form__success, .user-editor-form__error {
-	display: none;
 }
 .article-editor-form h5 {
 	margin-top: 20px;
@@ -52,6 +61,9 @@
 	position: relative;
 	padding: 0 10px;
 	bottom: 6px;
+}
+.show-sections {
+	float: right;
 }
 
 .link-color__green, .link-color__green:hover {

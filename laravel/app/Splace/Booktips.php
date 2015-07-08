@@ -32,9 +32,9 @@ class Booktips extends Model implements AuthenticatableContract {
 		return false;
 	}
 
-	public static function createBooktip($booktip) {
+	public static function createBooktip($booktip, $article_id) {
 		return Booktips::insertGetId([
-			'article_id' => $booktip['article_id'], 
+			'article_id' => $article_id, 
 			'number' => $booktip['number'], 
 			'textDE' => $booktip['booktipDE'], 
 			'textEN' => $booktip['booktipEN']]);

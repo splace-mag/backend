@@ -18,19 +18,24 @@
 						<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 						<input type="hidden" name="id" value="{{ $article->article_id or '-1' }}"/>
 
+						<a class="show-sections">Alle ausklappen</a>
+
 						<div class="form-group">
 							<div class="language-de">
 								<h2>Deutsche Inhalte</h2>
+								Kurztitel (Navigation)
 								<input class="form-control" name="titleDE" value="{{ $article->titleDE or '' }}" placeholder="Kurztitel" />
 							</div>
 							<div class="language-en hidden">
 								<h2>Englische Inhalte</h2>
+								Kurztitel (Navigation)
 								<input class="form-control" name="titleEN" value="{{ $article->titleEN or '' }}" placeholder="Kurztitel" />
 							</div>
 						</div>
 
-						<div class="form-group">
-							<h4>Seitentitel</h4>
+						<a class="section-header" data-key="title"><h4>Seitentitel</h4></a>
+						<div class="form-group section-content hidden" data-key="title">
+							
 
 							<h5>Titel</h5>
 							<div class="language-de">
@@ -65,62 +70,10 @@
 								Abstand oben (in %): 
 								<input class="form-control gradient-input" name="page_sub_title_padding_top" value="{{ $article->page_sub_title_padding_top or ''}}"/>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<h4>Texte</h4>
-							<h5>Einleitung</h5>
-							<div class="language-de">
-								<textarea id="introductionDE" name="introductionDE" class="form-control textarea article__textarea" placeholder="Einleitung" >{{ $article->introductionDE or '' }}</textarea>	
-							</div>
-							<div class="language-en hidden">
-								<textarea id="introductionEN" name="introductionEN" class="form-control textarea article__textarea" placeholder="Einleitung" >{{ $article->introductionEN or '' }}</textarea>	
-							</div>
-								
-							<h5>H2</h5>
-							<div class="language-de">
-								<textarea id="h2DE" name="h2DE" class="form-control textarea article__textarea" placeholder="H2" >{{ $article->h2DE or '' }}</textarea>	
-							</div>
-							<div class="language-en hidden">
-								<textarea id="h2EN" name="h2EN" class="form-control textarea article__textarea" placeholder="H2" >{{ $article->h2EN or '' }}</textarea>	
-							</div>
-								
-							<h5>H3</h5>
-							<div class="language-de">
-								<textarea id="h3DE" name="h3DE" class="form-control textarea article__textarea" placeholder="H3" >{{ $article->h3DE or '' }}</textarea>
-							</div>
-							<div class="language-en hidden">
-								<textarea id="h3EN" name="h3EN" class="form-control textarea article__textarea" placeholder="H3" >{{ $article->h3EN or '' }}</textarea>	
-							</div>
-									
-							<h5>Used Material</h5>
-							<div class="language-de">
-								<textarea id="used_materialDE" name="used_materialDE" class="form-control article__textarea" placeholder="Used Material" >{{ $article->used_materialDE or '' }}</textarea>	
-							</div>
-							<div class="language-en hidden">
-								<textarea id="used_materialEN" name="used_materialEN" class="form-control article__textarea" placeholder="Used Material" >{{ $article->used_materialEN or '' }}</textarea>	
-							</div>
-						</div>
-
-						<div class="form-group">
-							<h4>Absätze</h4>
-							<div class="language-de">
-								<div class="epiceditors" id="markdown-textDE"></div>
-								<textarea id="textDE" name="textDE" class="hidden" placeholder="Text" >{{ $article->editor_section_codeDE or '' }}</textarea>
-							</div>
-							<div class="language-en hidden">
-								<div class="epiceditors" id="markdown-textEN"></div>
-								<textarea id="textEN" name="textEN" class="hidden" placeholder="Text" >{{ $article->editor_section_codeEN or '' }}</textarea>	
-							</div>
-
-							@if(!$new)
-							<a href="/admin/article/sections/{{ $article->article_id}}">Zeige Absätze</a>
-							@endif
-						</div>
-						
-						<div class="form-group">
-							<h5>Cover Image</h5>
+							<h5>Cover Bild</h5>
 							<input class="form-file" type="file" name="cover_image" id="cover_image"/>
+							@if(!$new)
 							<div>
 							@if($article->cover_image)
 								Aktuelles Cover Image: <a href="/images/{{$article->cover_image}}" target="_blank">{{$article->cover_image_name}}</a>
@@ -128,6 +81,7 @@
 								Derzeit kein Cover Image vorhanden!
 							@endif
 							</div>
+							@endif
 							<div class="col-md-6">
 								Abstand links (in %): 
 								<input class="form-control gradient-input" name="cover_image_padding_left" value="{{ $article->cover_image_padding_left or ''}}" />
@@ -136,7 +90,19 @@
 								Abstand oben (in %): 
 								<input class="form-control gradient-input" name="cover_image_padding_top" value="{{ $article->cover_image_padding_top or ''}}"/>
 							</div>
-							
+						</div>
+
+		
+						<a class="section-header" data-key="info"><h4>Leseinformationen</h4></a>
+						<div class="form-group section-content hidden" data-key="info">
+							<h5>Summary</h5>
+							<div class="language-de">
+								<input class="form-control" name="summaryDE" value="{{ $article->summaryDE or '' }}" placeholder="Summary" />
+							</div>
+							<div class="language-en hidden">
+								<input class="form-control" name="summaryEN" value="{{ $article->summaryEN or '' }}" placeholder="Summary" />
+							</div>
+						
 							<h5>Spitzmarke</h5>
 							<input class="form-control" name="spitzmarke" value="{{ $article->spitzmarke or '' }}" placeholder="Spitzmarke" />
 							
@@ -151,16 +117,38 @@
 							<input class="form-control gradient-input" name="link_color" value="{{ $article->link_color or '' }}" placeholder="Link Farbe" />
 						</div>
 
-						<div class="form-group">
-							<h4>Autor</h4>
+						<a class="section-header" data-key="text"><h4>Einleitung</h4></a>
+						<div class="form-group section-content hidden" data-key="text">
+							<div class="language-de">
+								<textarea id="introductionDE" name="introductionDE" class="form-control textarea article__textarea" placeholder="Einleitung" >{{ $article->introductionDE or '' }}</textarea>	
+							</div>
+							<div class="language-en hidden">
+								<textarea id="introductionEN" name="introductionEN" class="form-control textarea article__textarea" placeholder="Einleitung" >{{ $article->introductionEN or '' }}</textarea>	
+							</div>
+						</div>
+
+						<a class="section-header" data-key="material"><h4>Used Material</h4></a>
+						<div class="form-group section-content hidden" data-key="material">
+							<div class="language-de">
+								<textarea id="used_materialDE" name="used_materialDE" class="form-control article__textarea" placeholder="Used Material" >{{ $article->used_materialDE or '' }}</textarea>	
+							</div>
+							<div class="language-en hidden">
+								<textarea id="used_materialEN" name="used_materialEN" class="form-control article__textarea" placeholder="Used Material" >{{ $article->used_materialEN or '' }}</textarea>	
+							</div>
+						</div>
+
+						<a class="section-header" data-key="author"><h4>Autor</h4></a>
+						<div class="form-group section-content hidden" data-key="author">
 							<input class="form-control" name="author_name" value="{{ $article->author_name or '' }}" placeholder="Autor" />
 							
-							<h5>Bild</h5>
+							<h5>Bild Autor</h5>
 							<input class="form-file " type="file" name="bio_image" id="bio_image"/>
+							@if(!$new)
 							@if($article->bio_image)
-								Aktuelles Bio Image: <a href="/images/{{$article->bio_image}}" target="_blank">{{$article->bio_image_name}}</a>
+								Aktuelles Bild: <a href="/images/{{$article->bio_image}}" target="_blank">{{$article->bio_image_name}}</a>
 							@else
-								Derzeit kein Bio Image vorhanden!
+								Derzeit kein Bild vorhanden!
+							@endif
 							@endif
 							
 							<h5>Biografie</h5>
@@ -172,8 +160,24 @@
 							</div>
 						</div>
 
-						<div class="form-group">
-							<h3>Links</h3>
+						<a class="section-header" data-key="sections"><h3>Text</h3></a>
+						<div class="form-group section-content" data-key="sections">
+							<div class="language-de">
+								<div class="epiceditors" id="markdown-textDE"></div>
+								<textarea id="textDE" name="textDE" class="hidden" placeholder="Text" >{{ $article->editor_section_codeDE or '' }}</textarea>
+							</div>
+							<div class="language-en hidden">
+								<div class="epiceditors" id="markdown-textEN"></div>
+								<textarea id="textEN" name="textEN" class="hidden" placeholder="Text" >{{ $article->editor_section_codeEN or '' }}</textarea>	
+							</div>
+
+							@if(!$new)
+							<a href="/admin/article/sections/{{ $article->article_id}}">Zeige Absätze</a>
+							@endif
+						</div>
+
+						<a class="section-header" data-key="links"><h3>Links</h3></a>
+						<div class="form-group section-content" data-key="links">
 							<div class="link-box">
 								@if(!$new)
 								@foreach ($links as $link)
@@ -194,8 +198,8 @@
 							<a class="add-link link-color__green"><i class="fa fa-plus"></i> hinzufügen</a>
 						</div>
 
-						<div class="form-group">
-							<h3>Buchtipps</h3>
+						<a class="section-header" data-key="booktips"><h3>Buchtipps</h3></a>
+						<div class="form-group section-content" data-key="booktips">
 							<div class="booktip-box">
 								@if(!$new)
 								@foreach ($booktips as $booktip)
@@ -224,10 +228,10 @@
 							<button type="submit" class="btn btn-primary">Speichern</button>
 						</div>
 						
-						<div class="article-editor-form__success alert alert-success">
+						<div class="article-editor-form__success alert alert-success hidden">
 							Änderungen erfolgreich gespeichert!
 						</div>
-						<div class="article-editor-form__error alert alert-danger">
+						<div class="article-editor-form__error alert alert-danger hidden">
 							Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!
 						</div>
 					</form>

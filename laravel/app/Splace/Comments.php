@@ -52,6 +52,13 @@ class Comments extends Model implements AuthenticatableContract {
 			->select('comments.comment_id', 'users.name', 'articles.article_id', 'articles.titleDE', 'sections.section_id', 'sections.key', 'comments.user_id', 'comments.text', 'comments.read', 'comments.marked')
 			->paginate(15);
 	}
+
+	public static function getBySectionForArticle($section_id) {
+		return Comments::where('comments.section_id', '=', $section_id)
+			->join('users', 'comments.user_id', '=', 'users.id')
+			->select('comments.comment_id', 'users.name', 'comments.user_id', 'comments.text')
+			->get();
+	}
 	
 	public static function exists($id) {
 		if(Comments::where('comment_id', $id)->count() == '1') {

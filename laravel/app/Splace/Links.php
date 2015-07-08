@@ -32,9 +32,9 @@ class Links extends Model implements AuthenticatableContract {
 		return false;
 	}
 
-	public static function createLink($link) {
+	public static function createLink($link, $article_id) {
 		return Links::insertGetId([
-			'article_id' => $link['article_id'], 
+			'article_id' => $article_id, 
 			'number' => $link['number'], 
 			'link' => $link['link'], 
 			'link_descriptionDE' => $link['link_descriptionDE'], 

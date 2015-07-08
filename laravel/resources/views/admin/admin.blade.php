@@ -2,6 +2,16 @@
 
 @section('content')
 <div class="container">
+	<div class="row col-md-10 col-md-offset-1" id="magazine">
+		<form class="magazine-form">
+			<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+			<select id="active-magazine" class="input-sm">
+				@foreach ($magazines as $magazine)
+					<option value="{{$magazine->magazine_id}}" @if ($magazine->magazine_id == $active) selected @endif >{{$magazine->title}}</option>
+				@endforeach
+			</select>
+		</form>
+	</div>
 	<div class="row" id="articles">
 		<div class="col-md-10 col-md-offset-1">
 			<h1>Artikel</h1>
@@ -68,26 +78,10 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="row" id="users">
-		<div class="col-md-10 col-md-offset-1">
-			<h1>User</h1>
-
-			@if ($warning['user'] == 'nouserwiththisid')
-			<div class="panel-warning">
-				<div class="panel-heading">Kein User mit dieser ID vorhanden</div>
-			</div>
-			@endif
-
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<ul class="articles">
-
-						<li><a href="/admin/user">Alle anzeigen</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+	<hr>
+	<div class="show-section col-md-10 col-md-offset-1">
+		<h3><a href="/admin/user">User anzeigen</a></h3>
+		<h3><a href="/admin/magazines">Magazine anzeigen</a></h3>
 	</div>
 </div>
 @endsection

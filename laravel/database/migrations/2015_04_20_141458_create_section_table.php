@@ -22,6 +22,7 @@ class CreateSectionTable extends Migration {
 			$table->text('textEN');
 			$table->text('noteDE');
 			$table->text('noteEN');
+			$table->string('media_type');
 			$table->timestamps();
 		});
 	}

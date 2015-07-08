@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Contracts\Auth\Registrar;
 use Request;
 use App\Splace\Article;
@@ -45,7 +46,7 @@ class ArticleController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{		$article = Article::getAll();
+	{		$article = Article::getAll(Session::get('active'));
 		if(count($article) == '0') {
 			$warning = 'noarticleexists';
 		}
@@ -78,7 +79,7 @@ class ArticleController extends Controller {
 	{
 		if(!Article::exists($id)) {
 			return view('admin/articles')
-				->with('articles', Article::getAll())
+				->with('articles', Article::getAll(Session::get('active')))
 				->with('warning', 'noarticlewiththisid');
 		}
 
@@ -107,19 +108,19 @@ class ArticleController extends Controller {
 		}
 		Section::insertSections($id, Input::get('sectionsDE'), Input::get('sectionsEN'));
 
-		Links::deleteLinksByArticle($article['id']);
+		Links::deleteLinksByArticle($id);
 		$links = Input::get('links');
 		if($links != 0) {
 			foreach ($links as $link) {
-				Links::createLink($link);
+				Links::createLink($link, $id);
 			}
 		}
 
-		Booktips::deleteBooktipsByArticle($article['id']);
+		Booktips::deleteBooktipsByArticle($id);
 		$booktips = Input::get('booktips', 0);
 		if($booktips != 0) {
 			foreach ($booktips as $booktip) {
-				Booktips::createBooktip($booktip);
+				Booktips::createBooktip($booktip, $id);
 			}
 		}
 

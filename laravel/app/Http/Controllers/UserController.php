@@ -42,7 +42,6 @@ class UserController extends Controller {
 	public function saveUser() {
 		$user = Input::get('user');
 
-		\Log::info($user['id'].' + '.\Auth::user()->id);
 		if($user['id'] != \Auth::user()->id) {
 			return response()->json(['success' => 'false'], 404);
 		}

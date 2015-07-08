@@ -33,8 +33,10 @@ class RedirectIfAuthenticated {
 	 */
 	public function handle($request, Closure $next)
 	{
+		\Log::info('authenticate');
 		if ($this->auth->check())
 		{
+			\Log::info('successful');
 			return new RedirectResponse(url('/admin'));
 		}
 

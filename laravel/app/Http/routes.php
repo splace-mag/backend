@@ -19,6 +19,7 @@
 */
 Route::get('/', 'WelcomeController@index');
 Route::get('home', 'WelcomeController@index');
+Route::get('locale/{lang}', 'Auth\AccountController@changeLocale');
 
 /*
 |
@@ -36,6 +37,10 @@ Route::get('account/facebook', 'Auth\AccountController@facebookLogin');
 Route::get('twitter', 'Auth\AccountController@redirectToTwitter');
 Route::get('account/twitter', 'Auth\AccountController@twitterLogin');
 
+
+//Route::get('/', 'Frontend\ArticleController@index');
+Route::get('article/{magazineid}/{number}', 'Frontend\ArticleController@showArticle');
+
 /*
 |
 | Admin Routes
@@ -43,6 +48,8 @@ Route::get('account/twitter', 'Auth\AccountController@twitterLogin');
 */
 Route::group(['prefix' =>'admin'], function() {
 	Route::get('/', 'Admin\AdminController@index');
+
+	Route::post('magazine', 'Admin\MagazinesController@setMagazine');
 
 	Route::get('article', 'Admin\ArticleController@index');
 	Route::post('article/sort', 'Admin\ArticleController@sortArticles');
@@ -57,9 +64,12 @@ Route::group(['prefix' =>'admin'], function() {
 	Route::get('article/comments/{article_id}', 'Admin\CommentsController@showArticleComments');
 
 	Route::get('sections', 'Admin\SectionsController@index');
+	Route::post('sections/fileupload/{id}', 'Admin\SectionsController@fileUpload');
 	Route::get('sections/{id}', 'Admin\SectionsController@editSection');
 	Route::post('sections/{id}', 'Admin\SectionsController@saveSection');
 	Route::get('sections/delete/{id}', 'Admin\SectionsController@deleteSection');
+
+	Route::get('media/delete/{filename}', 'Admin\SectionsController@deleteMediaItem');
 
 	Route::get('comments', 'Admin\CommentsController@index');
 	Route::get('comments/{id}', 'Admin\CommentsController@editComment');
@@ -68,6 +78,12 @@ Route::group(['prefix' =>'admin'], function() {
 
 	Route::get('user', 'Admin\AdminController@showUser');
 	Route::get('user/delete/{id}', 'Admin\AdminController@deleteUser');
+
+	Route::get('magazines', 'Admin\MagazinesController@showMagazines');
+	Route::get('magazines/create', 'Admin\MagazinesController@createMagazine');
+	Route::get('magazines/delete/{id}', 'Admin\MagazinesController@deleteMagazine');
+	Route::get('magazines/{id}', 'Admin\MagazinesController@showMagazine');
+	Route::post('magazines/{id}', 'Admin\MagazinesController@saveMagazine');
 
 });
 

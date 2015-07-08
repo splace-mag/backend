@@ -18,18 +18,37 @@ class Article extends Model implements AuthenticatableContract {
 
 	public $timestamps = true;
 
-	public static function getAll() {
-		$magazine_id = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
-		return Article::where('magazine_id', $magazine_id)->orderBy('number', 'asc')->paginate(15);
+	public static function getAll($magazine = 'active') {
+		if($magazine == 'active') {
+			$magazine = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
+		}
+		return Article::where('magazine_id', $magazine)->orderBy('number', 'asc')->paginate(15);
 	}
-	public static function getFirst($count) {
-		$magazine_id = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
-		return Article::where('magazine_id', $magazine_id)->orderBy('updated_at', 'desc')->take($count)->get();
+	public static function getFirst($count, $magazine = 'active') {
+		if($magazine == 'active') {
+			$magazine = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
+		}
+		return Article::where('magazine_id', $magazine)->orderBy('updated_at', 'desc')->take($count)->get();
 	}
 	public static function getById($id) {
 		return Article::where('article_id', $id)->first();
 	}
-	
+
+	public static function getByNumber($magazineid, $number) {
+		return Article::where('magazine_id', $magazineid)
+			->where('number', $number)
+			->first();
+	}
+/*
+	public static function getFullArticle($id) {
+		$article = Article::where('articles.article_id', $id)
+			->join('sections', 'sections.article_id', '=', 'articles.article_id')
+			->join('links', 'links.article_id', '=', 'articles.article_id')
+			->join('booktips', 'booktips.article_id', '=', 'articles.article_id')
+			->first();
+			return $article;
+	}
+*/
 	public static function exists($id) {
 		if(Article::where('article_id', $id)->count() >= '1') {
 			return true;
@@ -37,12 +56,13 @@ class Article extends Model implements AuthenticatableContract {
 		return false;
 	}
 
-	public static function createArticle($article) {
-		$magazine_id = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
-		\Log::info($article);
+	public static function createArticle($article, $magazine = 'active') {
+		if($magazine == 'active') {
+			$magazine = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
+		}
 
 		return Article::insertGetId([
-			'magazine_id' => $magazine_id, 
+			'magazine_id' => $magazine, 
 			'titleDE' => $article['titleDE'], 
 			'titleEN' => $article['titleEN'], 
 			'spitzmarke' => $article['spitzmarke'], 
@@ -60,10 +80,8 @@ class Article extends Model implements AuthenticatableContract {
 			'gradient_1' => $article['gradient_1'], 
 			'gradient_2' => $article['gradient_2'], 
 			'link_color' => $article['link_color'], 
-			'h2DE' => $article['h2DE'], 
-			'h2EN' => $article['h2EN'], 
-			'h3DE' => $article['h3DE'], 
-			'h3EN' => $article['h3EN'], 
+			'summaryDE' => $article['summaryDE'], 
+			'summaryEN' => $article['summaryEN'], 
 			'editor_section_codeDE' => $article['editor_section_codeDE'], 
 			'editor_section_codeEN' => $article['editor_section_codeEN'], 
 			'author_name' => $article['author_name'], 
@@ -97,10 +115,8 @@ class Article extends Model implements AuthenticatableContract {
 				'gradient_1' => $article['gradient_1'], 
 				'gradient_2' => $article['gradient_2'], 
 				'link_color' => $article['link_color'],
-				'h2DE' => $article['h2DE'], 
-				'h2EN' => $article['h2EN'], 
-				'h3DE' => $article['h3DE'], 
-				'h3EN' => $article['h3EN'], 
+				'summaryDE' => $article['summaryDE'], 
+				'summaryEN' => $article['summaryEN'], 
 				'editor_section_codeDE' => $article['editor_section_codeDE'], 
 				'editor_section_codeEN' => $article['editor_section_codeEN'], 
 				'author_name' => $article['author_name'], 

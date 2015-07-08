@@ -12,6 +12,7 @@
 					<ul class="articles">
 						@foreach ($user as $u)
 						<li>
+							@if($u->is_admin)<strong>Administrator </strong> @endif
 							{{$u->name}} ({{$u->email}})
 							<a class="article-delete link-color__red" href="/admin/user/delete/{{ $u->id }}"><i class="fa fa-times"></i> Löschen</a>
 						</li>

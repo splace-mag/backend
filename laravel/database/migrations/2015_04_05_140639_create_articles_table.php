@@ -16,7 +16,7 @@ class CreateArticlesTable extends Migration {
 		{
 			$table->increments('article_id');
 			$table->integer('magazine_id');
-			$table->integer('number');
+			$table->integer('number')->default(1);
 			$table->string('spitzmarke');
 			$table->string('titleDE');
 			$table->string('titleEN');

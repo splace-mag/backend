@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Contracts\Auth\Registrar;
 use App\Splace\Section;
+use Request;
 
 class SectionsController extends Controller {
 
@@ -41,7 +43,7 @@ class SectionsController extends Controller {
 	 */
 	public function index()
 	{
-		$sections = Section::getAll();
+		$sections = Section::getAll(Session::get('active'));
 		if(count($sections) == '0') {
 			$warning = 'nosectionexists';
 		}
@@ -82,12 +84,13 @@ class SectionsController extends Controller {
 	{
 		if(!Section::exists($id)) {
 			return view('admin/sections')
-				->with('sections', Section::getAll())
+				->with('sections', Section::getAll(Session::get('active')))
 				->with('warning', 'nosectionwiththisid');
 		}
 
 		return view('admin/sectioneditor')
-			->with('section', section::getById($id));
+			->with('section', Section::getById($id))
+			->with('media', Section::getMedia($id));
 	}
 
 	/**
@@ -101,6 +104,11 @@ class SectionsController extends Controller {
 		
 		if(Section::exists($section['id'])) {
 			Section::editSection($section);
+
+			$media = Input::get('media');
+			if($media != 'undefined') {
+				Section::saveMediaDescription($media);
+			}
 		}
 		else {
 			return response()->json(['success' => 'false'], 404);
@@ -119,6 +127,56 @@ class SectionsController extends Controller {
 		Section::deleteSection($id);
 
 		return redirect('admin/sections');
+	}
+
+	public function fileUpload($id) 
+	{
+		$mediaType = Input::get('media_type', 'none');
+
+		if($mediaType == 'image' && Request::hasFile('media-file-image')) {
+			$file = Request::file('media-file-image');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('images'), $filename);
+			
+			Section::saveMedia($id, $filename, $file->getClientOriginalName(), $mediaType);
+		}
+		else if($mediaType == 'video' && Request::hasFile('media-file-video')) {
+			$file = Request::file('media-file-video');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('videos'), $filename);
+			
+			Section::saveMedia($id, $filename, $file->getClientOriginalName(), $mediaType);
+		}
+		else if($mediaType == 'gallery') {
+			if(Request::hasFile('media-file-image-cover')) {
+				$file = Request::file('media-file-image-cover');
+				$filename = time().$file->getClientOriginalName();
+				$file->move(public_path('images'), $filename);
+				
+				Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'cover');
+			}
+
+			for($i = 0; $i < Input::get('gallery_items', 0); $i++) {
+				if(Request::hasFile('media-file-gallery-'.$i)) {
+					$file = Request::file('media-file-gallery-'.$i);
+					$filename = time().$file->getClientOriginalName();
+					$file->move(public_path('images'), $filename);
+					
+					Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'gallery');
+				}
+			}
+		}
+		
+		return response()->json(['success' => 'true']);
+	}
+
+	public function deleteMediaItem($filename) {
+		if(\File::exists('images/'.$filename)) {
+			\File::delete('images/'.$filename);
+			Section::deleteMedia($filename);
+		}
+
+		return redirect()->back();
 	}
 
 }

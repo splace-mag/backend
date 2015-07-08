@@ -44,10 +44,10 @@
 							<button type="submit" class="btn btn-primary">Speichern</button>
 						</div>
 						
-						<div class="comment-editor-form__success alert alert-success">
+						<div class="comment-editor-form__success alert alert-success hidden">
 							Änderungen erfolgreich gespeichert!
 						</div>
-						<div class="comment-editor-form__error alert alert-danger">
+						<div class="comment-editor-form__error alert alert-danger hidden">
 							Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut!
 						</div>
 					</form>

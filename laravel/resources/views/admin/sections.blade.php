@@ -22,7 +22,7 @@
 					<ul class="sections">
 						@foreach ($sections as $section)
 						<li>
-							<a href="/admin/sections/{{ $section->section_id }}">{{ $section->article_id }} | {{ $section->key }}</a>
+							<a href="/admin/sections/{{ $section->section_id }}">{{ $section->titleDE }} > {{ $section->key }}</a>
 							<a class="article-delete link-color__red" href="/admin/sections/delete/{{ $section->section_id }}"><i class="fa fa-times"></i> Löschen</a>
 						</li>
 						@endforeach
