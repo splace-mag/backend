@@ -1,25 +1,24 @@
 
+SCHREIBRECHTE in public Verzeichnis von backend.splace.applics.at
+
+
+Tasks: 
+ - Fußnoten (testen)
+
+ - Profilbild zu User hinzufügen
+ - Gallery/Image/Video bei Sections-Anzeige
+ - Frontend integrieren
+
+ - Language-Switch (über Frontend zu erledigen)
+ - Beschreibung des Bildes sofort nach File Upload (+)
+
+
+Error (should already be fixed): 
+ - Manchmal werden 2 gleiche Artikel erstellt. 
  - Password Reset: E-Mail kommt nicht an. 
- - Profilbild
- - Language-Switch
- - Artikel Number beim Speichern erstellen
- - Sections Note not save
-
-Fußnote in Used Material
-Alle Input-Felder mit HTML-Elementen auf Markdown ändern
-
-Video: Youtube oder Vimeo Url
-
-2 gleiche Artikel werden erstellt. 
-
-Lukas: Prozentangabe bei Cover Image etc. für Abstand, nicht ganze Breite
 
 
 
-
-
-info Site: 
-	Sind hauptsächlich Mitwirkende-Listen, etc. (0815 stuff)
 
 
 
@@ -27,13 +26,15 @@ info Site:
 ---------
 
 
+-
 sections-table: media_type hinzufügen
 articles-table: h2, h3 entfernen
 articles-table: summary hinzufügen
 media-table erstellen
+-
 
-
-
+articles-table: markdown-entities erstellen
+users-table: picture column erstellen
 
  ----------
 

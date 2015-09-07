@@ -56,7 +56,6 @@ class Section extends Model implements AuthenticatableContract {
 							'updated_at' => Carbon::now()]);
 				}
 				else {
-					\Log::info($section['id'].': insert');
 					Section::insert([
 						'article_id' => $article_id, 
 						'magazine_id' => $magazine, 
@@ -94,7 +93,7 @@ class Section extends Model implements AuthenticatableContract {
 			->update([ 
 				'noteDE' => $section['noteDE'], 
 				'noteEN' => $section['noteEN'], 
-				'media_type' => $section['media_type'],
+				'media_type' => 'multiple',
 				'updated_at' => new Carbon]);
 	}
 
@@ -111,24 +110,34 @@ class Section extends Model implements AuthenticatableContract {
 			->where('section_id', $section_id)
 			->get();
 
-		$section['type'] = 'empty';
+		$section = array(
+			'image' => false, 
+			'youtube-video' => false, 
+			'vimeo-video' => false, 
+			'cover' => false, 
+			'gallery' => false);
 
+		$i = 0;
 		foreach ($media as $m) {
 			if($m->media_type == 'image') {
-				$section['type'] = 'image';
-				$section['image'] = $m;
+				$section['image'] = true;
+				$section['image-data'] = $m;
 			}
-			else if($m->media_type == 'video') {
-				$section['type'] = 'video';
-				$section['video'] = $m;
+			else if($m->media_type == 'youtube-video') {
+				$section['youtube-video'] = true;
+				$section['youtube-video-data'] = $m;
+			}
+			else if($m->media_type == 'vimeo-video') {
+				$section['vimeo-video'] = true;
+				$section['vimeo-video-data'] = $m;
 			}
 			else if($m->media_type == 'cover') {
-				$section['type'] = 'cover';
-				$section['cover'] = $m;
+				$section['cover'] = true;
+				$section['cover-data'] = $m;
 			}
 			else if($m->media_type == 'gallery') {
-				$section['type'] = 'gallery';
-				$section['gallery'][] = $m;
+				$section['gallery'] = true;
+				$section['gallery-data'][] = $m;
 			}
 		}
 
@@ -136,7 +145,7 @@ class Section extends Model implements AuthenticatableContract {
 	}
 
 	public static function saveMedia($section_id, $file_name, $original_name, $media_type, $number = 0) {
-		if($media_type == 'image' || $media_type == 'video' || $media_type == 'cover') {
+		if($media_type == 'image' || $media_type == 'cover') {
 			$media = \DB::table('media')
 				->where('section_id', $section_id)
 				->where('media_type', $media_type)
@@ -152,14 +161,31 @@ class Section extends Model implements AuthenticatableContract {
 				->where('media_type', $media_type)
 				->delete();
 		}
-
-		\DB::table('media')
-			->insert([
-				'section_id' => $section_id, 
-				'file_name' => $file_name, 
-				'original_name' => $original_name, 
-				'media_type' => $media_type, 
-				'number' => $number]);
+		
+		if($media_type == 'youtube-video' || $media_type == 'vimeo-video') {
+			if(\DB::table('media')->where('section_id', $section_id)->where('media_type', $media_type)->count() >= '1') {
+				\DB::table('media')
+					->where('section_id', $section_id)
+					->where('media_type', $media_type)
+					->update(['original_name' => $original_name]);
+			}
+			else {
+				\DB::table('media')
+					->insert([
+						'section_id' => $section_id, 
+						'media_type' => $media_type, 
+						'original_name' => $original_name]);
+			}
+		}
+		else {	
+			\DB::table('media')
+				->insert([
+					'section_id' => $section_id, 
+					'file_name' => $file_name, 
+					'original_name' => $original_name, 
+					'media_type' => $media_type, 
+					'number' => $number]);
+		}
 	}
 
 	public static function saveMediaDescription($media) {

@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Input;
 use Redirect;
 use Socialize;
 use App;
@@ -34,7 +36,7 @@ class AccountController extends Controller {
 		$user->getAvatar();
 		*/
 
-		//\Log::info($user->getId().': '.$user->getName());
+		\Log::info($user->getId().': '.$user->getName());
 
 		return redirect('home')->send();
 	}
@@ -70,12 +72,12 @@ class AccountController extends Controller {
 
 	public function changeLocale($lang) {
 		if($lang == 'de') {
-			App::setLocale('de');
+			Session::put('language', 'de');
 		}
 		else {
-			App::setLocale('en');
+			Session::put('language', 'en');
 		}
-		return;
+		return redirect()->back();
 	}
 
 }

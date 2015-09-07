@@ -38,9 +38,6 @@ Route::get('twitter', 'Auth\AccountController@redirectToTwitter');
 Route::get('account/twitter', 'Auth\AccountController@twitterLogin');
 
 
-//Route::get('/', 'Frontend\ArticleController@index');
-Route::get('article/{magazineid}/{number}', 'Frontend\ArticleController@showArticle');
-
 /*
 |
 | Admin Routes
@@ -95,5 +92,15 @@ Route::group(['prefix' =>'admin'], function() {
 Route::get('user', 'UserController@index');
 Route::post('user', 'UserController@saveUser');
 
-
+/*
+|
+| Magazine Routes
+|
+*/
+//Route::get('/', 'Frontend\ArticleController@index');
+Route::get('{magazineid}/article/{number}', 'Frontend\ArticleController@showArticle');
+Route::get('{magazineid}/splace', 'Frontend\MainController@index');
+Route::get('{magazineid}/content', 'Frontend\MainController@showContents');
+Route::get('{magazineid}/editorial', 'Frontend\MainController@showEditorial');
+Route::get('help', 'Frontend\MainController@showHelpPage');
 

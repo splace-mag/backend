@@ -55,6 +55,7 @@ class Comments extends Model implements AuthenticatableContract {
 
 	public static function getBySectionForArticle($section_id) {
 		return Comments::where('comments.section_id', '=', $section_id)
+			->where('comments.marked', '1')
 			->join('users', 'comments.user_id', '=', 'users.id')
 			->select('comments.comment_id', 'users.name', 'comments.user_id', 'comments.text')
 			->get();

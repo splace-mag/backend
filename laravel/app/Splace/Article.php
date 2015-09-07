@@ -22,13 +22,27 @@ class Article extends Model implements AuthenticatableContract {
 		if($magazine == 'active') {
 			$magazine = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
 		}
-		return Article::where('magazine_id', $magazine)->orderBy('number', 'asc')->paginate(15);
+		return Article::where('magazine_id', $magazine)
+			->orderBy('number', 'asc')
+			->paginate(15);
+	}
+	public static function getArticleList($magazine = 'active') {
+		if($magazine == 'active') {
+			$magazine = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
+		}
+		return Article::where('magazine_id', $magazine)
+			->orderBy('number', 'asc')
+			->select('magazine_id', 'article_id', 'number', 'titleDE', 'titleEN', 'page_titleDE', 'page_titleEN', 'page_sub_titleDE', 'page_sub_titleEN')
+			->get();
 	}
 	public static function getFirst($count, $magazine = 'active') {
 		if($magazine == 'active') {
 			$magazine = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
 		}
-		return Article::where('magazine_id', $magazine)->orderBy('updated_at', 'desc')->take($count)->get();
+		return Article::where('magazine_id', $magazine)
+			->orderBy('updated_at', 'desc')
+			->take($count)
+			->get();
 	}
 	public static function getById($id) {
 		return Article::where('article_id', $id)->first();
@@ -60,11 +74,13 @@ class Article extends Model implements AuthenticatableContract {
 		if($magazine == 'active') {
 			$magazine = \DB::table('magazines')->where('active', '1')->first()->magazine_id;
 		}
+		$number = Article::where('magazine_id', $magazine)->orderBy('number', 'desc')->first()->number;
 
 		return Article::insertGetId([
 			'magazine_id' => $magazine, 
 			'titleDE' => $article['titleDE'], 
 			'titleEN' => $article['titleEN'], 
+			'number' => ($number+1), 
 			'spitzmarke' => $article['spitzmarke'], 
 			'page_titleDE' => $article['page_titleDE'], 
 			'page_titleEN' => $article['page_titleEN'], 
@@ -76,19 +92,28 @@ class Article extends Model implements AuthenticatableContract {
 			'page_sub_title_padding_top' => $article['page_sub_title_padding_top'], 
 			'introductionDE' => $article['introductionDE'], 
 			'introductionEN' => $article['introductionEN'], 
+			'markdown_introductionDE' => $article['markdown_introductionDE'], 
+			'markdown_introductionEN' => $article['markdown_introductionEN'], 
 			'reading_time' => $article['reading_time'], 
 			'gradient_1' => $article['gradient_1'], 
 			'gradient_2' => $article['gradient_2'], 
 			'link_color' => $article['link_color'], 
+			'subtitle_backgroundcolor' => $article['subtitle_backgroundcolor'], 
 			'summaryDE' => $article['summaryDE'], 
 			'summaryEN' => $article['summaryEN'], 
+			'markdown_summaryDE' => $article['markdown_summaryDE'], 
+			'markdown_summaryEN' => $article['markdown_summaryEN'], 
 			'editor_section_codeDE' => $article['editor_section_codeDE'], 
 			'editor_section_codeEN' => $article['editor_section_codeEN'], 
 			'author_name' => $article['author_name'], 
 			'bio_textDE' => $article['bio_textDE'], 
 			'bio_textEN' => $article['bio_textEN'], 
+			'markdown_bio_textDE' => $article['markdown_bio_textDE'], 
+			'markdown_bio_textEN' => $article['markdown_bio_textEN'], 
 			'used_materialDE' => $article['used_materialDE'], 
 			'used_materialEN' => $article['used_materialEN'], 
+			'markdown_used_materialDE' => $article['markdown_used_materialDE'], 
+			'markdown_used_materialEN' => $article['markdown_used_materialEN'], 
 			'cover_image_padding_left' => $article['cover_image_padding_left'], 
 			'cover_image_padding_top' => $article['cover_image_padding_top'], 
 			'created_at' => new Carbon, 
@@ -111,19 +136,28 @@ class Article extends Model implements AuthenticatableContract {
 				'page_sub_title_padding_top' => $article['page_sub_title_padding_top'], 
 				'introductionDE' => $article['introductionDE'], 
 				'introductionEN' => $article['introductionEN'], 
+				'markdown_introductionDE' => $article['markdown_introductionDE'], 
+				'markdown_introductionEN' => $article['markdown_introductionEN'], 
 				'reading_time' => $article['reading_time'], 
 				'gradient_1' => $article['gradient_1'], 
 				'gradient_2' => $article['gradient_2'], 
 				'link_color' => $article['link_color'],
+				'subtitle_backgroundcolor' => $article['subtitle_backgroundcolor'], 
 				'summaryDE' => $article['summaryDE'], 
 				'summaryEN' => $article['summaryEN'], 
+				'markdown_summaryDE' => $article['markdown_summaryDE'], 
+				'markdown_summaryEN' => $article['markdown_summaryEN'], 
 				'editor_section_codeDE' => $article['editor_section_codeDE'], 
 				'editor_section_codeEN' => $article['editor_section_codeEN'], 
 				'author_name' => $article['author_name'], 
 				'bio_textDE' => $article['bio_textDE'], 
 				'bio_textEN' => $article['bio_textEN'], 
+				'markdown_bio_textDE' => $article['markdown_bio_textDE'], 
+				'markdown_bio_textEN' => $article['markdown_bio_textEN'], 
 				'used_materialDE' => $article['used_materialDE'], 
 				'used_materialEN' => $article['used_materialEN'], 
+				'markdown_used_materialDE' => $article['markdown_used_materialDE'], 
+				'markdown_used_materialEN' => $article['markdown_used_materialEN'], 
 				'cover_image_padding_left' => $article['cover_image_padding_left'], 
 				'cover_image_padding_top' => $article['cover_image_padding_top'], 
 				'updated_at' => new Carbon]);

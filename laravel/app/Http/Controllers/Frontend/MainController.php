@@ -5,18 +5,14 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Contracts\Auth\Registrar;
 use Request;
-use App\Splace\Article;
-use App\Splace\Section;
-use App\Splace\Links;
-use App\Splace\Booktips;
-use App\Splace\Comments;
 use App\Splace\Magazines;
+use App\Splace\Article;
 
-class ArticleController extends Controller {
+class MainController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
-	| Article Controller
+	| Main Controller
 	|--------------------------------------------------------------------------
 	|
 	| This controller renders your application's "dashboard" for users that
@@ -30,40 +26,38 @@ class ArticleController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{		
-		return view('frontend/splace');
-	}
-
-
-	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
-	 */
-	public function showArticle($magazineid, $number)
+	public function index($magazineid)
 	{		
 		$this->setMagazine($magazineid);
-
-		$article = Article::getByNumber($magazineid, $number);
-		if($article == '') {
-			$article = Article::getByNumber(Magazines::getActive(), 1);
-		}
-
-		$navigationList = $this->navigationList(Article::getArticleList(Magazines::getActive()), Magazines::getAll());
-
-		$sections = Section::getByArticle($article->article_id);
-		foreach($sections as $s) {
-			$s->comments = Comments::getBySectionForArticle($s->section_id);
-		}
-
-		return view('frontend/article')
-			->with('article', $article)
+		return view('frontend/splace')
+			->with('navigation', $this->navigationList(Article::getArticleList(Session::get('active', Magazines::getActive())), Magazines::getAll()))
 			->with('magazine', Magazines::getById(Session::get('active', Magazines::getActive())))
-			->with('navigation', $navigationList) 
-			->with('sections', $sections)
-			->with('links', Links::getByArticle($article->article_id))
-			->with('booktips', Booktips::getByArticle($article->article_id))
+			->with('language', Session::get('language', 'de'));
+	}
+
+	public function showContents($magazineid)
+	{		
+		$this->setMagazine($magazineid);
+		return view('frontend/contents')
+			->with('navigation', $this->navigationList(Article::getArticleList(Session::get('active', Magazines::getActive())), Magazines::getAll()))
+			->with('magazine', Magazines::getById(Session::get('active', Magazines::getActive())))
+			->with('language', Session::get('language', 'de'));
+	}
+
+	public function showEditorial($magazineid)
+	{		
+		$this->setMagazine($magazineid);
+		return view('frontend/editorial')
+			->with('navigation', $this->navigationList(Article::getArticleList(Session::get('active', Magazines::getActive())), Magazines::getAll()))
+			->with('magazine', Magazines::getById(Session::get('active', Magazines::getActive())))
+			->with('language', Session::get('language', 'de'));
+	}
+
+	public function showHelpPage()
+	{		
+		return view('frontend/help')
+			->with('navigation', $this->navigationList(Article::getArticleList(Session::get('active', Magazines::getActive())), Magazines::getAll()))
+			->with('magazine', Magazines::getById(Session::get('active', Magazines::getActive())))
 			->with('language', Session::get('language', 'de'));
 	}
 

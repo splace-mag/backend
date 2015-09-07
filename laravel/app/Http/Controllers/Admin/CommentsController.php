@@ -101,7 +101,7 @@ class CommentsController extends Controller {
 	 */
 	public function saveComment()
 	{
-		$comment = Input::get('comment');
+		$comment = Request::input('comment');
 		
 		if(Comments::exists($comment['id'])) {
 			Comments::markPublic($comment);

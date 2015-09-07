@@ -100,12 +100,12 @@ class SectionsController extends Controller {
 	 */
 	public function saveSection()
 	{
-		$section = Input::get('section');
+		$section = Request::input('section');
 		
 		if(Section::exists($section['id'])) {
 			Section::editSection($section);
 
-			$media = Input::get('media');
+			$media = Request::input('media');
 			if($media != 'undefined') {
 				Section::saveMediaDescription($media);
 			}
@@ -131,39 +131,38 @@ class SectionsController extends Controller {
 
 	public function fileUpload($id) 
 	{
-		$mediaType = Input::get('media_type', 'none');
+		$mediaType = Request::input('media_type', 'none');
 
-		if($mediaType == 'image' && Request::hasFile('media-file-image')) {
+		if(Request::hasFile('media-file-image')) {
 			$file = Request::file('media-file-image');
 			$filename = time().$file->getClientOriginalName();
 			$file->move(public_path('images'), $filename);
 			
-			Section::saveMedia($id, $filename, $file->getClientOriginalName(), $mediaType);
+			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'image');
 		}
-		else if($mediaType == 'video' && Request::hasFile('media-file-video')) {
-			$file = Request::file('media-file-video');
+		if(Request::has('media-youtube-video')) {
+			$name = Request::input('media-youtube-video');
+			Section::saveMedia($id, '', $name, 'youtube-video');
+		}
+		if(Request::has('media-vimeo-video')) {
+			$name = Request::input('media-vimeo-video');
+			Section::saveMedia($id, '', $name, 'vimeo-video');
+		}
+		if(Request::hasFile('media-file-image-cover')) {
+			$file = Request::file('media-file-image-cover');
 			$filename = time().$file->getClientOriginalName();
-			$file->move(public_path('videos'), $filename);
+			$file->move(public_path('images'), $filename);
 			
-			Section::saveMedia($id, $filename, $file->getClientOriginalName(), $mediaType);
+			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'cover');
 		}
-		else if($mediaType == 'gallery') {
-			if(Request::hasFile('media-file-image-cover')) {
-				$file = Request::file('media-file-image-cover');
+
+		for($i = 0; $i < Request::input('gallery_items', 0); $i++) {
+			if(Request::hasFile('media-file-gallery-'.$i)) {
+				$file = Request::file('media-file-gallery-'.$i);
 				$filename = time().$file->getClientOriginalName();
 				$file->move(public_path('images'), $filename);
 				
-				Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'cover');
-			}
-
-			for($i = 0; $i < Input::get('gallery_items', 0); $i++) {
-				if(Request::hasFile('media-file-gallery-'.$i)) {
-					$file = Request::file('media-file-gallery-'.$i);
-					$filename = time().$file->getClientOriginalName();
-					$file->move(public_path('images'), $filename);
-					
-					Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'gallery');
-				}
+				Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'gallery');
 			}
 		}
 		

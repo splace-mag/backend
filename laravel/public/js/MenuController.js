@@ -12,7 +12,11 @@ var splaceMenuController = (function($) {
 	function issueSelection() {
 
 		for(var i in splaceConfig.issueList) {
-			$('.splace-issue-selection__list').append('<li><a href="'+splaceConfig.issueList[i].url+'">'+splaceConfig.issueList[i].name+'</a></li>');
+			if(splaceConfig.issueList[i].current) {
+				$('.splace-issue-selection__list').append('<li><a href="'+splaceConfig.issueList[i].url+'" style="color:#e60032;">'+splaceConfig.issueList[i].name+'</a></li>');
+			} else {
+				$('.splace-issue-selection__list').append('<li><a href="'+splaceConfig.issueList[i].url+'">'+splaceConfig.issueList[i].name+'</a></li>');	
+			}
 		}
 
 		$(_issueSelector).on('click', function(e) {
@@ -37,10 +41,23 @@ var splaceMenuController = (function($) {
 		});
 	}
 
+	function externalLinkTrigger() {
+		$('.splace-external-links__wrapper').on('click', function(e) {
+			$target = $(e.delegateTarget);
+
+			if($target.hasClass('active')) {
+				$target.removeClass('active');
+			} else {
+				$target.addClass('active');
+			}
+		});
+	}
+
 	function init() {
 		
 		issueSelection();
 		navigationTrigger();
+		externalLinkTrigger();
 
 		$navList = $('.splace-navigation__list');
 		for(var i in splaceConfig.navigationItems) {

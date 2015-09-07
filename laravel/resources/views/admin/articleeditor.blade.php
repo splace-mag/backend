@@ -8,8 +8,8 @@
 				<div class="panel-heading">
 					Artikel {{ $article->nameDE or '' }}
 					<span class="content-language">
-						<a href="#" id="language-switch--de" class="language-switch active">Deutsch</a> | 
-						<a href="#" id="language-switch--en" class="language-switch">Englisch</a>
+						<a id="language-switch--de" class="language-switch active">Deutsch</a> | 
+						<a id="language-switch--en" class="language-switch">Englisch</a>
 					</span>
 				</div>
 				
@@ -62,6 +62,11 @@
 								<input class="form-control" name="page_subtitleEN" value="{{ $article->page_sub_titleEN or '' }}" placeholder="Untertitel" />
 							</div>
 
+							<div class="col-md-12">
+								Hintergrundfarbe (Format: #000000): 
+								<input class="form-control gradient-input" name="subtitle_backgroundcolor" value="{{ $article->subtitle_backgroundcolor }}" placeholder="Hintergrundfarbe"/>
+							</div>
+
 							<div class="col-md-6">
 								Abstand links (in %): 
 								<input class="form-control gradient-input" name="page_sub_title_padding_left" value="{{ $article->page_sub_title_padding_left or ''}}" />
@@ -97,10 +102,12 @@
 						<div class="form-group section-content hidden" data-key="info">
 							<h5>Summary</h5>
 							<div class="language-de">
-								<input class="form-control" name="summaryDE" value="{{ $article->summaryDE or '' }}" placeholder="Summary" />
+								<div class="epiceditor" data-markdown="summaryDE"></div>
+								<input id="summaryDE" name="summaryDE" class="hidden" value="{{ $article->markdown_summaryDE or '' }}" placeholder="Summary" />
 							</div>
 							<div class="language-en hidden">
-								<input class="form-control" name="summaryEN" value="{{ $article->summaryEN or '' }}" placeholder="Summary" />
+								<div class="epiceditor" data-markdown="summaryEN"></div>
+								<input id="summaryEN" name="summaryEN" class="hidden" value="{{ $article->markdown_summaryEN or '' }}" placeholder="Summary" />
 							</div>
 						
 							<h5>Spitzmarke</h5>
@@ -120,20 +127,24 @@
 						<a class="section-header" data-key="text"><h4>Einleitung</h4></a>
 						<div class="form-group section-content hidden" data-key="text">
 							<div class="language-de">
-								<textarea id="introductionDE" name="introductionDE" class="form-control textarea article__textarea" placeholder="Einleitung" >{{ $article->introductionDE or '' }}</textarea>	
+								<div class="epiceditor" data-markdown="introductionDE"></div>
+								<textarea id="introductionDE" name="introductionDE" class="hidden" placeholder="Einleitung" >{{ $article->markdown_introductionDE or '' }}</textarea>	
 							</div>
 							<div class="language-en hidden">
-								<textarea id="introductionEN" name="introductionEN" class="form-control textarea article__textarea" placeholder="Einleitung" >{{ $article->introductionEN or '' }}</textarea>	
+								<div class="epiceditor" data-markdown="introductionEN"></div>
+								<textarea id="introductionEN" name="introductionEN" class="hidden" placeholder="Einleitung" >{{ $article->markdown_introductionEN or '' }}</textarea>	
 							</div>
 						</div>
 
 						<a class="section-header" data-key="material"><h4>Used Material</h4></a>
 						<div class="form-group section-content hidden" data-key="material">
 							<div class="language-de">
-								<textarea id="used_materialDE" name="used_materialDE" class="form-control article__textarea" placeholder="Used Material" >{{ $article->used_materialDE or '' }}</textarea>	
+								<div class="epiceditor" data-markdown="used_materialDE"></div>
+								<textarea id="used_materialDE" name="used_materialDE" class="hidden" placeholder="Used Material" >{{ $article->markdown_used_materialDE or '' }}</textarea>	
 							</div>
 							<div class="language-en hidden">
-								<textarea id="used_materialEN" name="used_materialEN" class="form-control article__textarea" placeholder="Used Material" >{{ $article->used_materialEN or '' }}</textarea>	
+								<div class="epiceditor" data-markdown="used_materialEN"></div>
+								<textarea id="used_materialEN" name="used_materialEN" class="hidden" placeholder="Used Material" >{{ $article->markdown_used_materialEN or '' }}</textarea>	
 							</div>
 						</div>
 
@@ -153,21 +164,23 @@
 							
 							<h5>Biografie</h5>
 							<div class="language-de">
-								<textarea id="bio_textDE" name="bio_textDE" class="form-control textarea article__textarea" placeholder="Autor-Biografie" >{{ $article->bio_textDE or '' }}</textarea>	
+								<div class="epiceditor" data-markdown="bio_textDE"></div>
+								<textarea id="bio_textDE" name="bio_textDE" class="hidden" placeholder="Autor-Biografie" >{{ $article->markdown_bio_textDE or '' }}</textarea>	
 							</div>
 							<div class="language-en hidden">
-								<textarea id="bio_textEN" name="bio_textEN" class="form-control textarea article__textarea" placeholder="Autor-Biografie" >{{ $article->bio_textEN or '' }}</textarea>	
+								<div class="epiceditor" data-markdown="bio_textEN"></div>
+								<textarea id="bio_textEN" name="bio_textEN" class="hidden" placeholder="Autor-Biografie" >{{ $article->markdown_bio_textEN or '' }}</textarea>	
 							</div>
 						</div>
 
-						<a class="section-header" data-key="sections"><h3>Text</h3></a>
-						<div class="form-group section-content" data-key="sections">
+						<a class="section-header" data-key="sections"><h4>Text</h4></a>
+						<div class="form-group section-content hidden" data-key="sections">
 							<div class="language-de">
-								<div class="epiceditors" id="markdown-textDE"></div>
+								<div class="epiceditor" data-markdown="textDE"></div>
 								<textarea id="textDE" name="textDE" class="hidden" placeholder="Text" >{{ $article->editor_section_codeDE or '' }}</textarea>
 							</div>
 							<div class="language-en hidden">
-								<div class="epiceditors" id="markdown-textEN"></div>
+								<div class="epiceditor" data-markdown="textEN"></div>
 								<textarea id="textEN" name="textEN" class="hidden" placeholder="Text" >{{ $article->editor_section_codeEN or '' }}</textarea>	
 							</div>
 
@@ -176,8 +189,8 @@
 							@endif
 						</div>
 
-						<a class="section-header" data-key="links"><h3>Links</h3></a>
-						<div class="form-group section-content" data-key="links">
+						<a class="section-header" data-key="links"><h4>Links</h4></a>
+						<div class="form-group section-content hidden" data-key="links">
 							<div class="link-box">
 								@if(!$new)
 								@foreach ($links as $link)
@@ -198,8 +211,8 @@
 							<a class="add-link link-color__green"><i class="fa fa-plus"></i> hinzufügen</a>
 						</div>
 
-						<a class="section-header" data-key="booktips"><h3>Buchtipps</h3></a>
-						<div class="form-group section-content" data-key="booktips">
+						<a class="section-header" data-key="booktips"><h4>Buchtipps</h4></a>
+						<div class="form-group section-content hidden" data-key="booktips">
 							<div class="booktip-box">
 								@if(!$new)
 								@foreach ($booktips as $booktip)

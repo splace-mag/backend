@@ -97,7 +97,7 @@ class ArticleController extends Controller {
 	 */
 	public function saveArticle()
 	{
-		$article = Input::get('article');
+		$article = Request::input('article');
 		$id = $article['id'];
 		
 		if(Article::exists($article['id'])) {
@@ -106,10 +106,10 @@ class ArticleController extends Controller {
 		else {
 			$id = Article::createArticle($article);
 		}
-		Section::insertSections($id, Input::get('sectionsDE'), Input::get('sectionsEN'));
+		Section::insertSections($id, Request::input('sectionsDE'), Request::input('sectionsEN'));
 
 		Links::deleteLinksByArticle($id);
-		$links = Input::get('links');
+		$links = Request::input('links');
 		if($links != 0) {
 			foreach ($links as $link) {
 				Links::createLink($link, $id);
@@ -117,7 +117,7 @@ class ArticleController extends Controller {
 		}
 
 		Booktips::deleteBooktipsByArticle($id);
-		$booktips = Input::get('booktips', 0);
+		$booktips = Request::input('booktips', 0);
 		if($booktips != 0) {
 			foreach ($booktips as $booktip) {
 				Booktips::createBooktip($booktip, $id);
@@ -141,7 +141,7 @@ class ArticleController extends Controller {
 
 	public function sortArticles() 
 	{
-		$articles = Input::get('articles');
+		$articles = Request::input('articles');
 
 		if(count($articles) > 0) {
 			foreach($articles as $article) {

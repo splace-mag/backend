@@ -57,7 +57,7 @@ class MagazinesController extends Controller {
 	}
 
 	public function saveMagazine($id) {
-		$magazine = Input::get('magazine');
+		$magazine = Request::input('magazine');
 
 		if($magazine['id'] == '-1') {
 			Magazines::createMagazine($magazine);
@@ -74,7 +74,7 @@ class MagazinesController extends Controller {
 	}
 
 	public function setMagazine() {
-		$active = Input::get('active', 'active');
+		$active = Request::input('active', 'active');
 		Session::put('active', $active);
 
 		return response()->json(['success' => 'true']);

@@ -15,32 +15,31 @@
 			<div class="splace-article-header__marker">{{$article->spitzmarke}}</div>
 			<div class="splace-article-header__marker annotated">Reading: {{$article->reading_time}} min</div>
 			<span class="splace-article-header__author">@if($language == 'de') von @else from @endif <strong>{{$article->author_name}}</strong></span>
-			<div class="splace-qarticle-header__marker down">^ swipe up</div>
+			<div class="splace-article-header__marker down">^ swipe up</div>
 
-			<h1 style="right: 5%; bottom: 30%;">
+			<h1 style="right: -12%; bottom: 31%;">
 				@if($language == 'de')
 					{{$article->page_titleDE}}
 				@else
 					{{$article->page_titleEN}}
-				@endif
-			</h1>
-			<h2 style="right: 0%; bottom: 56%;">
+				@endif</h1>
+			<h2 style="right: 0%; bottom: 17%;">
 				@if($language == 'de')
 					{{$article->page_sub_titleDE}}
 				@else
 					{{$article->page_sub_titleEN}}
 				@endif
 			</h2>
-			<img src="/images/{{$article->cover_image}}" alt="" style="width: 70%; left: 0; top: 10%;">
+			@if($article->cover_image) <img src="/images/{{$article->cover_image}}" alt="" style="width: 70%; left: 0; top: 10%;"> @endif
 		</div>
 
 		<div class="splace-paragraph">
 			<div class="splace-paragraph__text splace-paragraph__text--heading">
 				<p>
 				@if($language == 'de')
-					{{{$article->introductionDE}}}
+					{!!$article->introductionDE!!}
 				@else
-					{{{$article->introductionEN}}}
+					{!!$article->introductionEN!!}
 				@endif
 				</p>
 			</div>
@@ -58,7 +57,7 @@
 					  </a>
 
 					  <div class="bd">
-					    {{$c->text}}
+					    {!!$c->text!!}
 					  </div>
 
 					</div>
@@ -67,9 +66,9 @@
 			</div>
 			<div class="splace-paragraph__text">
 				@if($language == 'de')
-					{{{$section->textDE}}}
+					{!!$section->textDE!!}
 				@else
-					{{{$section->textEN}}}
+					{!!$section->textEN!!}
 				@endif
 			</div>
 			<div class="splace-paragraph__annotation">
@@ -97,26 +96,26 @@
 			</div>
 
 			<div class="splace-paragraph__books">
-				<span>Buchtipp</span>
+				<span>@if($language == 'de') Buchtipp @else Booktip @endif</span>
 
 				@foreach($booktips as $booktip) 
 				<span>
 				@if($language == 'de') 
-					{{{$booktip->textDE}}}
+					{!!$booktip->textDE!!}
 				@else
-					{{{$booktip->textEN}}}
+					{!!$booktip->textEN!!}
 				@endif
 				</span>
 				@endforeach
 			</div>
 
 			<div class="splace-paragraph__author">
-				<img src="/images/{{$article->bio_image}}" alt="">
+				@if($article->bio_image) <img src="/images/{{$article->bio_image}}" alt=""> @endif
 				<span>
 				@if($language == 'de') 
-					{{{$article->bio_textDE}}}
+					{!!$article->bio_textDE!!}
 				@else
-					{{{$article->bio_textEN}}}
+					{!!$article->bio_textEN!!}
 				@endif
 				</span>
 			</div>
@@ -131,11 +130,13 @@
 			</div>
 			<p class="splace-paragraph__usages">
 				<span>MATERIAL USED IN THIS ARTICLE</span>
+				X
 				@if($language == 'de')
-					{{{$article->used_materialDE}}}
+					{!!$article->used_materialDE!!}
 				@else
-					{{{$article->used_materialEN}}}
+					{!!$article->used_materialEN!!}
 				@endif
+				X
 			</p>
 		</div>
 
@@ -155,7 +156,7 @@
 		</nav>
 		<div class="splace-footer">
 			<div class="splace-issue-selection">
-				<span class="splace-issue-selection__current">Issue #2</span>
+				<span class="splace-issue-selection__current">#{{$magazine->version}}</span>
 				<ul class="splace-issue-selection__list"></ul>
 			</div>
 			<div class="splace-navigation-trigger">
@@ -163,33 +164,24 @@
 			</div>
 			<div class="splace-footer-links">
 				<a @if($language == 'de') href="/locale/en" @else href="/locale/de" @endif class="splace-language-switcher splace-footer-links__item">@if($language == 'de') EN @else DE @endif</a>
-				<a href="#" class="splace-footer-links__item">INFO</a>
-				<div class="splace-footer-links__item">
-					<a href="https://vimeo.com/splace"><i class="icon-vimeo" target="_blank"></i></a>
-					<a href="https://www.facebook.com/SplaceMagazine"><i class="icon-facebook" target="_blank"></i></a>
-					<a href="mailto: redaktion@splace-magazine.at"><i class="icon-mail" target="_blank"></i></a>
+				<a href="/imprint" class="splace-footer-links__item">INFO</a>
+				<div class="splace-footer-links__item splace-external-links__wrapper">
+					<i class="icon-external-link"></i>
+					<ul class="splace-external-links__list">
+						<li><a href="#"><i class="icon-vimeo"></i></a></li>
+						<li><a href="https://www.facebook.com/SplaceMagazine" target="_blank"><i class="icon-facebook"></i></a></li>
+						<li><a href="mailto:redaktion@splace-magazine.at" target="_blank"><i class="icon-mail"></i></a></li>
+					</ul>
 				</div>
-				<a href="#" class="splace-footer-links__item">?</a>
+				<a href="/help" class="splace-footer-links__item">?</a>
 			</div>
 		</div>
 	</div>
 
+
 	
 	<script type="text/javascript">
-		var splaceConfig = {
-			issueList: [
-				{name: 'Issue #1', url: '#'}
-			],
-			navigationItems: [
-				{url: '/splace.html', title: 'Cover', subtitle: ''},
-				{url: '/dummyPage.html', title: 'Inhaltsverzeichnis', subtitle: 'Index'},
-				{url: '/dummyPage2.html', title: 'Editorial', subtitle: 'Editorial'},
-				{url: '#', title: 'Staging Knowledge', subtitle: '1'},
-				{url: '#', title: 'Flock, Bernd Oppl', subtitle: '2'},
-				{url: '#', title: 'Raum ist Rahmen <br>für Inhalte.', subtitle: '3'},
-				{url: '#', title: 'Titel für einen Beitrag <br>hier geschrieben.', subtitle: '4'}
-			]
-		}
+		var splaceConfig = <?php echo($navigation); ?>
 	</script>
 	
 	<script type="text/javascript" src="/js/jquery.min.js"></script>

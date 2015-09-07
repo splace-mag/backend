@@ -36,23 +36,28 @@ class CreateArticlesTable extends Migration {
 			$table->string('gradient_1');
 			$table->string('gradient_2');
 			$table->string('link_color');
+			$table->string('subtitle_backgroundcolor');
 			$table->text('introductionDE');
 			$table->text('introductionEN');
-			$table->text('h2DE');
-			$table->text('h2EN');
-			$table->text('h3DE');
-			$table->text('h3EN');
+			$table->text('markdown_introductionDE');
+			$table->text('markdown_introductionEN');
+			$table->text('summaryDE');
+			$table->text('summaryEN');
+			$table->text('markdown_summaryDE');
+			$table->text('markdown_summaryEN');
 			$table->string('author_name');
 			$table->string('bio_image');
 			$table->string('bio_image_name');
 			$table->text('bio_textDE');
 			$table->text('bio_textEN');
-
+			$table->text('markdown_bio_textDE');
+			$table->text('markdown_bio_textEN');
 			$table->text('used_materialDE');
 			$table->text('used_materialEN');
+			$table->text('markdown_used_materialDE');
+			$table->text('markdown_used_materialEN');
 			$table->text('editor_section_codeDE');
 			$table->text('editor_section_codeEN');
-
 			$table->timestamps();
 		});
 	}

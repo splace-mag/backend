@@ -1,4 +1,4 @@
-var editorDE, editorEN, count, linkCount = 1, booktipCount = 1;
+var el, editor = {}, sectionsDE, sectionsEN, count, linkCount = 1, booktipCount = 1;
 
 function editorLanguageSwitch(add, remove) {
 	$('#language-switch--'+remove).removeClass('active');
@@ -10,11 +10,17 @@ function editorLanguageSwitch(add, remove) {
 function changeLanguage() {
 	$('#language-switch--de').on('click', function() {
 		editorLanguageSwitch('de', 'en');
-		editorDE.reflow();
+
+	    for (var i = 0; i < el.length; i++) {
+	    	editor[i].reflow();
+	    }
 	});
 	$('#language-switch--en').on('click', function() {
 		editorLanguageSwitch('en', 'de');
-		editorEN.reflow();
+		
+		for (var i = 0; i < el.length; i++) {
+	    	editor[i].reflow();
+	    }
 	});
 }
 
@@ -22,7 +28,7 @@ function parseSections(text) {
 	var sections = {};
 	text = text.replace(/<p>/g, '');
 	text = text.replace(/<\/p>/g, '');
-	console.log(text);
+
 	var parts = text.split('[--');
 
 	i = 0;
@@ -58,20 +64,21 @@ function saveArticle(e) {
 		'page_sub_title_padding_left': $('[name="page_sub_title_padding_left"]').val(), 
 		'page_sub_title_padding_top': $('[name="page_sub_title_padding_top"]').val(), 
 		'reading_time': $('[name="reading_time"]').val(),  
-		'introductionDE': $('[name="introductionDE"]').val(), 
-		'introductionEN': $('[name="introductionEN"]').val(), 
-		'summaryDE': $('[name="summaryDE"]').val(), 
-		'summaryEN': $('[name="summaryEN"]').val(), 
+		'markdown_introductionDE': $('[name="introductionDE"]').val(), 
+		'markdown_introductionEN': $('[name="introductionEN"]').val(), 
+		'markdown_summaryDE': $('[name="summaryDE"]').val(), 
+		'markdown_summaryEN': $('[name="summaryEN"]').val(), 
 		'editor_section_codeDE': $('[name="textDE"]').val(), 
 		'editor_section_codeEN': $('[name="textEN"]').val(), 
 		'author_name': $('[name="author_name"]').val(), 
-		'bio_textDE': $('[name="bio_textDE"]').val(), 
-		'bio_textEN': $('[name="bio_textEN"]').val(), 
-		'used_materialDE': $('[name="used_materialDE"]').val(), 
-		'used_materialEN': $('[name="used_materialEN"]').val(), 
+		'markdown_used_materialDE': $('[name="used_materialDE"]').val(), 
+		'markdown_used_materialEN': $('[name="used_materialEN"]').val(), 
+		'markdown_bio_textDE': $('[name="bio_textDE"]').val(), 
+		'markdown_bio_textEN': $('[name="bio_textEN"]').val(), 
 		'gradient_1': $('[name="gradient_1"]').val(), 
 		'gradient_2': $('[name="gradient_2"]').val(), 
 		'link_color': $('[name="link_color"]').val(), 
+		'subtitle_backgroundcolor': $('[name="subtitle_backgroundcolor"]').val(), 
 		'cover_image_padding_left': $('[name="cover_image_padding_left"]').val(), 
 		'cover_image_padding_top': $('[name="cover_image_padding_top"]').val()
 	};
@@ -101,14 +108,43 @@ function saveArticle(e) {
 		};
 	});
 	
+	for (var i = 0; i < el.length; i++) {
+		editor[i].preview();
+		editor[i].edit();
 
-	editorDE.preview();
-	var sectionsDE = editorDE.getElement('previewer');
-	sectionsDE = parseSections($(sectionsDE).find('#epiceditor-preview').html());
-
-	editorEN.preview();
-	var sectionsEN = editorEN.getElement('previewer');
-	sectionsEN = parseSections($(sectionsEN).find('#epiceditor-preview').html());
+		var element = editor[i].getElement('container');
+		if($(element).attr('data-markdown') == 'textDE') {
+			sectionsDE = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html());
+		}
+		else if($(element).attr('data-markdown') == 'textEN') {
+			sectionsEN = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html());
+		}
+		else if($(element).attr('data-markdown') == 'introductionDE') {
+			article['introductionDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+		}
+		else if($(element).attr('data-markdown') == 'introductionEN') {
+			article['introductionEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+		}
+		else if($(element).attr('data-markdown') == 'summaryDE') {
+			article['summaryDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+		}
+		else if($(element).attr('data-markdown') == 'summaryEN') {
+			article['summaryEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+		}
+		else if($(element).attr('data-markdown') == 'used_materialDE') {
+			article['used_materialDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+		}
+		else if($(element).attr('data-markdown') == 'used_materialEN') {
+			article['used_materialEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+		}
+		else if($(element).attr('data-markdown') == 'bio_textDE') {
+			article['bio_textDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+		}
+		else if($(element).attr('data-markdown') == 'bio_textEN') {
+			article['bio_textEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+		}
+		
+    }
 
 	var cover_file = $('#cover_image')[0].files[0];
 	var bio_file = $('#bio_image')[0].files[0];
@@ -153,21 +189,26 @@ function saveSection(e) {
 		'id': $('[name="id"]').val(), 
 		'noteDE': $('[name="noteDE"]').val(), 
 		'noteEN': $('[name="noteEN"]').val(), 
-		'media_type': $('#media-type-select option:selected').val()
+		'media_type': 'multiple'
 	};
 
 	var media = false;
 	formdata = new FormData();
 
-	if($('#media-type-select option:selected').val() == 'image' && $('#media-file-image')[0].files[0] != undefined) {
+	if($('#media-file-image')[0].files[0] != undefined) {
 		formdata.append("media-file-image", $('#media-file-image')[0].files[0]);
 		media = 'image';
 	}
-	else if($('#media-type-select option:selected').val() == 'video' && $('#media-file-video')[0].files[0] != undefined) {
-		formdata.append("media-file-video", $('#media-file-video')[0].files[0]);
-		media = 'video';
+	else if($('[name="media-youtube-video"]').val() != '') {
+		console.log("."+$('#media-youtube-video').val()+".");
+		formdata.append("media-youtube-video", $('[name="media-youtube-video"]').val());
+		media = 'youtube-video';
 	}
-	else if($('#media-type-select option:selected').val() == 'gallery' && $('#media-file-image-multiple')[0].files[0] != undefined) {
+	else if($('#media-vimeo-video') != '') {
+		formdata.append("media-youtube-video", $('[name="media-vimeo-video"]').val());
+		media = 'vimeo-video';
+	}
+	else if($('#media-file-image-multiple')[0].files[0] != undefined) {
 		formdata.append('media-file-image-cover', $('#media-file-image-cover')[0].files[0]);
 
 		i = 0;
@@ -181,7 +222,6 @@ function saveSection(e) {
 	}
 		
 	if(media != 'false') {
-		formdata.append("media_type", media);
         formdata.append("_token", token);
 
 	    $.ajax({
@@ -281,19 +321,17 @@ function epiceditor() {
 	    base: '/themes/base/epiceditor.css',
 	    editor: '/themes/editor/epic-dark.css'
 	  },
-	  clientSideStorage: false
+	  clientSideStorage: false, 
+	  focusOnLoad: false
 	}
 
-	//Initiate Markdown Editor #1 German
-	editorDE = new EpicEditor(opts);
-	editorDE.load();
-
-	opts['container'] = 'markdown-textEN';
-	opts['textarea'] = 'textEN';
-
-	//Initiate Markdown Editor #2 English
-	editorEN = new EpicEditor(opts);
-	editorEN.load();
+	el = document.getElementsByClassName('epiceditor');
+    for (var i = 0; i < el.length; i++) {
+    	opts.container = el[i];
+    	opts.localStorageName = 'epiceditor-' + i;
+    	opts.textarea = $(el[i]).attr('data-markdown');
+    	editor[i] = new EpicEditor(opts).load();
+    }
 }
 
 function addLinkContent() {
@@ -365,6 +403,9 @@ function initializeForms() {
 
 		$('.show-sections').click(function() {
 			$('.section-content').removeClass('hidden');
+			for (var i = 0; i < el.length; i++) {
+		    	editor[i].reflow();
+		    }
 		})
 		$('.section-header').click(function() {
 			var section = $(this).attr('data-key');
@@ -374,6 +415,10 @@ function initializeForms() {
 			else {
 				$('.section-content[data-key="'+section+'"]').addClass('hidden');
 			}
+
+			for (var i = 0; i < el.length; i++) {
+		    	editor[i].reflow();
+		    }
 		});
 
 		if($('.link-input').val() != undefined) {
@@ -388,6 +433,7 @@ function initializeForms() {
 		$('.add-booktip').on('click', addBooktipContent);
 		valueInput('booktip');
 	}
+	/*
 	else if($('form').hasClass('section-editor-form')) {
 		$('#media-type-select').change(function() { 
 			var selected = $('#media-type-select option:selected').val();
@@ -395,6 +441,7 @@ function initializeForms() {
 			$('#media-'+selected).removeClass('hidden');
 		});
 	}
+	*/
 	else if($('form').hasClass('magazine-form')) {
 		$('#active-magazine').change(function() { 
 			setActiveMagazine();
