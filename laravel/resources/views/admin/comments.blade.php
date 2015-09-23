@@ -25,39 +25,38 @@
 				</div>
 
 				<div class="panel-body">
-					<ul class="sections">
-						@foreach ($comments as $comment)
-						<a href="/admin/comments/{{ $comment->comment_id }}">
-						<li>
-							<div class="col-xs-4">{{ $comment->name }}</div>
-							<div class="col-xs-4">{{ $comment->titleDE }} | {{ $comment->key }}</div>
-							<div class="col-xs-2">
-								@if( $comment->marked == true) 
-									Ja
-								@else
-									Nein
-								@endif	
-							</div>
-							<div class="col-xs-2"><a class="article-delete link-color__red" href="/admin/comments/delete/{{ $comment->comment_id }}"><i class="fa fa-times"></i> Löschen</a></div>
-						</li>
-						</a>
-						@endforeach
-
-						<li class="important">
-							<div class="col-xs-4 col-xs-push-4 article-pagination">
-							@if ( $comments->currentPage() > 1 )
-							<a class="show-prev-page" href="{{ $comments->previousPageUrl() }}"><i class="fa fa-chevron-left fa-2x"></i></a>
-							@endif
+					<div class="form">
+						<table class="comment-table">
+							<tbody>
+							@foreach ($comments as $comment)
+								<tr>
+									<td class="col-xs-4">{{ $comment->name }}</td>
+									<td class="col-xs-4"><a href="/admin/comments/{{ $comment->comment_id }}">{{ $comment->titleDE }} | {{ $comment->key }}</a></td>
+									<td class="col-xs-2">
+										@if ( $comment->marked == 1)
+										<input name="marked-{{$comment->comment_id}}" type="checkbox" checked disabled/>
+										@else
+										<input name="marked-{{$comment->comment_id}}" type="checkbox" disabled/>
+										@endif
+									</td>
+									<td class="col-xs-2"><a class="article-delete link-color__red" href="/admin/comments/delete/{{ $comment->comment_id }}"><i class="fa fa-times"></i> Löschen</a></td>
+								</tr>
+							@endforeach
+							</tbody>
+						</table>
 							
-							<span class="article-counter">Seite {{ $comments->currentPage() }} von {{ $comments->lastPage() }}</span>
-							
-							@if ( $comments->hasMorePages() )
-							<a class="show-next-page" href="{{ $comments->nextPageUrl() }}"><i class="fa fa-chevron-right fa-2x"></i></a>
-							@endif
-							</div>
-						</li>
-
-					</ul>
+						<div class="col-xs-4 col-xs-push-4 article-pagination">
+						@if ( $comments->currentPage() > 1 )
+						<a class="show-prev-page" href="{{ $comments->previousPageUrl() }}"><i class="fa fa-chevron-left fa-2x"></i></a>
+						@endif
+						
+						<span class="article-counter">Seite {{ $comments->currentPage() }} von {{ $comments->lastPage() }}</span>
+						
+						@if ( $comments->hasMorePages() )
+						<a class="show-next-page" href="{{ $comments->nextPageUrl() }}"><i class="fa fa-chevron-right fa-2x"></i></a>
+						@endif
+						</div>
+					</div>
 				</div>
 			</div>
 

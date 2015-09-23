@@ -9,6 +9,7 @@ use App\Splace\Article;
 use App\Splace\Comments;
 use App\Splace\Magazines;
 use App\User;
+use Request;
 
 class AdminController extends Controller {
 

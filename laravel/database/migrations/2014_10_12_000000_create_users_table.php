@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 60);
 			$table->string('picture', 255);
 			$table->boolean('is_admin')->default(false);
+			$table->string('fb_token', 255);
 			$table->rememberToken();
 			$table->timestamps();
 		});

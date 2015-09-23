@@ -6,12 +6,22 @@ Author: Lukas Leitner
 
 var splaceCommentController = (function() {
 
+	function getCommentHTML(comment, tmpId) {
+
+		return '<div class="splace-paragraph__comment" data-comment-id="'+tmpId+'"><div class="media attribution"><div class="img"><img src="'+splaceUserController.getImageUrl()+'" alt="me" /></div><div class="bd"><span class="splace-paragraph__comment-author">'+splaceUserController.getUserName()+'</span><span class="splace-paragraph__comment-time"></span></div><p>'+comment+'</p></div></div>'
+	}
+
 	//Returns a temporary commentId
-	function addComment(paragraphId, comment) {
+	function addComment(paragraphId, comment, $target) {
 
 		var tmpCommentId = 'cTmp'+new Date().getTime();
 
-		$.post('/addComment', {paragraphId: paragraphId, comment: comment})
+		var html = getCommentHTML(comment, tmpCommentId);
+		$lastComment = $target.parents('.splace-paragraph__comments').find('.splace-paragraph__comment').last();
+
+		$(html).insertAfter($lastComment);
+
+		$.post('/addComment', {paragraphId: paragraphId, comment: comment, _token: splaceConfig.token})
 			.done(function(response) {
 				$('[data-comment-id="'+tmpCommentId+'"]').attr('data-comment-id', response.commentId);
 			})
@@ -33,11 +43,43 @@ var splaceCommentController = (function() {
 			});
 	}
 
+	function submitComment(e) {
+		e.preventDefault();
+		$target = $(e.target);
 
+		var comment = $target.find('textarea').val();
+		var paragraphId = $target.find('input[type="hidden"]').val();
+
+		$target.find('textarea').val('');
+
+		addComment(paragraphId, comment, $target);
+		disableCommentInput($target);
+
+	}
+
+	function enableCommentInput(e) {
+		e.stopPropagation();
+		var $target = $(e.target);
+		$target.siblings('form').unbind('submit');
+		$target.siblings('form').addClass('active').on('submit', submitComment);
+		$target.addClass('hidden');
+	}
+
+	function disableCommentInput($target) {
+		$target.removeClass('active');
+		$target.siblings('span').removeClass('hidden');
+	}
+
+	function init() {
+		$('body').on('click, touchend', '.splace-paragraph__comment-add', enableCommentInput);
+	}
+
+	init();
 
 	return {
 		addComment: addComment,
-		deleteComment: deleteComment
+		deleteComment: deleteComment,
+		enableCommentInput: enableCommentInput
 	}
 
 })();

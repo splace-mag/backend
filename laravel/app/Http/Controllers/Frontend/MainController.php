@@ -26,7 +26,7 @@ class MainController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index($magazineid)
+	public function index($magazineid = -1)
 	{		
 		$this->setMagazine($magazineid);
 		return view('frontend/splace')
@@ -90,9 +90,17 @@ class MainController extends Controller {
 			}
 		}
 
+		$user = \Auth::user();
+		$userData = '';
+		if($user) {
+			$userData = "user: {id: ".$user->id.", name: '".$user->name."', email: '".$user->email."', image: '".$user->picture."'}";
+		}
+
 		$list = "{ 
 				issueList: [".$magazineList."], 
-				navigationItems: [".$articleList."]
+				navigationItems: [".$articleList."], 
+				token: '".Session::token()."', 
+				".$userData."
 				}";
 
 		return $list;

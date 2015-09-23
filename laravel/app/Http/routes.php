@@ -17,8 +17,8 @@
 | Main Routes
 |
 */
-Route::get('/', 'WelcomeController@index');
-Route::get('home', 'WelcomeController@index');
+Route::get('/', 'Frontend\MainController@index');
+Route::get('home', 'Frontend\MainController@index');
 Route::get('locale/{lang}', 'Auth\AccountController@changeLocale');
 
 /*
@@ -30,6 +30,11 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::post('signin', 'Auth\AccountController@authenticate');
+Route::post('register', 'Auth\AccountController@register');
+Route::post('profile', 'Auth\AccountController@editProfile');
+Route::get('signout', 'Auth\AccountController@logout');
 
 Route::get('facebook', 'Auth\AccountController@redirectToFacebook');
 Route::get('account/facebook', 'Auth\AccountController@facebookLogin');
@@ -94,12 +99,19 @@ Route::post('user', 'UserController@saveUser');
 
 /*
 |
+| Comment Routes
+|
+*/
+Route::post('addComment', 'Frontend\CommentController@addComment');
+
+/*
+|
 | Magazine Routes
 |
 */
 //Route::get('/', 'Frontend\ArticleController@index');
+Route::get('{magazineid?}/splace', 'Frontend\MainController@index');
 Route::get('{magazineid}/article/{number}', 'Frontend\ArticleController@showArticle');
-Route::get('{magazineid}/splace', 'Frontend\MainController@index');
 Route::get('{magazineid}/content', 'Frontend\MainController@showContents');
 Route::get('{magazineid}/editorial', 'Frontend\MainController@showEditorial');
 Route::get('help', 'Frontend\MainController@showHelpPage');

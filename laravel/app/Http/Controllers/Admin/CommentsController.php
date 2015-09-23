@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Contracts\Auth\Registrar;
 use App\Splace\Comments;
+use Request;
 
 class CommentsController extends Controller {
 

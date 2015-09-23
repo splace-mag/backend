@@ -24,8 +24,8 @@
 				
 				<div class="panel-heading">
 					<div class="col-xs-4">User</div>
-					<div class="col-xs-4">Absatz</div>
-					<div class="col-xs-2">Veröffentlichen</div>
+					<div class="col-xs-4">Artikel/ Absatz</div>
+					<div class="col-xs-2">Veröffentlicht</div>
 				</div>
 
 				<div class="panel-body">
@@ -38,9 +38,9 @@
 									<td class="col-xs-4"><a href="/admin/comments/{{ $comment->comment_id }}">{{ $comment->titleDE }} | {{ $comment->key }}</a></td>
 									<td class="col-xs-2">
 										@if ( $comment->marked == 1)
-										<input name="marked-{{$comment->comment_id}}" type="checkbox" checked/>
+										<input name="marked-{{$comment->comment_id}}" type="checkbox" checked disabled/>
 										@else
-										<input name="marked-{{$comment->comment_id}}" type="checkbox"/>
+										<input name="marked-{{$comment->comment_id}}" type="checkbox" disabled/>
 										@endif
 									</td>
 									<td class="col-xs-2"><a class="article-delete link-color__red" href="/admin/comments/delete/{{ $comment->comment_id }}"><i class="fa fa-times"></i> Löschen</a></td>

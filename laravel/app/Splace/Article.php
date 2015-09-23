@@ -116,8 +116,8 @@ class Article extends Model implements AuthenticatableContract {
 			'markdown_used_materialEN' => $article['markdown_used_materialEN'], 
 			'cover_image_padding_left' => $article['cover_image_padding_left'], 
 			'cover_image_padding_top' => $article['cover_image_padding_top'], 
-			'created_at' => new Carbon, 
-			'updated_at' => new Carbon]);
+			'created_at' => Carbon::now(), 
+			'updated_at' => Carbon::now()]);
 	}
 
 	public static function editArticle($article) {
@@ -160,7 +160,7 @@ class Article extends Model implements AuthenticatableContract {
 				'markdown_used_materialEN' => $article['markdown_used_materialEN'], 
 				'cover_image_padding_left' => $article['cover_image_padding_left'], 
 				'cover_image_padding_top' => $article['cover_image_padding_top'], 
-				'updated_at' => new Carbon]);
+				'updated_at' => Carbon::now()]);
 	}
 
 	public static function deleteArticle($id) {

@@ -49,7 +49,7 @@ class Comments extends Model implements AuthenticatableContract {
 			->join('articles', 'comments.article_id', '=', 'articles.article_id')
 			->join('sections', 'comments.section_id', '=', 'sections.section_id')
 			->join('users', 'comments.user_id', '=', 'users.id')
-			->select('comments.comment_id', 'users.name', 'articles.article_id', 'articles.titleDE', 'sections.section_id', 'sections.key', 'comments.user_id', 'comments.text', 'comments.read', 'comments.marked')
+			->select('comments.comment_id', 'users.name', 'articles.article_id', 'articles.titleDE', 'sections.section_id', 'sections.key', 'comments.user_id', 'comments.text', 'comments.read', 'comments.marked', 'comments.created_at')
 			->paginate(15);
 	}
 
@@ -57,7 +57,7 @@ class Comments extends Model implements AuthenticatableContract {
 		return Comments::where('comments.section_id', '=', $section_id)
 			->where('comments.marked', '1')
 			->join('users', 'comments.user_id', '=', 'users.id')
-			->select('comments.comment_id', 'users.name', 'comments.user_id', 'comments.text')
+			->select('comments.comment_id', 'users.name', 'users.picture', 'comments.user_id', 'comments.text', 'comments.created_at')
 			->get();
 	}
 	
@@ -70,11 +70,14 @@ class Comments extends Model implements AuthenticatableContract {
 
 
 	public static function createComment($comment) {
-		Comments::insert([
+		$articleId = \DB::table('sections')->where('section_id', $comment['section_id'])->select('article_id')->first()->article_id;
+
+		return Comments::insertGetId([
 			'user_id' => $comment['user_id'], 
 			'section_id' => $comment['section_id'], 
+			'article_id' => $articleId, 
 			'text' => $comment['text'], 
-			'created_at' => new Carbon]);
+			'created_at' => Carbon::now()]);
 	}
 
 	public static function editComment($comment) {
@@ -82,14 +85,14 @@ class Comments extends Model implements AuthenticatableContract {
 			->update([
 				'section_id' => $comment['section_id'], 
 				'text' => $comment['text'], 
-				'updated_at' => new Carbon]);
+				'updated_at' => Carbon::now()]);
 	}
 
 	public static function markRead($id) {
 		Comments::where('comment_id', $id)
 			->update([
 				'read' => '1', 
-				'updated_at' => new Carbon]);
+				'updated_at' => Carbon::now()]);
 	}
 
 	public static function markPublic($comment) {

@@ -46,7 +46,8 @@ class ArticleController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{		$article = Article::getAll(Session::get('active'));
+	{		
+		$article = Article::getAll(Session::get('active'));
 		if(count($article) == '0') {
 			$warning = 'noarticleexists';
 		}

@@ -94,7 +94,7 @@ class Section extends Model implements AuthenticatableContract {
 				'noteDE' => $section['noteDE'], 
 				'noteEN' => $section['noteEN'], 
 				'media_type' => 'multiple',
-				'updated_at' => new Carbon]);
+				'updated_at' => Carbon::now()]);
 	}
 
 	public static function deleteSection($section_id) {
