@@ -70,8 +70,10 @@ var splaceUserController = (function() {
 						success: false,
 						error: response.error
 					});
+					return;
 				}
 
+				$('body').addClass('loggedin');
 				loggedin = true;
 				user = response.user;
 
@@ -96,6 +98,7 @@ var splaceUserController = (function() {
 		$.post('/signout', {})
 			.done(function(response) {
 				loggedin = false;
+				$('body').removeClass('loggedin');
 				user.id = '';
 				user.name = '';
 				user.email = '';
@@ -307,6 +310,7 @@ var splaceUserController = (function() {
 			formData.append('password', password);
 		}
 		formData.append('_token', splaceConfig.token);
+		formData.append('id', user.id);
 
 		$.ajax({
 			url: '/profile',
@@ -356,6 +360,7 @@ var splaceUserController = (function() {
 		user.image = splaceConfig.user.image;
 
 		loggedin = true;
+		$('body').addClass('loggedin');
 	}
 
 	init();

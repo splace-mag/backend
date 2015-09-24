@@ -84,6 +84,7 @@
 
 				<div class="splace-paragraph__comment-note">Note</div>
 				<div class="splace-paragraph__comment-add-note-wrapper">
+					<span class="splace-add-comment-notice">Danke für Ihre Anmerkung!<br>Bevor diese veröffentlicht wird muss sie noch von einem unserer Mitarbeiter geprüft werden.</span>
 					<span class="splace-paragraph__comment-add splace-color">@if($language == 'de') Kommentar hinterlassen @else Leave a comment @endif</span>
 					<form name="splace-add-comment-form" class="splace-paragraph__comment-form">
 						<span> @if($language == 'de') Ihre Anmerkung @else Your comment @endif </span>
