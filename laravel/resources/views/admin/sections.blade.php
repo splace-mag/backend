@@ -19,9 +19,10 @@
 				<div class="panel-heading">Absätze</div>
 
 				<div class="panel-body">
-					<ul class="sections">
+					<div id="_token" class="hidden">{{{ csrf_token() }}}</div>
+					<ul class="sections sortable" id="section-list">
 						@foreach ($sections as $section)
-						<li>
+						<li id="{{$section->section_id}}" number="{{$section->number}}">
 							<a href="/admin/sections/{{ $section->section_id }}">{{ $section->titleDE }} > {{ $section->key }}</a>
 							<a class="article-delete link-color__red" href="/admin/sections/delete/{{ $section->section_id }}"><i class="fa fa-times"></i> Löschen</a>
 						</li>

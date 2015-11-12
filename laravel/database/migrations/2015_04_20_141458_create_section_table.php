@@ -18,6 +18,7 @@ class CreateSectionTable extends Migration {
 			$table->integer('magazine_id');
 			$table->integer('article_id');
 			$table->string('key');
+			$table->integer('number');
 			$table->text('textDE');
 			$table->text('textEN');
 			$table->text('noteDE');

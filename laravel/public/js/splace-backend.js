@@ -75,6 +75,8 @@ function saveArticle(e) {
 		'markdown_used_materialEN': $('[name="used_materialEN"]').val(), 
 		'markdown_bio_textDE': $('[name="bio_textDE"]').val(), 
 		'markdown_bio_textEN': $('[name="bio_textEN"]').val(), 
+		'bio_text_shortDE': $('[name="bio_text_shortDE"]').val(), 
+		'bio_text_shortEN': $('[name="bio_text_shortEN"]').val(), 
 		'gradient_1': $('[name="gradient_1"]').val(), 
 		'gradient_2': $('[name="gradient_2"]').val(), 
 		'link_color': $('[name="link_color"]').val(), 
@@ -193,49 +195,45 @@ function saveSection(e) {
 	};
 
 	var media = false;
-	formdata = new FormData();
 
-	if($('#media-file-image')[0].files[0] != undefined) {
+	if($('[name="media-file-image"]')[0].files[0] != undefined) {
+		formdata = new FormData();
 		formdata.append("media-file-image", $('#media-file-image')[0].files[0]);
 		media = 'image';
+		uploadMedia(section, formdata, media, token);
 	}
-	else if($('[name="media-youtube-video"]').val() != '') {
-		console.log("."+$('#media-youtube-video').val()+".");
+	if($('[name="media-youtube-video"]').val() != '') {
+		formdata = new FormData();
 		formdata.append("media-youtube-video", $('[name="media-youtube-video"]').val());
 		media = 'youtube-video';
+		uploadMedia(section, formdata, media, token);
 	}
-	else if($('#media-vimeo-video') != '') {
-		formdata.append("media-youtube-video", $('[name="media-vimeo-video"]').val());
+	if($('[name="media-vimeo-video"]') != '') {
+		formdata = new FormData();
+		formdata.append("media-vimeo-video", $('[name="media-vimeo-video"]').val());
 		media = 'vimeo-video';
+		uploadMedia(section, formdata, media, token);
 	}
-	else if($('#media-file-image-multiple')[0].files[0] != undefined) {
+	if($('[name="media-file-image-cover"]') != '') {
+		formdata = new FormData();
 		formdata.append('media-file-image-cover', $('#media-file-image-cover')[0].files[0]);
-
+		media = 'gallery';
+		uploadMedia(section, formdata, media, token);
+	}
+	if($('[name="media-file-image-multiple"]')[0].files[0] != undefined) {
+		formdata = new FormData();
 		i = 0;
-		for(file in $('#media-file-image-multiple')[0].files) {
+		for(file in $('[name="media-file-image-multiple"]')[0].files) {
 			formdata.append('media-file-gallery-'+i, $('#media-file-image-multiple')[0].files[i]);
 			i++;
 		}
 		formdata.append('gallery_items', i);
 	
 		media = 'gallery';
+		uploadMedia(section, formdata, media, token);
 	}
 		
-	if(media != 'false') {
-        formdata.append("_token", token);
-
-	    $.ajax({
-	        type: "POST",
-	        url: "fileupload/"+section['id'],
-	        enctype: 'multipart/form-data',
-	        contentType: false, 
-	        processData: false, 
-	        data: formdata, 
-	        success: function () {
-	            console.log('Media successful uploaded');
-	        }
-	    });
-    }
+	
 
     mediacontent = {};
     $('input.media-input').each(function(index) {
@@ -252,6 +250,24 @@ function saveSection(e) {
         .error(function(response){
             showError('section');
         });
+}
+
+function uploadMedia(section, formdata, media, token) {
+	if(media != 'false') {
+        formdata.append("_token", token);
+
+	    $.ajax({
+	        type: "POST",
+	        url: "fileupload/"+section['id'],
+	        enctype: 'multipart/form-data',
+	        contentType: false, 
+	        processData: false, 
+	        data: formdata, 
+	        success: function () {
+	            console.log('Media successful uploaded');
+	        }
+	    });
+    }
 }
 function saveComment(e) {
 	e.preventDefault();
@@ -365,6 +381,8 @@ function valueInput(value) {
 
 function sorted(listId) {
 	var articles = {};
+	var sections = {};
+
 	if(listId == 'article-list') {
 		$('#article-list').find('li').each(function(i) {
 			if($(this).hasClass('important')) {
@@ -377,10 +395,26 @@ function sorted(listId) {
 			articles[i]['number'] = $(this).attr('number');
 		});
 
-		$.post('article/sort', { articles: articles, _token: $('#_token').text() })
+		$.post('/admin/article/sort', { articles: articles, _token: $('#_token').text() })
         .success(function(response){ })
         .error(function(response){ });
+	}
 
+	if(listId == 'section-list') {
+		$('#section-list').find('li').each(function(i) {
+			if($(this).hasClass('important')) {
+				return;
+			}
+			$(this).attr('number', (i+1));
+
+			sections[i] = {};
+			sections[i]['id'] = $(this).attr('id');
+			sections[i]['number'] = $(this).attr('number');
+		});
+
+		$.post('/admin/sections/sort', { sections: sections, _token: $('#_token').text() })
+        .success(function(response){ })
+        .error(function(response){ });
 	}
 }
 

@@ -10,19 +10,20 @@
 </head>
 <body class="splace-orientation--portrait">
 	
-	<div class="splace-portrait" data-color="{{$article->link_color}}">
+	<div class="splace-portrait" data-color="{{$article->link_color}}" data-app-folder="dummyApps/historyofcoloredfilm" data-app-name="dummy">
 		<div class="splace-article-header" style="background-image: linear-gradient(-60deg, {{$article->gradient_1}}, {{$article->gradient_2}});">
 			<div class="splace-article-header__marker">{{$article->spitzmarke}}</div>
 			<div class="splace-article-header__marker annotated">Reading: {{$article->reading_time}} min</div>
 			<span class="splace-article-header__author">@if($language == 'de') von @else from @endif <strong>{{$article->author_name}}</strong></span>
 			<div class="splace-article-header__marker down">^ swipe up</div>
 
-			<h1 style="left: {{$article->page_title_padding_left}}%; top: {{$article->page_title_padding_top}}%;" class="splace-profile__trigger">
+			<h1 style="left: {{$article->page_title_padding_left}}%; top: {{$article->page_title_padding_top}}%;">
 				@if($language == 'de')
-					{{$article->page_titleDE}}
+					{!!$article->page_titleDE!!}
 				@else
-					{{$article->page_titleEN}}
-				@endif</h1>
+					{!!$article->page_titleEN!!}
+				@endif
+			</h1>
 			<h2 style="left: {{$article->page_sub_title_padding_left}}%; top: {{$article->page_sub_title_padding_top}}%; background-color: {{$article->subtitle_backgroundcolor}}">
 				@if($language == 'de')
 					{{$article->page_sub_titleDE}}
@@ -50,9 +51,9 @@
 			<div class="splace-paragraph__comments splace-color" data-comment-count="{{count($section->comments)}}">
 				<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="19.1px" height="18.2px" viewBox="0 0 19.1 18.2" enable-background="new 0 0 19.1 18.2" xml:space="preserve">
 					<g>
-						<g><rect fill="#0A919F" width="19.1" height="4"/></g>
-						<g><rect y="7.101" fill="#0A919F" width="19.1" height="4"/></g>
-						<g><rect y="14.2" fill="#0A919F" width="13.1" height="4"/></g>
+						<g><rect fill="#0A919F" width="19.1" height="4" /></g>
+						<g><rect y="7.101" fill="#0A919F" width="19.1" height="4" /></g>
+						<g><rect y="14.2" fill="#0A919F" width="13.1" height="4" /></g>
 					</g>
 				</svg>
 				@foreach($section->comments as $c)
@@ -104,10 +105,43 @@
 			</div>
 
 			<div class="splace-paragraph__annotation">
+				@if($section->media['image'] != false)
+					<div class="splace-paragraph__annotation-image">
+						<img src="/images/{{ $section->media['image-data']->file_name }}" />
+					</div>
+				@endif
+				@if($section->media['youtube-video'] != false)
+					<div class="splace-paragraph__annotation-video">
+						<a href="https://www.youtube.com/watch?v={{ $section->media['youtube-video-data']->original_name }}" data-youtube="{{ $section->media['youtube-video-data']->original_name }}" class="splace-video splace-video__youtube">
+							<img src="https://i.ytimg.com/vi_webp/{{ $section->media['youtube-video-data']->original_name }}/mqdefault.webp">
+						</a>
+					</div>
+				@endif
+				@if($section->media['vimeo-video'] != false)
+					<div class="splace-paragraph__annotation-video">
+						<a href="https://www.youtube.com/watch?v={{ $section->media['vimeo-video-data']->original_name }}" data-vimeo="{{ $section->media['vimeo-video-data']->original_name }}" class="splace-video splace-video__vimeo">
+							<img src="https://i.vimeocdn.com/video/{{ $section->media['vimeo-video-data']->original_name }}.webp">
+						</a>
+					</div>
+				@endif
+				
+				@if($section->media['gallery'] != false)
+					<div class="splace-paragraph__annotation-gallery">
+						@if($section->media['cover'] != false)
+							<img src="/images/{{ $section->media['cover-data']->file_name }}" />
+						@endif
+						@foreach($section->media['gallery-data'] as $g)
+						    <a href="/images/{{ $g->file_name }}" title="{{ $g->description }}" class="splace-gallery-link">
+						        <img src="/images/{{ $g->file_name }}" alt="{{ $g->description }}">
+						    </a>
+					    @endforeach
+					</div>
+				@endif
+
 				@if($language == 'de')
-					{{$section->noteDE}}
+					{!!$section->noteDE!!}
 				@else
-					{{$section->noteEN}}
+					{!!$section->noteEN!!}
 				@endif
 			</div>
 		</div>
@@ -141,34 +175,49 @@
 				@endforeach
 			</div>
 
-			<div class="splace-paragraph__author">
-				@if($article->bio_image) <img src="/images/{{$article->bio_image}}" alt=""> @endif
-				<span>
-				@if($language == 'de') 
-					{!!$article->bio_textDE!!}
-				@else
-					{!!$article->bio_textEN!!}
-				@endif
-				</span>
+			<div class="splace-paragraph__author media">
+				<div class="splace-paragraph__author-blend splace-background-color-alpha2">
+					@if($article->bio_image) <img src="/images/{{$article->bio_image}}" alt=""> @endif
+				</div>
+				<div class="bd">
+					<span>
+						@if($language == 'de') 
+							{!!$article->bio_text_shortDE!!}
+						@else
+							{!!$article->bio_text_shortEN!!}
+						@endif
+					</span>
+					<a href="#" class="splace-paragraph__author-more">read more</a>
+				</div>
+
+				<div class="splace-paragraph__author-full">
+					<i class="close splace-color">×</i>
+					@if($article->bio_image) <img src="/images/{{$article->bio_image}}" alt=""> @endif
+					<p>
+						@if($language == 'de') 
+							{!!$article->bio_textDE!!}
+						@else
+							{!!$article->bio_textEN!!}
+						@endif
+					</p>
+				</div>
 			</div>
 		</div>
 
 		<div class="splace-paragraph">
 			<div class="splace-paragraph__share">
 				<span>Share this article</span>
-				<a href="https://vimeo.com/splace" class="splace-background-color" target="_blank"><i class="icon-vimeo"></i></a>
+				<a href="https://vimeo.com/splace" class="splace-background-color" target="_blank"><i class="icon-twitter"></i></a>
 				<a href="https://www.facebook.com/SplaceMagazine" class="splace-background-color" target="_blank"><i class="icon-facebook"></i></a>
 				<a href="mailto:redaktion@splace-magazine.at" class="splace-background-color" target="_blank"><i class="icon-mail"></i></a>
 			</div>
 			<p class="splace-paragraph__usages">
 				<span>MATERIAL USED IN THIS ARTICLE</span>
-				X
 				@if($language == 'de')
 					{!!$article->used_materialDE!!}
 				@else
 					{!!$article->used_materialEN!!}
 				@endif
-				X
 			</p>
 		</div>
 
@@ -188,14 +237,14 @@
 		</nav>
 		<div class="splace-footer">
 			<div class="splace-issue-selection">
-				<span class="splace-issue-selection__current">#2</span>
+				<span class="splace-issue-selection__current">#{{$magazine->version}}</span>
 				<ul class="splace-issue-selection__list"></ul>
 			</div>
 			<div class="splace-navigation-trigger">
-				<span>Inhalt</span>
+				<span>@if($language == 'de') Inhalt @else Content @endif</span>
 			</div>
 			<div class="splace-footer-links">
-				<a href="#" class="splace-language-switcher splace-footer-links__item">EN</a>
+				<a @if($language == 'de') href="/locale/en" @else href="/locale/de" @endif class="splace-language-switcher splace-footer-links__item">@if($language == 'de') EN @else DE @endif</a>
 				<a href="#" class="splace-footer-links__item">INFO</a>
 				<div class="splace-footer-links__item splace-external-links__wrapper">
 					<i class="icon-external-link"></i>
@@ -206,7 +255,14 @@
 					</ul>
 				</div>
 				<a href="hilfe.html" class="splace-footer-links__item">?</a>
-				<a href="#" class="splace-footer-links__item splace-user__trigger">*</a>
+				<div class="splace-footer-links__item splace-user-links__wrapper">
+					<!--<i class="icon-user-link"></i>-->*
+					<ul class="splace-user-links__list">
+						<li class="splace-show-loggedin"><a href="#" class="splace-user__trigger">@if($language == 'de') Profil @else Profile @endif</a></li>
+						<li class="splace-hide-loggedin"><a href="#" class="splace-user__trigger">@if($language == 'de') Anmelden @else Login @endif</a></li>
+						<li class="splace-show-loggedin"><a href="#" class="splace-user-logout_trigger">@if($language == 'de') Abmelden @else Logout @endif</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -218,7 +274,7 @@
 		<div class="splace-user__login-section splace-border-color">
 			<h2>Anmelden</h2>
 			<p>
-				Um Artikel zu kommentieren müssen Sie registriert sein. Nur Kommentare von angemeldeten LeserInnen können berücksichtigt werden. Klar fomulieren was kann ich dann machen. TEXT ?!
+				Um Artikel zu kommentieren müssen Sie registriert sein. Nur Kommentare von angemeldeten LeserInnen können berücksich- tigt werden. Klar fomulieren was kann ich dann machen. TEXT ?!
 			</p>
 
 			<div class="splace-grid-row splace-grid-2 splace-user__action-grid cf">
@@ -316,7 +372,8 @@
 
 		<div class="splace-user__login-section splace-border-color">
 			<h2>Ihre Einstellungen</h2>
-			<p></p>
+			<p>
+			</p>
 
 			<form class="splace-user__profile-form" name="profile-form">
 				<h4 class="splace-color"></h4>
@@ -370,6 +427,7 @@
 	<script type="text/javascript" src="/js/CommentController.js"></script>
 	<script type="text/javascript" src="/js/PageController.js"></script>
 	<script type="text/javascript" src="/js/UserController.js"></script>
+	<script type="text/javascript" src="/js/LandscapeAppController.js"></script>
 	<script type="text/javascript" src="/js/blueimp-gallery.min.js"></script>
 </body>
 </html>

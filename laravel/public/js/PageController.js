@@ -6,6 +6,8 @@ Author: Lukas Leitner
 
 var splacePageController = (function($) {
 
+
+	var _basePath = '';
 	var orientationController,
 		menuController;
 
@@ -63,12 +65,17 @@ var splacePageController = (function($) {
   			splaceOrientationController.setHelpSite(false);
   		}
 
-  		var color = $(content).filter('.splace-portrait').data('color');
+  		var color = $('body').find('.splace-portrait').data('color');
   		if(color.length !== 7) {
   			color = '#00909f';
   		}
-  		setPageColor(color);
-    	
+  		setPageColor(color);    
+
+  		setAppName();	
+	}
+
+	function setAppName() {
+		splaceLandscapeAppController.setApp($('body').find('.splace-portrait').data('app-name'), $('body').find('.splace-portrait').data('app-folder'));
 	}
 
 	function setPageColor(color) {
@@ -131,17 +138,23 @@ var splacePageController = (function($) {
 
 		$('.splace-video').on('click', function(e) {
 			e.preventDefault();
-			var $target = $(e.target);
+			var $target = $(e.delegateTarget);
 			var data = {};
 
 			if($target.hasClass('splace-video__youtube')) {
 				data.href = $target.attr('href');
 				data.youtube = $target.data('youtube');
 				data.type = 'text/html';
-				data.poster = 'https://img.youtube.com/vi/'+data.youtube+'/maxresdefault.jpg';
+				data.poster = 'https://img.youtube.com/vi/'+data.youtube+'/0.jpg';
+			}
+			if($target.hasClass('splace-video__vimeo')) {
+				data.href = $target.attr('href');
+				data.vimeo = $target.data('vimeo');
+				data.type = 'text/html';
+				data.poster = 'https://img.youtube.com/vi/'+data.vimeo+'/maxresdefault.jpg';
 			}
 
-			blueimp.Gallery([data], {youTubeClickToPlay: false});
+			blueimp.Gallery([data], {youTubeClickToPlay: false, vimeoClickToPlay: false});
 		});
 	}
 
@@ -152,9 +165,9 @@ var splacePageController = (function($) {
 	}
 
 	function getPageIndex(url) {
-		if(url.lastIndexOf(url) !== -1) {
+		/*if(url.lastIndexOf('/') !== -1) {
 			url = url.substr(url.lastIndexOf('/'));
-		}
+		}*/
 
 		for(var i in splaceConfig.navigationItems) {
 			if(splaceConfig.navigationItems[i].url === url) {
@@ -299,6 +312,10 @@ var splacePageController = (function($) {
 				return;
 			}
 
+			if($target.parents('.splace-paragraph').find('.splace-paragraph__annotation-video').length > 0) {
+				return;
+			}
+
 			$target.parents('.splace-paragraph').addClass('splace-paragraph--annotation-active');
 			$('body').addClass('splace-paragraph--annotation-active');
 			//$('.splace-paragraph').addClass('splace-paragraph--annotation-active');
@@ -336,6 +353,27 @@ var splacePageController = (function($) {
 		$('body').on('click, touchend', '.splace-paragraph__annotation', annotationClick);
 		$('body').on('click, touchend', '.splace-paragraph__comments', commentClick);
 		$('body').on('click, touchend', '.splace-paragraph__text', textClick);
+
+	}
+
+	function initLanguageSwitch() {
+		$('.splace-language-switcher').on('click', function(e) {
+			e.preventDefault();
+
+			var $target = $(e.target);
+			var newLang = 'DE';
+			if($target.text() === 'DE') {
+				newLang = 'EN';
+			}
+
+			$.get(_basePath+'/locale/'+newLang.toLowerCase())
+				.done(function(response) {
+					showPage(location.pathname, true);
+					$target.text(newLang);
+
+				});
+
+		});
 	}
 
 	function init() {
@@ -344,6 +382,7 @@ var splacePageController = (function($) {
 		menuController = splaceMenuController.init();
 		initLocation();
 		initGesture();
+		initLanguageSwitch();
 		//initClickListener();
 
 		splaceOrientationController.setCallback(orientationChanged);

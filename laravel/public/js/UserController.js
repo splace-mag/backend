@@ -4,6 +4,13 @@ Splace User Controller
 Author: Lukas Leitner
 */
 
+if (typeof String.prototype.startsWith != 'function') {
+  // see below for better implementation!
+  String.prototype.startsWith = function (str){
+    return this.indexOf(str) === 0;
+  };
+}
+
 var splaceUserController = (function() {
 
 	var loggedin = false;
@@ -95,7 +102,7 @@ var splaceUserController = (function() {
 			return false;
 		}
 
-		$.post('/signout', {})
+		$.get('/signout', {})
 			.done(function(response) {
 				loggedin = false;
 				$('body').removeClass('loggedin');
@@ -371,7 +378,7 @@ var splaceUserController = (function() {
 		getUserName: getUserName,
 		getImageUrl: getImageUrl,
 		signin: signin,
-		singout: signout,
+		signout: signout,
 		signup: signup,
 		sendResetMail: sendResetMail,
 		resetPassword: resetPassword,
@@ -428,6 +435,13 @@ var splaceUserActionController = (function() {
 		});
 	}
 
+	function performLogout(e) {
+		e.preventDefault();
+
+		splaceUserController.signout(function(response) {
+			//TODO: Logout performed
+		});
+	}
 	function close() {
 		userInterface.removeClass('active');
 		visible = false;
@@ -435,6 +449,11 @@ var splaceUserActionController = (function() {
 
 	function toggleUserInterface(e) {
 		e.preventDefault();
+
+		if(splaceUserController.isLoggedIn()) {
+			splaceProfileActionController.toggleUserInterface();
+			return;
+		}
 
 		if(visible) {
 			userInterface.removeClass('active');
@@ -454,6 +473,7 @@ var splaceUserActionController = (function() {
 		        toggleUserInterface(e);
 		    }
 		});
+		$('.splace-user-logout_trigger').on('click', performLogout);
 
 		$('.splace-user__login-form').on('submit', performLogin);
 		$('.splace-user__signup-form').on('submit', performSignup);
@@ -571,7 +591,9 @@ var splaceProfileActionController = (function() {
 	}
 
 	function toggleUserInterface(e) {
-		e.preventDefault();
+		if(e) {
+			e.preventDefault();
+		}
 
 		if(visible) {
 			userInterface.removeClass('active');
@@ -608,14 +630,8 @@ var splaceProfileActionController = (function() {
 	init();
 
 	return {
-		init: init
+		init: init,
+		toggleUserInterface: toggleUserInterface
 	}
 
 })();
-
-if (typeof String.prototype.startsWith != 'function') {
-  // see below for better implementation!
-  String.prototype.startsWith = function (str){
-    return this.indexOf(str) === 0;
-  };
-}

@@ -29,7 +29,14 @@ class Section extends Model implements AuthenticatableContract {
 			->paginate(15);
 	}
 	public static function getByArticle($article_id) {
-		return Section::where('article_id', $article_id)->paginate(15);
+		return Section::where('article_id', $article_id)
+			->orderBy('number')
+			->paginate(15);
+	}
+	public static function getAllByArticle($article_id) {
+		return Section::where('article_id', $article_id)
+			->orderBy('number')
+			->get();
 	}
 	public static function getById($id) {
 		return Section::where('section_id', $id)->first();
@@ -103,6 +110,12 @@ class Section extends Model implements AuthenticatableContract {
 
 	public static function deleteArticleSections($article_id) {
 		Section::where('article_id', $article_id)->delete();
+	}
+
+	public static function sortSection($section) {
+		Section::where('section_id', $section['id']) 
+			->update([
+				'number' => $section['number']]);
 	}
 
 	public static function getMedia($section_id) {

@@ -35,6 +35,7 @@ Route::post('signin', 'Auth\AccountController@authenticate');
 Route::post('register', 'Auth\AccountController@register');
 Route::post('profile', 'Auth\AccountController@editProfile');
 Route::get('signout', 'Auth\AccountController@logout');
+Route::post('sendResetMail', 'Auth\AccountController@resetPassword');
 
 Route::get('facebook', 'Auth\AccountController@redirectToFacebook');
 Route::get('account/facebook', 'Auth\AccountController@facebookLogin');
@@ -66,6 +67,7 @@ Route::group(['prefix' =>'admin'], function() {
 	Route::get('article/comments/{article_id}', 'Admin\CommentsController@showArticleComments');
 
 	Route::get('sections', 'Admin\SectionsController@index');
+	Route::post('sections/sort', 'Admin\SectionsController@sortSections');
 	Route::post('sections/fileupload/{id}', 'Admin\SectionsController@fileUpload');
 	Route::get('sections/{id}', 'Admin\SectionsController@editSection');
 	Route::post('sections/{id}', 'Admin\SectionsController@saveSection');

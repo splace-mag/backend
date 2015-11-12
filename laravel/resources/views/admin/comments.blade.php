@@ -31,7 +31,7 @@
 							@foreach ($comments as $comment)
 								<tr>
 									<td class="col-xs-4">{{ $comment->name }}</td>
-									<td class="col-xs-4"><a href="/admin/comments/{{ $comment->comment_id }}">{{ $comment->titleDE }} | {{ $comment->key }}</a></td>
+									<td class="col-xs-4"><a href="/admin/comments/{{ $comment->comment_id }}">{{ $comment->titleDE }} / {{ $comment->key }}</a></td>
 									<td class="col-xs-2">
 										@if ( $comment->marked == 1)
 										<input name="marked-{{$comment->comment_id}}" type="checkbox" checked disabled/>

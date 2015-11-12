@@ -162,6 +162,14 @@
 							@endif
 							@endif
 							
+							<h5>Biografie Kurztext</h5>
+							<div class="language-de">
+								<input class="form-control" name="bio_text_shortDE" value="{{ $article->bio_text_shortDE or '' }}" placeholder="Autor-Biografie (kurzer Vorschautext)" />
+							</div>
+							<div class="language-en hidden">
+								<input class="form-control" name="bio_text_shortEN" value="{{ $article->bio_text_shortEN or '' }}" placeholder="Autor-Biografie (kurzer Vorschautext)" />
+							</div>
+
 							<h5>Biografie</h5>
 							<div class="language-de">
 								<div class="epiceditor" data-markdown="bio_textDE"></div>

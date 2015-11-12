@@ -16,25 +16,14 @@
 
 						<div class="form-group">
 							Absatz: <a href="/admin/sections/{{ $comment->section_id }}"> {{ $comment->key }}</a><br>
-							User: <a href="/admin/user/{{ $comment->user_id }}">{{ $comment->name }}</a>
+							User: { $comment->name }} ( {{ $comment->email }} )
 						</div>
 
 						<div class="form-group">
 							<h4>Kommentar</h4>
 							<textarea class="form-control comment-text-area" name="text" placeholder="Text" >{{ $comment->text or '' }}</textarea>	
 						</div>
-						
-						<!--
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember"> Remember Me
-									</label>
-								</div>
-							</div>
-						</div>
-						-->
+
 						<div class="form-group">
 							Veröffentlichen 
 							<input type="checkbox" name="marked" value="{{ $comment->marked }}" @if($comment->marked == '1') checked @endif />

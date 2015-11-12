@@ -38,9 +38,11 @@ class MainController extends Controller {
 	public function showContents($magazineid)
 	{		
 		$this->setMagazine($magazineid);
+		$article = Article::getArticleList(Session::get('active', Magazines::getActive()));
 		return view('frontend/contents')
-			->with('navigation', $this->navigationList(Article::getArticleList(Session::get('active', Magazines::getActive())), Magazines::getAll()))
+			->with('navigation', $this->navigationList($article, Magazines::getAll()))
 			->with('magazine', Magazines::getById(Session::get('active', Magazines::getActive())))
+			->with('article', $article)
 			->with('language', Session::get('language', 'de'));
 	}
 

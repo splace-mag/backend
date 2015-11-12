@@ -129,6 +129,20 @@ class SectionsController extends Controller {
 		return redirect('admin/sections');
 	}
 
+	public function sortSections() 
+	{
+		$sections = Request::input('sections');
+
+		if(count($sections) > 0) {
+			foreach($sections as $section) {
+				Section::sortSection($section);
+			}
+		}
+			
+		
+		return response()->json(['success' => 'true']);
+	}
+
 	public function fileUpload($id) 
 	{
 		$mediaType = Request::input('media_type', 'none');

@@ -52,6 +52,8 @@ class CreateArticlesTable extends Migration {
 			$table->text('bio_textEN');
 			$table->text('markdown_bio_textDE');
 			$table->text('markdown_bio_textEN');
+			$table->text('bio_text_shortDE');
+			$table->text('bio_text_shortEN');
 			$table->text('used_materialDE');
 			$table->text('used_materialEN');
 			$table->text('markdown_used_materialDE');

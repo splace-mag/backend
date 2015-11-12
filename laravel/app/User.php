@@ -32,6 +32,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+	public static function findUser($mail) {
+		if(User::where('email', $mail)->count() == 1) {
+			return true;
+		}
+		return false;
+	}
+
 	public static function editUser($user) {
 		if($user['password'] === '-') {
 			User::where('id', $user['id'])
@@ -109,6 +116,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		}
 
 		return $id;
+	}
+
+	public static function changePassword($mail, $password) {
+		User::where('email', $mail)
+			->update(['password' => $password]);
 	}
 
 }

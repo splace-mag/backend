@@ -98,6 +98,24 @@ class AccountController extends Controller {
 		Auth::logout();
 	}
 
+	public function resetPassword() {
+		$user['mail'] = Request::input('email');
+
+		if(!User::findUser($user['mail'])) {
+			return response()->json(array('success' => false, 'error' => 'email not found'));
+		}
+
+		$user['password'] = str_random(12);
+		
+		User::changePassword($user['mail'], \Hash::make($user['password']));
+		\Mail::send('emails.resetPassword', $user, function($message)
+		{
+		    $message->to('s@applics.at')->subject('Password Reset');
+		});
+
+		return response()->json(array('success' => true));
+	}
+
 	/*
 	*
 	* Login with Facebook
@@ -158,7 +176,7 @@ class AccountController extends Controller {
 		$user->getNickname();
 		$user->getName();
 		$user->getEmail();
-		$user->getAvatar();
+		$user->getAvatar()
 		*/
 
 	    return redirect('home')->send();
@@ -171,7 +189,7 @@ class AccountController extends Controller {
 		else {
 			Session::put('language', 'en');
 		}
-		return redirect()->back();
+		return response()->json(['language' => $lang]);
 	}
 
 }

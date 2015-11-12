@@ -52,9 +52,10 @@ class ArticleController extends Controller {
 
 		$navigationList = $this->navigationList(Article::getArticleList(Magazines::getActive()), Magazines::getAll());
 
-		$sections = Section::getByArticle($article->article_id);
+		$sections = Section::getAllByArticle($article->article_id);
 		foreach($sections as $s) {
 			$s->comments = Comments::getBySectionForArticle($s->section_id);
+			$s->media = Section::getMedia($s->section_id);
 		}
 
 		return view('frontend/article')
