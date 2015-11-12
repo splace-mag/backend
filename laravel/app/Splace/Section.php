@@ -209,7 +209,9 @@ class Section extends Model implements AuthenticatableContract {
 			\DB::table('media')
 				->where('media_id', $m['id'])
 				->update([
-					'description' => $m['description']]);
+					'descriptionDE' => $m['descriptionDE'], 
+					'descriptionEN' => $m['descriptionEN']
+				]);
 		}
 	}
 

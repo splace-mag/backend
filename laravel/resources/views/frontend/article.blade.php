@@ -131,9 +131,15 @@
 							<img src="/images/{{ $section->media['cover-data']->file_name }}" />
 						@endif
 						@foreach($section->media['gallery-data'] as $g)
-						    <a href="/images/{{ $g->file_name }}" title="{{ $g->description }}" class="splace-gallery-link">
-						        <img src="/images/{{ $g->file_name }}" alt="{{ $g->description }}">
-						    </a>
+							@if($language == 'de') 
+							    <a href="/images/{{ $g->file_name }}" title="{{ $g->descriptionDE }}" class="splace-gallery-link">
+							        <img src="/images/{{ $g->file_name }}" alt="{{ $g->descriptionDE }}">
+							    </a>
+							@else
+								<a href="/images/{{ $g->file_name }}" title="{{ $g->descriptionEN }}" class="splace-gallery-link">
+							        <img src="/images/{{ $g->file_name }}" alt="{{ $g->descriptionEN }}">
+							    </a>
+							@endif
 					    @endforeach
 					</div>
 				@endif

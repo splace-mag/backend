@@ -35,7 +35,12 @@ class CommentController extends Controller {
 
 
 		$id = Comments::createComment($comment);
-
+/*
+		\Mail::send('emails.newComment', array('id' => $id), function($message)
+		{
+		    $message->to('s@applics.at')->subject('splace - neues Kommentar');
+		});
+*/
 		$response['success'] = true;
 		$response['commentId'] = $id;
 

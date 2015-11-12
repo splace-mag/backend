@@ -22,16 +22,16 @@
 					<span class="splace-index-item__number">{{$a->number}}</span>
 					<h3 class="splace-index-item__title">
 						@if($language == 'de')
-							{!!$a->page_titleDE!!}
+							{!! $a->page_titleDE !!}
 						@else
-							{!!$a->page_titleEN!!}
+							{!! $a->page_titleEN !!}
 						@endif
 					</h3>
 					<h5 class="splace-index-item__subtitle">
 						@if($language == 'de')
-							{{$a->page_sub_titleDE}}
+							{!! $a->summaryDE !!}
 						@else
-							{{$a->page_sub_titleEN}}
+							{!! $a->summaryEN !!}
 						@endif
 					</h5>
 
@@ -45,16 +45,16 @@
 						<span class="splace-index-item__number">{{$a->number}}</span>
 						<h3 class="splace-index-item__title">
 							@if($language == 'de')
-								{!!$a->page_titleDE!!}
+								{!! $a->page_titleDE !!}
 							@else
-								{!!$a->page_titleEN!!}
+								{!! $a->page_titleEN !!}
 							@endif
 						</h3>
 						<h5 class="splace-index-item__subtitle">
 							@if($language == 'de')
-								{{$a->page_sub_titleDE}}
+								{!! $a->summaryDE !!}
 							@else
-								{{$a->page_sub_titleEN}}
+								{!! $a->summaryEN !!}
 							@endif
 						</h5>
 					</a>

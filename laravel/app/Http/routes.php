@@ -111,10 +111,10 @@ Route::post('addComment', 'Frontend\CommentController@addComment');
 | Magazine Routes
 |
 */
-//Route::get('/', 'Frontend\ArticleController@index');
+Route::get('help', 'Frontend\MainController@showHelpPage');
+Route::get('{magazineid?}', 'Frontend\MainController@index');
 Route::get('{magazineid?}/splace', 'Frontend\MainController@index');
 Route::get('{magazineid}/article/{number}', 'Frontend\ArticleController@showArticle');
 Route::get('{magazineid}/content', 'Frontend\MainController@showContents');
 Route::get('{magazineid}/editorial', 'Frontend\MainController@showEditorial');
-Route::get('help', 'Frontend\MainController@showHelpPage');
 

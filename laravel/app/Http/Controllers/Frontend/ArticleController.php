@@ -79,6 +79,7 @@ class ArticleController extends Controller {
 
 	private function navigationList($articles, $magazines) {
 		$magazineList = "";
+		$magazineList .= "{name: '#1 Farbe', url: '/1'}, ";
 		foreach($magazines as $m) {
 			$magazineList .= "{name: '#".$m->version." ".$m->title."', url: '/".$m->magazine_id."/splace'}, ";
 		}

@@ -65,10 +65,11 @@
 							<input class="form-file" type="file" name="media-file-image" id="media-file-image"/>
 							<div>
 							@if($media['image'])
-								<div>
+								<div class="media-input">
 									<h6>Aktuelles Bild</h6>
 									<a href="/images/{{$media['image-data']->file_name}}" target="_blank">{{$media['image-data']->original_name}}</a>
-									<input class="form-control media-input" data-key="{{$media['image-data']->media_id}}" type="text" value="{{$media['image-data']->description}}" placeholder="Bildbeschreibung" />
+									<input name="media-descriptionDE" class="form-control" data-key="{{$media['image-data']->media_id}}" type="text" value="{{$media['image-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+									<input name="media-descriptionEN" class="form-control" data-key="{{$media['image-data']->media_id}}" type="text" value="{{$media['image-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
 								</div>
 							@else
 								Derzeit kein Bild vorhanden!
@@ -81,16 +82,22 @@
 							<h5>Youtube Video</h5>
 							<input class="form-control" type="text" name="media-youtube-video" @if($media['youtube-video']) value="{{$media['youtube-video-data']->original_name}}" @endif placeholder="Youtube Video-Code"/>
 							@if($media['youtube-video']) 
-							<input class="form-control media-input" data-key="{{$media['youtube-video-data']->media_id}}" type="text" value="{{$media['youtube-video-data']->description}}" placeholder="Videobeschreibung" />
+								<div class="media-input">
+									<input name="media-descriptionDE" class="form-control" data-key="{{$media['youtube-video-data']->media_id}}" type="text" value="{{$media['youtube-video-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+									<input name="media-descriptionEN" class="form-control" data-key="{{$media['youtube-video-data']->media_id}}" type="text" value="{{$media['youtube-video-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
+								</div>
 							@endif
 						</div>
 						<hr>
 
-						<div id="media-vimeo-video" class="form-group media-type">
+						<div id="media-vimeo-video" class="form-group media-type media-input">
 							<h5>Vimeo Video</h5>
 							<input class="form-control" type="text" name="media-vimeo-video" @if($media['vimeo-video']) value="{{$media['vimeo-video-data']->original_name}}" @endif placeholder="Vimeo Video-Code"/>
 							@if($media['vimeo-video']) 
-							<input class="form-control media-input" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->description}}" placeholder="Videobeschreibung" />
+								<div class="media-input">
+									<input name="media-descriptionDE" class="form-control" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+									<input name="media-descriptionEN" class="form-control" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
+								</div>
 							@endif
 						</div>
 						<hr>
@@ -99,10 +106,11 @@
 							<h5>Galerie - Thumbnail</h5>
 							<input class="form-file" type="file" name="media-file-image-cover" id="media-file-image-cover"/>
 							@if($media['cover'])
-								<div>
+								<div class="media-input">
 									<h6>Thumbnail</h6>
 									<a href="/images/{{$media['cover-data']->file_name}}" target="_blank">{{$media['cover-data']->original_name}}</a>
-									<input class="form-control media-input" data-key="{{$media['cover-data']->media_id}}" type="text" value="{{$media['cover-data']->description}}" placeholder="Bildbeschreibung" />
+									<input name="media-descriptionDE" class="form-control" data-key="{{$media['cover-data']->media_id}}" type="text" value="{{$media['cover-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+									<input name="media-descriptionEN" class="form-control" data-key="{{$media['cover-data']->media_id}}" type="text" value="{{$media['cover-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
 								</div>
 							@else
 								Derzeit kein Bild vorhanden!
@@ -113,10 +121,11 @@
 							@if($media['gallery'])
 								<h6>Aktuelle Bilder</h6>
 								@foreach($media['gallery-data'] as $gallery_item)
-								<div>
+								<div class="media-input">
 									<a class="link-color__red" href="/admin/media/delete/{{ $gallery_item->file_name }}"><i class="fa fa-times"></i></a>
 									<a href="/images/{{$gallery_item->file_name}}" target="_blank">{{$gallery_item->original_name}}</a>
-									<input class="form-control media-input" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->description}}" placeholder="Bildbeschreibung" />
+									<input name="media-descriptionDE" class="form-control" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+									<input name="media-descriptionEN" class="form-control" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
 								</div>
 								<br>
 								@endforeach

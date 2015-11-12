@@ -16,7 +16,7 @@
 
 						<div class="form-group">
 							Absatz: <a href="/admin/sections/{{ $comment->section_id }}"> {{ $comment->key }}</a><br>
-							User: { $comment->name }} ( {{ $comment->email }} )
+							User: {{ $comment->name }} ( <a href="mailto:{{ $comment->email }}">{{ $comment->email }}</a> )
 						</div>
 
 						<div class="form-group">

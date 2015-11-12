@@ -236,10 +236,11 @@ function saveSection(e) {
 	
 
     mediacontent = {};
-    $('input.media-input').each(function(index) {
+    $('div.media-input').each(function(index) {
     	mediacontent[index] = {};
-    	mediacontent[index]['id'] = $(this).attr('data-key');
-    	mediacontent[index]['description'] = $(this).val();
+    	mediacontent[index]['id'] = $(this).children('[name="media-descriptionDE"]').attr('data-key');
+    	mediacontent[index]['descriptionDE'] = $(this).children('[name="media-descriptionDE"]').val();
+    	mediacontent[index]['descriptionEN'] = $(this).children('[name="media-descriptionEN"]').val();
     });
 
 	$.post(section['id'], { _token: token, section: section, media: mediacontent })
