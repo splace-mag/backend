@@ -19,7 +19,8 @@ class CreateMediaTable extends Migration {
 			$table->integer('number');
 			$table->string('file_name');
 			$table->string('original_name');
-			$table->text('description');
+			$table->text('descriptionDE');
+			$table->text('descriptionEN');
 		});
 	}
 

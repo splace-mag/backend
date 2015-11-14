@@ -32,7 +32,7 @@ class Article extends Model implements AuthenticatableContract {
 		}
 		return Article::where('magazine_id', $magazine)
 			->orderBy('number', 'asc')
-			->select('magazine_id', 'article_id', 'number', 'titleDE', 'titleEN', 'page_titleDE', 'page_titleEN', 'page_sub_titleDE', 'page_sub_titleEN')
+			->select('magazine_id', 'article_id', 'number', 'titleDE', 'titleEN', 'page_titleDE', 'page_titleEN', 'page_sub_titleDE', 'page_sub_titleEN', 'spitzmarke')
 			->get();
 	}
 	public static function getFirst($count, $magazine = 'active') {
@@ -90,6 +90,7 @@ class Article extends Model implements AuthenticatableContract {
 			'page_sub_titleEN' => $article['page_subtitleEN'], 
 			'page_sub_title_padding_left' => $article['page_sub_title_padding_left'], 
 			'page_sub_title_padding_top' => $article['page_sub_title_padding_top'], 
+			'app_name' => $article['app_name'], 
 			'introductionDE' => $article['introductionDE'], 
 			'introductionEN' => $article['introductionEN'], 
 			'markdown_introductionDE' => $article['markdown_introductionDE'], 
@@ -136,6 +137,7 @@ class Article extends Model implements AuthenticatableContract {
 				'page_sub_titleEN' => $article['page_subtitleEN'], 
 				'page_sub_title_padding_left' => $article['page_sub_title_padding_left'], 
 				'page_sub_title_padding_top' => $article['page_sub_title_padding_top'], 
+				'app_name' => $article['app_name'], 
 				'introductionDE' => $article['introductionDE'], 
 				'introductionEN' => $article['introductionEN'], 
 				'markdown_introductionDE' => $article['markdown_introductionDE'], 

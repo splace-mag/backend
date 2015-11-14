@@ -33,6 +33,10 @@ class Links extends Model implements AuthenticatableContract {
 	}
 
 	public static function createLink($link, $article_id) {
+		if(strpos($link['link'], 'http') !== 0) {
+			$link['link'] = 'http://'.$link['link'];
+		}
+
 		return Links::insertGetId([
 			'article_id' => $article_id, 
 			'number' => $link['number'], 
@@ -42,6 +46,10 @@ class Links extends Model implements AuthenticatableContract {
 	}
 
 	public static function editLink($link) {
+		if(strpos($link['link'], 'http') !== 0) {
+			$link['link'] = 'http://'.$link['link'];
+		}
+
 		Links::where('link_id', $link['id'])
 			->update([
 				'number' => $link['number'], 

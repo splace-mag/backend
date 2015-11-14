@@ -57,6 +57,7 @@ class Comments extends Model implements AuthenticatableContract {
 		return Comments::where('comments.section_id', '=', $section_id)
 			->where('comments.marked', '1')
 			->join('users', 'comments.user_id', '=', 'users.id')
+			->orderby('comments.created_at', 'desc')
 			->select('comments.comment_id', 'users.name', 'users.picture', 'comments.user_id', 'comments.text', 'comments.created_at')
 			->get();
 	}

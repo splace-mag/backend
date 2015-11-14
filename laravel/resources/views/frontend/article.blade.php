@@ -10,8 +10,8 @@
 </head>
 <body class="splace-orientation--portrait">
 	
-	<div class="splace-portrait" data-color="{{$article->link_color}}" data-app-folder="dummyApps/historyofcoloredfilm" data-app-name="dummy">
-		<div class="splace-article-header" style="background-image: linear-gradient(-60deg, {{$article->gradient_1}}, {{$article->gradient_2}});">
+	<div class="splace-portrait" data-color="{{$article->link_color}}" data-app-folder="apps/{{$article->app_name}}" data-app-name="{{$article->app_name}}">
+		<div class="splace-article-header" style="background-image: linear-gradient(-60deg, {{$article->gradient_2}}, {{$article->gradient_1}});">
 			<div class="splace-article-header__marker">{{$article->spitzmarke}}</div>
 			<div class="splace-article-header__marker annotated">Reading: {{$article->reading_time}} min</div>
 			<span class="splace-article-header__author">@if($language == 'de') von @else from @endif <strong>{{$article->author_name}}</strong></span>
@@ -59,7 +59,6 @@
 				@foreach($section->comments as $c)
 				<div class="splace-paragraph__comment">
 					<div class="media attribution">
-					  <a href="http://twitter.com/stubbornella" class="img {{$c->picture}}">
 					  	<?php 
 					  		if(strpos($c->picture, 'https://') === 0) {
 					  			echo('<img src="'.$c->picture.'" alt="me" />');
@@ -71,14 +70,11 @@
 					  			echo('<img src="https://s3.amazonaws.com/uifaces/faces/twitter/peterlandt/128.jpg" alt="me" />');
 					  		}
 					  	?>
-					  </a>
-					  <div class="bd">
-					  	<span class="splace-paragraph__comment-author">{{$c->name}}</span>
-					  	<span class="splace-paragraph__comment-time">{{date("d.m.Y", strtotime($c->created_at)) }}</span>
-					  </div>
-					  <p>
-					  	{!!$c->text!!}
-					  </p>
+					  	<div class="bd">
+					  		<span class="splace-paragraph__comment-author">{{$c->name}}</span>
+					  		<span class="splace-paragraph__comment-time">{{date("d.m.Y", strtotime($c->created_at)) }}</span>
+					  	</div>
+					  	<p>{!!$c->text!!}</p>
 					</div>
 				</div>
 				@endforeach
@@ -88,6 +84,7 @@
 					<span class="splace-add-comment-notice">Danke für Ihre Anmerkung!<br>Bevor diese veröffentlicht wird muss sie noch von einem unserer Mitarbeiter geprüft werden.</span>
 					<span class="splace-paragraph__comment-add splace-color">@if($language == 'de') Kommentar hinterlassen @else Leave a comment @endif</span>
 					<form name="splace-add-comment-form" class="splace-paragraph__comment-form">
+						<span class="splace-add-comment-cancel">(Abbrechen)</span>
 						<span> @if($language == 'de') Ihre Anmerkung @else Your comment @endif </span>
 						<textarea name="comment" required></textarea>
 						<input type="submit" value="@if($language == 'de') > Anmerkung absenden @else > Save @endif" class="splace-background-color">
@@ -108,6 +105,11 @@
 				@if($section->media['image'] != false)
 					<div class="splace-paragraph__annotation-image">
 						<img src="/images/{{ $section->media['image-data']->file_name }}" />
+						@if($language == 'de')
+							<p class="splace-paragraph__annotation-info">{{ $section->media['image-data']->descriptionDE }}</p>
+						@else
+							<p class="splace-paragraph__annotation-info">{{ $section->media['image-data']->descriptionEN }}</p>
+						@endif
 					</div>
 				@endif
 				@if($section->media['youtube-video'] != false)
@@ -115,6 +117,11 @@
 						<a href="https://www.youtube.com/watch?v={{ $section->media['youtube-video-data']->original_name }}" data-youtube="{{ $section->media['youtube-video-data']->original_name }}" class="splace-video splace-video__youtube">
 							<img src="https://i.ytimg.com/vi_webp/{{ $section->media['youtube-video-data']->original_name }}/mqdefault.webp">
 						</a>
+						@if($language == 'de')
+							<p class="splace-paragraph__annotation-info">{{ $section->media['youtube-video-data']->descriptionDE }}</p>
+						@else
+							<p class="splace-paragraph__annotation-info">{{ $section->media['youtube-video-data']->descriptionEN }}</p>
+						@endif
 					</div>
 				@endif
 				@if($section->media['vimeo-video'] != false)
@@ -122,6 +129,11 @@
 						<a href="https://www.youtube.com/watch?v={{ $section->media['vimeo-video-data']->original_name }}" data-vimeo="{{ $section->media['vimeo-video-data']->original_name }}" class="splace-video splace-video__vimeo">
 							<img src="https://i.vimeocdn.com/video/{{ $section->media['vimeo-video-data']->original_name }}.webp">
 						</a>
+						@if($language == 'de')
+							<p class="splace-paragraph__annotation-info">{{ $section->media['vimeo-video-data']->descriptionDE }}</p>
+						@else
+							<p class="splace-paragraph__annotation-info">{{ $section->media['vimeo-video-data']->descriptionEN }}</p>
+						@endif
 					</div>
 				@endif
 				
@@ -141,19 +153,26 @@
 							    </a>
 							@endif
 					    @endforeach
+
+					    @if($language == 'de')
+							<p class="splace-paragraph__annotation-info">{{ $section->media['cover-data']->descriptionDE }}</p>
+						@else
+							<p class="splace-paragraph__annotation-info">{{ $section->media['cover-data']->descriptionEN }}</p>
+						@endif
 					</div>
 				@endif
-
+				<p>
 				@if($language == 'de')
 					{!!$section->noteDE!!}
 				@else
 					{!!$section->noteEN!!}
 				@endif
+				</p>
 			</div>
 		</div>
 		@endforeach
 
-		<div class="splace-paragraph">
+		<div class="splace-paragraph splace-paragraph--top-space">
 			<div class="splace-paragraph__links">
 				<span>Links</span>
 				@foreach($links as $link) 
@@ -213,18 +232,18 @@
 		<div class="splace-paragraph">
 			<div class="splace-paragraph__share">
 				<span>Share this article</span>
-				<a href="https://vimeo.com/splace" class="splace-background-color" target="_blank"><i class="icon-twitter"></i></a>
-				<a href="https://www.facebook.com/SplaceMagazine" class="splace-background-color" target="_blank"><i class="icon-facebook"></i></a>
-				<a href="mailto:redaktion@splace-magazine.at" class="splace-background-color" target="_blank"><i class="icon-mail"></i></a>
+				<a href="https://twitter.com/share?url=http://splace-00-00.dmz.ufg.ac.at/{{$magazine->version}}/article/{{$article->number}}&via=splace-magazine" target="_blank" class="splace-background-color"><i class="icon-twitter"></i></a>
+				<a href="http://www.facebook.com/sharer/sharer.php?u=http://splace-00-00.dmz.ufg.ac.at/{{$magazine->version}}/article/{{$article->number}}" target="_blank" class="splace-background-color"><i class="icon-facebook"></i></a>
+				<a href="mailto:?subject=splace-magazine.at&body=http://splace-00-00.dmz.ufg.ac.at/{{$magazine->version}}/article/{{$article->number}}" target="_blank" class="splace-background-color"><i class="icon-mail"></i></a>
 			</div>
-			<p class="splace-paragraph__usages">
+			<div class="splace-paragraph__usages">
 				<span>MATERIAL USED IN THIS ARTICLE</span>
 				@if($language == 'de')
 					{!!$article->used_materialDE!!}
 				@else
 					{!!$article->used_materialEN!!}
 				@endif
-			</p>
+			</div>
 		</div>
 
 	</div>
@@ -280,7 +299,7 @@
 		<div class="splace-user__login-section splace-border-color">
 			<h2>Anmelden</h2>
 			<p>
-				Um Artikel zu kommentieren müssen Sie registriert sein. Nur Kommentare von angemeldeten LeserInnen können berücksich- tigt werden. Klar fomulieren was kann ich dann machen. TEXT ?!
+				Um Artikel zu kommentieren m$uuml;ssen Sie registriert sein. Nur Kommentare von angemeldeten LeserInnen k$ouml;nnen ber$uuml;cksichtigt werden. Klar fomulieren was kann ich dann machen. TEXT ?!
 			</p>
 
 			<div class="splace-grid-row splace-grid-2 splace-user__action-grid cf">
@@ -434,6 +453,10 @@
 	<script type="text/javascript" src="/js/PageController.js"></script>
 	<script type="text/javascript" src="/js/UserController.js"></script>
 	<script type="text/javascript" src="/js/LandscapeAppController.js"></script>
+	<script type="text/javascript" src="/js/AuthorController.js"></script>
 	<script type="text/javascript" src="/js/blueimp-gallery.min.js"></script>
 </body>
 </html>
+<?php
+	http_response_code(200);
+?>

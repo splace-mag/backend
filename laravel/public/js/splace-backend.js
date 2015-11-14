@@ -63,6 +63,7 @@ function saveArticle(e) {
 		'page_subtitleEN': $('[name="page_subtitleEN"]').val(),
 		'page_sub_title_padding_left': $('[name="page_sub_title_padding_left"]').val(), 
 		'page_sub_title_padding_top': $('[name="page_sub_title_padding_top"]').val(), 
+		'app_name': $('[name="app_name"]').val(), 
 		'reading_time': $('[name="reading_time"]').val(),  
 		'markdown_introductionDE': $('[name="introductionDE"]').val(), 
 		'markdown_introductionEN': $('[name="introductionEN"]').val(), 

@@ -23,14 +23,16 @@
 						<div class="form-group">
 							<div class="language-de">
 								<h2>Deutsche Inhalte</h2>
-								Kurztitel (Navigation)
+								<h5>Kurztitel (Navigation)</h5>
 								<input class="form-control" name="titleDE" value="{{ $article->titleDE or '' }}" placeholder="Kurztitel" />
 							</div>
 							<div class="language-en hidden">
 								<h2>Englische Inhalte</h2>
-								Kurztitel (Navigation)
+								<h5>Kurztitel (Navigation)</h5>
 								<input class="form-control" name="titleEN" value="{{ $article->titleEN or '' }}" placeholder="Kurztitel" />
 							</div>
+							<h5>App-Name (für Quervariante)</h5>
+							<input class="form-control" name="app_name" value="{{ $article->app_name or '' }}" placeholder="App-Name" />
 						</div>
 
 						<a class="section-header" data-key="title"><h4>Seitentitel</h4></a>

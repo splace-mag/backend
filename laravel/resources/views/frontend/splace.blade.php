@@ -5,13 +5,49 @@
 	<title>@if($language == 'de') Splace Magazin @else Splace Magazine @endif</title>
 
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="/css/main.css">
 </head>
 <body class="splace-orientation--portrait">
 	
-	<div class="splace-portrait">
-		<div class="splace-article-header" style="background-image: linear-gradient(-60deg, rgb(112,198,215), rgb(117,179,180));">
-			
+	<div class="splace-portrait" data-color="#ff0000" data-app-name="index">
+
+		<div class="splace-article-header splace-article-header--cover" style="">
+			<div class="splace-article-header__marker">splace – das digitale Magazin der Kunstuni Linz / the digital magazine of the University of Art and Design Linz</div>
+			<div class="splace-article-header__marker annotated">Issue #2, 2015</div>
+			<div class="splace-article-header__marker down"></div>
+
+			<div class="splace-cover-links">
+				<div class="splace-cover-links__block">
+					<span class="splace-cover-links__author">essay Karin Harrasser</span>
+					<a href="/2/article/10">Zombies. Leben, Arbeit, Produktion</a>
+					<a href="/2/article/10">Zombies: Life, Work, Production</a>
+				</div>
+				<div class="splace-cover-links__block">
+					<span class="splace-cover-links__author">essay Helmut lethen</span>
+					<a href="/2/article/4">Steinzeit der Evidenz.<br>Das Schwarz-Weiß des Roland Barthes</a>
+					<a href="/2/article/4">Stone Age of Evidence:<br>The Black and White of Roland Barthes</a>
+				</div>
+				<div class="splace-cover-links__block">
+					<span class="splace-cover-links__author">centerfold</span>
+					<a href="/2/article/7">Karin Fisslthaler</a>
+					<a href="/2/article/7">Brainbows</a>
+				</div>
+			</div>
+
+			<div class="splace-cover-fat">
+				<span class="splace-cover-fat__lang">
+					<a href="#">Deutsch</a>
+					<a href="#">English</a>
+				</span>
+				<span class="splace-cover-fat__color">
+					<a href="#">Farbe</a>
+					/
+					<a href="#">Colour</a>
+				</span>
+			</div>
+
 		</div>
 	</div>
 
@@ -219,6 +255,7 @@
 	<script type="text/javascript" src="/js/PageController.js"></script>
 	<script type="text/javascript" src="/js/UserController.js"></script>
 	<script type="text/javascript" src="/js/LandscapeAppController.js"></script>
+	<script type="text/javascript" src="/js/AuthorController.js"></script>
 	<script type="text/javascript" src="/js/blueimp-gallery.min.js"></script>
 </body>
 </html>

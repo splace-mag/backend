@@ -269,6 +269,7 @@
 	<script type="text/javascript" src="/js/PageController.js"></script>
 	<script type="text/javascript" src="/js/UserController.js"></script>
 	<script type="text/javascript" src="/js/LandscapeAppController.js"></script>
+	<script type="text/javascript" src="/js/AuthorController.js"></script>
 	<script type="text/javascript" src="/js/blueimp-gallery.min.js"></script>
 </body>
 </html>

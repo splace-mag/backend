@@ -28,6 +28,7 @@ class CreateArticlesTable extends Migration {
 			$table->text('page_sub_titleEN');
 			$table->integer('page_sub_title_padding_left');
 			$table->integer('page_sub_title_padding_top');
+			$table->string('app_name');
 			$table->string('reading_time');
 			$table->string('cover_image');
 			$table->string('cover_image_name');

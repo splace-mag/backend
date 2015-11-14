@@ -17,8 +17,8 @@
 | Main Routes
 |
 */
-Route::get('/', 'Frontend\MainController@index');
-Route::get('home', 'Frontend\MainController@index');
+Route::get('/', 'Frontend\PagesController@index');
+Route::get('home', 'Frontend\PagesController@index');
 Route::get('locale/{lang}', 'Auth\AccountController@changeLocale');
 
 /*
@@ -111,10 +111,12 @@ Route::post('addComment', 'Frontend\CommentController@addComment');
 | Magazine Routes
 |
 */
-Route::get('help', 'Frontend\MainController@showHelpPage');
-Route::get('{magazineid?}', 'Frontend\MainController@index');
-Route::get('{magazineid?}/splace', 'Frontend\MainController@index');
-Route::get('{magazineid}/article/{number}', 'Frontend\ArticleController@showArticle');
-Route::get('{magazineid}/content', 'Frontend\MainController@showContents');
-Route::get('{magazineid}/editorial', 'Frontend\MainController@showEditorial');
 
+Route::get('{magazineid?}/splace', 'Frontend\PagesController@index');
+Route::get('{magazineid?}/article/{number}', 'Frontend\PagesController@showArticle');
+
+Route::get('{magazineid?}/help', 'Frontend\PagesController@showHelpPage');
+Route::get('{magazineid?}/content', 'Frontend\PagesController@showContents');
+Route::get('{magazineid?}/editorial', 'Frontend\PagesController@showEditorial');
+
+Route::get('{magazineid?}', 'Frontend\PagesController@index');
