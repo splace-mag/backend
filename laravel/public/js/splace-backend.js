@@ -7,6 +7,7 @@ function editorLanguageSwitch(add, remove) {
 	$('.language-'+remove).addClass('hidden');
 	$('.language-'+add).removeClass('hidden');
 }
+
 function changeLanguage() {
 	$('#language-switch--de').on('click', function() {
 		editorLanguageSwitch('de', 'en');
@@ -195,32 +196,52 @@ function saveSection(e) {
 		'media_type': 'multiple'
 	};
 
-	var media = false;
-
+	//save Image
 	if($('[name="media-file-image"]')[0].files[0] != undefined) {
 		formdata = new FormData();
-		formdata.append("media-file-image", $('#media-file-image')[0].files[0]);
-		media = 'image';
-		uploadMedia(section, formdata, media, token);
+		formdata.append("media-file-image", $('[name="media-file-image"]')[0].files[0]);
+		formdata.append('image-descriptionDE', $('[name="image-descriptionDE"]').val());
+		formdata.append('image-descriptionEN', $('[name="image-descriptionEN"]').val());
+		
+		uploadMedia(section, formdata, token);
 	}
-	if($('[name="media-youtube-video"]').val() != '') {
-		formdata = new FormData();
+	//save Youtube Video Link
+	formdata = new FormData();
+	if($('[name="media-youtube-video"]').val() == '') {
+		formdata.append("media-youtube-video", '-');
+	}
+	else {
 		formdata.append("media-youtube-video", $('[name="media-youtube-video"]').val());
-		media = 'youtube-video';
-		uploadMedia(section, formdata, media, token);
 	}
-	if($('[name="media-vimeo-video"]') != '') {
-		formdata = new FormData();
+	formdata.append('youtube-video-descriptionDE', $('[name="youtube-video-descriptionDE"]').val());
+	formdata.append('youtube-video-descriptionEN', $('[name="youtube-video-descriptionEN"]').val());
+
+	uploadMedia(section, formdata, token);
+
+	//save Vimeo Video Link
+	formdata = new FormData();
+	if($('[name="media-vimeo-video"]').val() == '') {
+		formdata.append("media-vimeo-video", '-');
+	}
+	else {
 		formdata.append("media-vimeo-video", $('[name="media-vimeo-video"]').val());
-		media = 'vimeo-video';
-		uploadMedia(section, formdata, media, token);
 	}
-	if($('[name="media-file-image-cover"]') != '') {
+	formdata.append('vimeo-video-descriptionDE', $('[name="vimeo-video-descriptionDE"]').val());
+	formdata.append('vimeo-video-descriptionEN', $('[name="vimeo-video-descriptionEN"]').val());
+	
+	uploadMedia(section, formdata, token);
+	
+	//save Gallery Cover Image
+	if($('[name="media-file-image-cover"]')[0].files[0] != undefined) {
 		formdata = new FormData();
-		formdata.append('media-file-image-cover', $('#media-file-image-cover')[0].files[0]);
-		media = 'gallery';
-		uploadMedia(section, formdata, media, token);
+		formdata.append('media-file-image-cover', $('[name="media-file-image-cover"]')[0].files[0]);
+		formdata.append('gallery-thumbnail-descriptionDE', $('[name="gallery-thumbnail-descriptionDE"]').val());
+		formdata.append('gallery-thumbnail-descriptionEN', $('[name="gallery-thumbnail-descriptionEN"]').val());
+
+		uploadMedia(section, formdata, token);
 	}
+
+	//save Gallery Images
 	if($('[name="media-file-image-multiple"]')[0].files[0] != undefined) {
 		formdata = new FormData();
 		i = 0;
@@ -230,47 +251,48 @@ function saveSection(e) {
 		}
 		formdata.append('gallery_items', i);
 	
-		media = 'gallery';
-		uploadMedia(section, formdata, media, token);
+		uploadMedia(section, formdata, token);
 	}
 		
 	
-
+	
     mediacontent = {};
-    $('div.media-input').each(function(index) {
-    	mediacontent[index] = {};
-    	mediacontent[index]['id'] = $(this).children('[name="media-descriptionDE"]').attr('data-key');
-    	mediacontent[index]['descriptionDE'] = $(this).children('[name="media-descriptionDE"]').val();
-    	mediacontent[index]['descriptionEN'] = $(this).children('[name="media-descriptionEN"]').val();
+    $('.media-input').each(function(index) {
+    	if($(this).parent().attr('id') != 'media-youtube-video' && $(this).parent().attr('id') != 'media-vimeo-video' && $(this).children('[name="media-descriptionDE"]').attr('data-key') != '-1') {
+    		mediacontent[index] = {};
+	    	mediacontent[index]['id'] = $(this).children('.media-descriptionDE').attr('data-key');
+	    	mediacontent[index]['descriptionDE'] = $(this).children('.media-descriptionDE').val();
+	    	mediacontent[index]['descriptionEN'] = $(this).children('.media-descriptionEN').val();
+    	}  	
     });
 
 	$.post(section['id'], { _token: token, section: section, media: mediacontent })
         .success(function(response){
-        	//location.reload();
         	showSuccess('section');
         })
         .error(function(response){
             showError('section');
         });
+    
 }
 
-function uploadMedia(section, formdata, media, token) {
-	if(media != 'false') {
-        formdata.append("_token", token);
+function uploadMedia(section, formdata, token) {
+    formdata.append("_token", token);
 
-	    $.ajax({
-	        type: "POST",
-	        url: "fileupload/"+section['id'],
-	        enctype: 'multipart/form-data',
-	        contentType: false, 
-	        processData: false, 
-	        data: formdata, 
-	        success: function () {
-	            console.log('Media successful uploaded');
-	        }
-	    });
-    }
+    $.ajax({
+        type: "POST",
+        url: "fileupload/"+section['id'],
+        enctype: 'multipart/form-data',
+        contentType: false, 
+        processData: false, 
+        data: formdata, 
+        success: function () {
+            console.log('Media successful uploaded');
+            showSuccess('section');
+        }
+    });
 }
+
 function saveComment(e) {
 	e.preventDefault();
 	
@@ -481,6 +503,50 @@ function initializeForms() {
 	else if($('form').hasClass('magazine-form')) {
 		$('#active-magazine').change(function() { 
 			setActiveMagazine();
+		});
+	}
+
+	else if($('form').hasClass('section-editor-form')) {
+		$('[name="media-file-image"]').change(function() {
+			if($('[name="media-file-image"]')[0].files[0] != undefined) {
+				$('#media-image > .media-input').removeClass('media-empty');
+				var html = 	'<input class="form-control" name="image-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
+						+  	'<input class="form-control" name="image-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />';
+				$('#media-image > .media-input').html(html);
+			}
+		});
+
+		$('[name="media-youtube-video"]').keyup(function() {
+			if($('[name="media-youtube-video"]').val() != '') {
+				$('#media-youtube-video > .media-input').removeClass('media-empty');
+				var html = 	'<input class="form-control" name="youtube-video-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
+						+  	'<input class="form-control" name="youtube-video-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />';
+				$('#media-youtube-video > .media-input').html(html);
+			}
+			else {
+				$('#media-youtube-video > .media-input').html('');
+			}
+		});
+
+		$('[name="media-vimeo-video"]').keyup(function() {
+			if($('[name="media-vimeo-video"]').val() != '') {
+				$('#media-vimeo-video > .media-input').removeClass('media-empty');
+				var html = 	'<input class="form-control" name="vimeo-video-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
+						+  	'<input class="form-control" name="vimeo-video-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />';
+				$('#media-vimeo-video > .media-input').html(html);
+			}
+			else {
+				$('#media-vimeo-video > .media-input').html('');
+			}
+		});
+
+		$('[name="media-file-image-cover"]').change(function() {
+			if($('[name="media-file-image-cover"]')[0].files[0] != undefined) {
+				$('#media-gallery-thumbnail > .media-input').removeClass('media-empty');
+				var html = 	'<input class="form-control" name="gallery-thumbnail-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
+						+  	'<input class="form-control" name="gallery-thumbnail-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />';
+				$('#media-gallery-thumbnail > .media-input').html(html);
+			}
 		});
 	}
 

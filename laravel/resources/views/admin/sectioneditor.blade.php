@@ -62,18 +62,17 @@
 
 						<div id="media-image" class="form-group media-type">
 							<h5>Bild</h5>
-							<input class="form-file" type="file" name="media-file-image" id="media-file-image"/>
-							<div>
-							@if($media['image'])
-								<div class="media-input">
-									<h6>Aktuelles Bild</h6>
-									<a href="/images/{{$media['image-data']->file_name}}" target="_blank">{{$media['image-data']->original_name}}</a>
-									<input name="media-descriptionDE" class="form-control" data-key="{{$media['image-data']->media_id}}" type="text" value="{{$media['image-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
-									<input name="media-descriptionEN" class="form-control" data-key="{{$media['image-data']->media_id}}" type="text" value="{{$media['image-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
-								</div>
-							@else
+							<input class="form-file" type="file" name="media-file-image"/>
+							<div class="media-input">
+								@if($media['image'])
+								<h6>Aktuelles Bild</h6>
+								<a href="/images/{{$media['image-data']->file_name}}" target="_blank">{{$media['image-data']->original_name}}</a>
+								<a href="/admin/media/delete/{{$section->section_id}}/{{$media['image-data']->file_name}}" class="link-color__red article-delete"><i class="fa fa-times"></i> Löschen</a>
+								<input class="form-control media-descriptionDE" name="image-descriptionDE" data-key="{{$media['image-data']->media_id}}" type="text" value="{{$media['image-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+								<input class="form-control media-descriptionEN" name="image-descriptionEN" data-key="{{$media['image-data']->media_id}}" type="text" value="{{$media['image-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
+								@else
 								Derzeit kein Bild vorhanden!
-							@endif
+								@endif
 							</div>
 						</div>
 						<hr>
@@ -81,40 +80,44 @@
 						<div id="media-youtube-video" class="form-group media-type">
 							<h5>Youtube Video</h5>
 							<input class="form-control" type="text" name="media-youtube-video" @if($media['youtube-video']) value="{{$media['youtube-video-data']->original_name}}" @endif placeholder="Youtube Video-Code"/>
-							@if($media['youtube-video']) 
-								<div class="media-input">
-									<input name="media-descriptionDE" class="form-control" data-key="{{$media['youtube-video-data']->media_id}}" type="text" value="{{$media['youtube-video-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
-									<input name="media-descriptionEN" class="form-control" data-key="{{$media['youtube-video-data']->media_id}}" type="text" value="{{$media['youtube-video-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
-								</div>
+							<div class="media-input">
+							@if($media['youtube-video'] != '') 
+								<input class="form-control" name="youtube-video-descriptionDE" data-key="{{$media['youtube-video-data']->media_id}}" type="text" value="{{$media['youtube-video-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+								<input class="form-control" name="youtube-video-descriptionEN" data-key="{{$media['youtube-video-data']->media_id}}" type="text" value="{{$media['youtube-video-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
 							@endif
+							</div>
 						</div>
 						<hr>
 
-						<div id="media-vimeo-video" class="form-group media-type media-input">
+						<div id="media-vimeo-video" class="form-group media-type">
 							<h5>Vimeo Video</h5>
 							<input class="form-control" type="text" name="media-vimeo-video" @if($media['vimeo-video']) value="{{$media['vimeo-video-data']->original_name}}" @endif placeholder="Vimeo Video-Code"/>
-							@if($media['vimeo-video']) 
-								<div class="media-input">
-									<input name="media-descriptionDE" class="form-control" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
-									<input name="media-descriptionEN" class="form-control" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
-								</div>
+							<div class="media-input">
+							@if($media['vimeo-video'] && $media['vimeo-video'] != '') 
+								<input class="form-control" name="vimeo-video-descriptionDE" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+								<input class="form-control" name="vimeo-video-descriptionEN" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />						
 							@endif
+							</div>
 						</div>
 						<hr>
 
-						<div id="media-gallery" class="form-group media-type">
+						<div id="media-gallery-thumbnail" class="form-group media-type">
 							<h5>Galerie - Thumbnail</h5>
-							<input class="form-file" type="file" name="media-file-image-cover" id="media-file-image-cover"/>
+							<input class="form-file" type="file" name="media-file-image-cover"/>
+							<div class="media-input">
 							@if($media['cover'])
-								<div class="media-input">
-									<h6>Thumbnail</h6>
-									<a href="/images/{{$media['cover-data']->file_name}}" target="_blank">{{$media['cover-data']->original_name}}</a>
-									<input name="media-descriptionDE" class="form-control" data-key="{{$media['cover-data']->media_id}}" type="text" value="{{$media['cover-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
-									<input name="media-descriptionEN" class="form-control" data-key="{{$media['cover-data']->media_id}}" type="text" value="{{$media['cover-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
-								</div>
+								<h6>Thumbnail</h6>
+								<a href="/admin/media/delete/{{$section->section_id}}/{{$media['cover-data']->file_name}}" class="link-color__red article-delete"><i class="fa fa-times"></i> Löschen</a>
+								<a href="/images/{{$media['cover-data']->file_name}}" target="_blank">{{$media['cover-data']->original_name}}</a>
+								<input class="form-control media-descriptionDE" name="gallery-thumbnail-descriptionDE" data-key="{{$media['cover-data']->media_id}}" type="text" value="{{$media['cover-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+								<input class="form-control media-descriptionEN" name="gallery-thumbnail-descriptionEN" data-key="{{$media['cover-data']->media_id}}" type="text" value="{{$media['cover-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
 							@else
 								Derzeit kein Bild vorhanden!
 							@endif
+							</div>
+						</div>
+						
+						<div id="media-gallery" class="form-group media-type">
 							<h5>Bilder für Galerie</h5>
 							<input class="form-file" type="file" name="media-file-image-multiple" id="media-file-image-multiple" multiple/>
 							<div>
@@ -122,10 +125,10 @@
 								<h6>Aktuelle Bilder</h6>
 								@foreach($media['gallery-data'] as $gallery_item)
 								<div class="media-input">
-									<a class="link-color__red" href="/admin/media/delete/{{ $gallery_item->file_name }}"><i class="fa fa-times"></i></a>
 									<a href="/images/{{$gallery_item->file_name}}" target="_blank">{{$gallery_item->original_name}}</a>
-									<input name="media-descriptionDE" class="form-control" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
-									<input name="media-descriptionEN" class="form-control" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
+									<a class="link-color__red article-delete" href="/admin/media/delete/{{$section->section_id}}/{{ $gallery_item->file_name }}"><i class="fa fa-times"></i> Löschen</a>
+									<input name="media-descriptionDE" class="form-control media-descriptionDE" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+									<input name="media-descriptionEN" class="form-control media-descriptionEN" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
 								</div>
 								<br>
 								@endforeach

@@ -32,7 +32,7 @@ class Article extends Model implements AuthenticatableContract {
 		}
 		return Article::where('magazine_id', $magazine)
 			->orderBy('number', 'asc')
-			->select('magazine_id', 'article_id', 'number', 'titleDE', 'titleEN', 'page_titleDE', 'page_titleEN', 'page_sub_titleDE', 'page_sub_titleEN', 'spitzmarke')
+			->select('magazine_id', 'article_id', 'number', 'titleDE', 'titleEN', 'page_titleDE', 'page_titleEN', 'page_sub_titleDE', 'page_sub_titleEN', 'summaryDE', 'summaryEN', 'spitzmarke')
 			->get();
 	}
 	public static function getFirst($count, $magazine = 'active') {

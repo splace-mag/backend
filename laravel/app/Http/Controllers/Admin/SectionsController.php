@@ -145,29 +145,28 @@ class SectionsController extends Controller {
 
 	public function fileUpload($id) 
 	{
-		$mediaType = Request::input('media_type', 'none');
-
 		if(Request::hasFile('media-file-image')) {
 			$file = Request::file('media-file-image');
 			$filename = time().$file->getClientOriginalName();
 			$file->move(public_path('images'), $filename);
 			
-			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'image');
+			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'image', Request::input('image-descriptionDE', ''), Request::input('image-descriptionEN', ''));
 		}
 		if(Request::has('media-youtube-video')) {
-			$name = Request::input('media-youtube-video');
-			Section::saveMedia($id, '', $name, 'youtube-video');
+			$name = Request::input('media-youtube-video', '-');
+			\Log::info('Youtube: X'.$name.'X');
+			Section::saveMedia($id, '', $name, 'youtube-video', Request::input('youtube-video-descriptionDE', ''), Request::input('youtube-video-descriptionEN', ''));
 		}
 		if(Request::has('media-vimeo-video')) {
-			$name = Request::input('media-vimeo-video');
-			Section::saveMedia($id, '', $name, 'vimeo-video');
+			$name = Request::input('media-vimeo-video', '-');
+			Section::saveMedia($id, '', $name, 'vimeo-video', Request::input('vimeo-video-descriptionDE', ''), Request::input('vimeo-video-descriptionEN', ''));
 		}
 		if(Request::hasFile('media-file-image-cover')) {
 			$file = Request::file('media-file-image-cover');
 			$filename = time().$file->getClientOriginalName();
 			$file->move(public_path('images'), $filename);
 			
-			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'cover');
+			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'cover', Request::input('gallery-thumbnail-descriptionDE', ''), Request::input('gallery-thumbnail-descriptionEN', ''));
 		}
 
 		for($i = 0; $i < Request::input('gallery_items', 0); $i++) {
@@ -176,20 +175,20 @@ class SectionsController extends Controller {
 				$filename = time().$file->getClientOriginalName();
 				$file->move(public_path('images'), $filename);
 				
-				Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'gallery');
+				Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'gallery', '', '');
 			}
 		}
 		
 		return response()->json(['success' => 'true']);
 	}
 
-	public function deleteMediaItem($filename) {
+	public function deleteMediaItem($sectionId, $filename) {
 		if(\File::exists('images/'.$filename)) {
 			\File::delete('images/'.$filename);
 			Section::deleteMedia($filename);
 		}
 
-		return redirect()->back();
+		return redirect('admin/sections/'.$sectionId);
 	}
 
 }

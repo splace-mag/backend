@@ -19,9 +19,10 @@
 			<div class="panel panel-default">
 				
 				<div class="panel-heading">
-					<div class="col-xs-4">User</div>
-					<div class="col-xs-4">Artikel / Absatz</div>
-					<div class="col-xs-2">Veröffentlicht</div>
+					<div class="col-xs-5">Artikel / Absatz</div>
+					<div class="col-xs-2">Datum</div>
+					<div class="col-xs-2">User</div>
+					<div class="col-xs-1">Veröffentlicht</div>
 				</div>
 
 				<div class="panel-body">
@@ -30,9 +31,10 @@
 							<tbody>
 							@foreach ($comments as $comment)
 								<tr>
-									<td class="col-xs-4">{{ $comment->name }}</td>
-									<td class="col-xs-4"><a href="/admin/comments/{{ $comment->comment_id }}">{{ $comment->titleDE }} / {{ $comment->key }}</a></td>
-									<td class="col-xs-2">
+									<td class="col-xs-5"><a href="/admin/comments/{{ $comment->comment_id }}">{{ $comment->titleDE }} / {{ $comment->key }}</a></td>
+									<td class="col-xs-2">{{ $comment->created_at }}</td>
+									<td class="col-xs-2">{{ $comment->name }}</td>
+									<td class="col-xs-1" style="text-align: center">
 										@if ( $comment->marked == 1)
 										<input name="marked-{{$comment->comment_id}}" type="checkbox" checked disabled/>
 										@else

@@ -6,7 +6,7 @@
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Kommentar zu {{ $comment->titleDE }}
+					Kommentar zu "{{ $comment->titleDE }}"
 				</div>
 				
 				<div class="panel-body editor">
@@ -16,7 +16,8 @@
 
 						<div class="form-group">
 							Absatz: <a href="/admin/sections/{{ $comment->section_id }}"> {{ $comment->key }}</a><br>
-							User: {{ $comment->name }} ( <a href="mailto:{{ $comment->email }}">{{ $comment->email }}</a> )
+							User: {{ $comment->name }} ( <a href="mailto:{{ $comment->email }}">{{ $comment->email }}</a> )<br/>
+							Datum: {{ $comment->created_at }}
 						</div>
 
 						<div class="form-group">

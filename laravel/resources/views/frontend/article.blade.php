@@ -10,7 +10,7 @@
 </head>
 <body class="splace-orientation--portrait">
 	
-	<div class="splace-portrait" data-color="{{$article->link_color}}" data-app-folder="apps/{{$article->app_name}}" data-app-name="{{$article->app_name}}">
+	<div class="splace-portrait" data-color="{{$article->link_color}}" data-app-name="{{$article->app_name}}">
 		<div class="splace-article-header" style="background-image: linear-gradient(-60deg, {{$article->gradient_2}}, {{$article->gradient_1}});">
 			<div class="splace-article-header__marker">{{$article->spitzmarke}}</div>
 			<div class="splace-article-header__marker annotated">Reading: {{$article->reading_time}} min</div>

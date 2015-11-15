@@ -157,7 +157,7 @@ class Section extends Model implements AuthenticatableContract {
 		return $section;
 	}
 
-	public static function saveMedia($section_id, $file_name, $original_name, $media_type, $number = 0) {
+	public static function saveMedia($section_id, $file_name, $original_name, $media_type, $descriptionDE, $descriptionEN, $number = 0) {
 		if($media_type == 'image' || $media_type == 'cover') {
 			$media = \DB::table('media')
 				->where('section_id', $section_id)
@@ -177,17 +177,32 @@ class Section extends Model implements AuthenticatableContract {
 		
 		if($media_type == 'youtube-video' || $media_type == 'vimeo-video') {
 			if(\DB::table('media')->where('section_id', $section_id)->where('media_type', $media_type)->count() >= '1') {
-				\DB::table('media')
-					->where('section_id', $section_id)
-					->where('media_type', $media_type)
-					->update(['original_name' => $original_name]);
+				if($original_name == '-') {
+					\DB::table('media')
+						->where('section_id', $section_id)
+						->where('media_type', $media_type)
+						->delete();
+				}
+				else {
+					\DB::table('media')
+						->where('section_id', $section_id)
+						->where('media_type', $media_type)
+						->update([
+							'original_name' => $original_name, 
+							'descriptionDE' => $descriptionDE, 
+							'descriptionEN' => $descriptionEN
+						]);
+				}
 			}
-			else {
+			else if($original_name != '-') {
 				\DB::table('media')
 					->insert([
 						'section_id' => $section_id, 
 						'media_type' => $media_type, 
-						'original_name' => $original_name]);
+						'original_name' => $original_name, 
+						'descriptionDE' => $descriptionDE, 
+						'descriptionEN' => $descriptionEN
+					]);
 			}
 		}
 		else {	
@@ -197,7 +212,10 @@ class Section extends Model implements AuthenticatableContract {
 					'file_name' => $file_name, 
 					'original_name' => $original_name, 
 					'media_type' => $media_type, 
-					'number' => $number]);
+					'number' => $number, 
+					'descriptionDE' => $descriptionDE, 
+					'descriptionEN' => $descriptionEN
+				]);
 		}
 	}
 

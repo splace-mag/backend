@@ -73,7 +73,7 @@ Route::group(['prefix' =>'admin'], function() {
 	Route::post('sections/{id}', 'Admin\SectionsController@saveSection');
 	Route::get('sections/delete/{id}', 'Admin\SectionsController@deleteSection');
 
-	Route::get('media/delete/{filename}', 'Admin\SectionsController@deleteMediaItem');
+	Route::get('media/delete/{sectionId}/{filename}', 'Admin\SectionsController@deleteMediaItem');
 
 	Route::get('comments', 'Admin\CommentsController@index');
 	Route::get('comments/{id}', 'Admin\CommentsController@editComment');
