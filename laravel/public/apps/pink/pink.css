@@ -1,0 +1,157 @@
+.pink_main {
+	color: blue;
+}
+
+/*LAYOUT*/
+
+/*Transitions*/
+div {
+transition-timing-function: ease-out;
+    -webkit-transition: background 5s; /* Safari */
+    transition: background 5s;
+	
+	transition-timing-function: ease-out;
+    -webkit-transition: opacity 2s; /* Safari */
+    transition: opacity 2s;
+} 
+	
+#body {	
+}
+
+#backgroundWrapper {
+	/*background-color: #e3deca;*/
+	transition-timing-function: ease-out;
+    -webkit-transition: background 5s; /* Safari */
+    transition: background 5s;
+}
+
+#wrapper {
+	width: 90%;
+	height: 90%;
+	margin-left: auto;
+    margin-right: auto;
+	padding: 120px 10px 120px 10px;
+	visibility: hidden;
+	/*border: 1px solid #cfcfcf;*/
+
+}
+#box_top {
+	/*border: 1px solid pink;*/
+}
+#box_axis {
+	/*height: 35px;*/
+	font-family: 'CircularStd-Book';
+	/*border: 1px solid pink;*/
+}
+#box_bottom {
+	/*border: 1px solid pink;*/
+}
+
+#title {
+	position: absolute;
+	top: 250px;
+	left: 100px;
+	font-family: 'CircularStd-Book';
+	font-size: 1.1 em;
+	color: #FF91AF;
+	
+	transition-timing-function: ease-out;
+    -webkit-transition: opacity 2s; /* Safari */
+    transition: opacity 2s;
+	/*border: 1px solid pink;*/
+}
+
+.colLeft {
+	float: left;
+	width: 33%;
+	margin: 0px 0px 0px 0px;
+	/*border: 1px solid #cfcfcf;*/
+}
+.colCenter {
+	margin: 0px 0px 0px 0px;
+	width: 33%;
+	display: inline-block;
+	/*border: 1px solid #cfcfcf;*/
+}
+.colRight {
+	float: right;
+	width: 33%;
+	margin: 0px 0px 0px 0px;
+	/*border: 1px solid #cfcfcf;*/
+}
+.stmtArea {
+	margin: 5px 5px 5px 5px;
+	/*border: 1px solid #cfcfcf;*/
+}
+.clearing {
+	clear: both;
+}
+
+/*AXIS*/
+
+#colLeftAxis {
+	float: left;
+	width: 7%;
+	/*height: 30px;*/
+	margin: 0px 0px 0px 0px;
+	/*border: 1px solid #cfcfcf;*/
+}
+#colCenterAxis{
+	margin: 0px 0px 0px 0px;
+	display: inline-block;
+	padding: 20px 0px 0px 0px;
+	width: 85%;
+	/*height: 30px;*/
+	/*border: 1px solid #cfcfcf;*/
+}
+#colRightAxis {
+	float: right;
+	width: 7%;
+	/*height: 30px;*/
+	margin: 0px 0px 0px 0px;
+	/*border: 1px solid #cfcfcf;*/
+}
+
+.axis_svg {
+	/*without margin and width definitions the svg element moved to far left*/
+	/*
+	margin-left: auto;
+    margin-right: auto;	
+	width: 90%;
+	*/
+}
+
+.axisTypo {
+	font-size: 0.8em;
+	fill: #ffffff;
+	
+}
+
+
+
+/*STATEMENTS*/
+.stmtContainer {
+	visibility = 'visible';
+	opacity = '0';
+	font-family: 'CircularStd-Book';
+	font-size: 0.7em; /* 14px/16=0.875em */
+	/*border: 1px solid #cfcfcf;*/
+	color: #878787;
+	
+	
+	
+}
+
+
+/*WEBFONT*/
+
+@font-face {
+  font-family: 'CircularStd-Book';
+  src: 	url('webfont_circularStdBook/CircularStd-Book.eot?#iefix') format('embedded-opentype'),
+		url('webfont_circularStdBook/CircularStd-Book.otf')  format('opentype'),
+	    url('webfont_circularStdBook/CircularStd-Book.woff') format('woff'),
+		url('webfont_circularStdBook/CircularStd-Book.ttf')  format('truetype'),
+		url('webfont_circularStdBook/CircularStd-Book.svg#CircularStd-Book') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

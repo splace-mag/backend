@@ -1,0 +1,289 @@
+.dummy_main {
+	color: blue;
+}
+
+
+
+#splashscreen{
+	z-index: 300;
+	position:absolute;
+	height: 100%;
+	width:100%;
+	background: url("bg.png");
+	background-repeat: no-repeat;
+}
+
+#filegal{
+	position:absolute;
+	top:-1000px;
+}
+
+#choosefromgal{
+	z-index: 303;
+	position:absolute;
+	top:63%;
+	left:30%;
+	height: 50px;
+	width:100px;
+	color:black;
+
+}
+
+#choosefromcam{
+	z-index: 303;
+	position:absolute;
+	top:63%;
+	left:25%;
+	height: 50px;
+	width:100px;
+}
+
+
+#splaceApp{
+	width:1024px;
+	height:730px;
+	min-width: 1024px;
+	min-height: 730px;
+
+}
+
+#hiddencontainer{
+	z-index: 400;
+	position:absolute;
+	height:100px;
+	width:100px;
+	left:0%;
+	right:0%;
+}
+
+#splashscreenimg{
+	z-index: 301;
+	position:absolute;
+	height: 100%;
+	width:100%;
+	top:0%;
+	left:0%;
+	background: url("3angles_Cover.png");
+	background-repeat: no-repeat;
+}
+
+#splashscreentext2{
+	z-index: 301;
+	position:absolute;
+	top:50%;
+	left:3%;
+	height: 434px;
+	width:371px;
+	background: url("choosepictex.png");
+	background-repeat: no-repeat;
+}
+
+#cambutton{
+	z-index: 301;
+	position:absolute;
+	top:50%;
+	left:65%;
+	height: 434px;
+	width:371px;
+	background: url("chooser.png");
+	background-repeat: no-repeat;
+}
+
+#splashscreentext{
+	z-index: 301;
+	position:absolute;
+	top:15%;
+	left:55%;
+	height: 434px;
+	width:371px;
+	background: url("title.png");
+	background-repeat: no-repeat;
+}
+
+#imageViewport {
+	position:relative;
+	background-color:blue; 
+	width:1024px; height:730px;
+}
+
+.filterImage {
+	position:absolute;
+	height: 100%;
+	width:100%;
+	text-align: left;
+	z-index:1;
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+
+#fixit_button {
+	z-index:10;
+	position:absolute;
+	left:45%;
+	top:40%;
+	width:192px;
+	height:111px;
+	background: url("fixit.png");
+}
+
+
+.fresh{
+	display: none;
+	font-family: sans-serif;
+}
+.fresh a {
+	color: black;
+}
+
+
+#share {
+	color: white;
+
+	z-index:10;
+	position:absolute;
+	left:45%;
+	top:50%;
+	width:192px;
+	height:111px;
+}
+#save {
+	color: white;
+	z-index:10;
+	position:absolute;
+	left:50%;
+	top:50%;
+	width:192px;
+	height:111px;
+
+}
+
+#filterText{
+	position:absolute;
+	height: 100%;
+	width:100%;
+	text-align: left;
+	z-index:5;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	top:30%;
+	left:30%;
+	opacity:0.75;
+	background-repeat: no-repeat;
+}
+
+#loadingScreen{
+	z-index:20;
+	background: url("bg_loading.png");
+}
+
+
+#left_info{
+	z-index:10;
+	position:absolute;
+	left:2%;
+	top:40%;
+	width:41px;
+	height:216px;
+	background: url("info_bw_white.png");
+	background-repeat: no-repeat;
+}
+
+.info{
+	background-repeat: no-repeat;
+}
+
+#right_info{
+	z-index:10;
+	position:absolute;
+	left:94%;
+	top:40%;
+	width:41px;
+	height:216px;
+	background: url("info_eastman_white.png");
+	background-repeat: no-repeat;
+}
+
+#top_info{
+	z-index:10;
+	position:absolute;
+	left:45%;
+	top:2%;
+	width:216px;
+	height:41px;
+	background: url("info_techni_white.png");
+	background-repeat: no-repeat;
+
+}
+
+#bottom_info{
+	z-index:10;
+	position:absolute;
+	left:45%;
+	top:92%;
+	width:216px;
+	height:41px;
+	background: url("info_ufa_white.png");
+	background-repeat: no-repeat;
+
+}
+
+#noFilterImage {
+	opacity:1; /* is only 0 for testing the layers; set to 1 for normal usage */
+	width:1024px;
+	height:730px;
+	min-width: 1024px;
+	min-height: 730px;
+
+}
+
+#rightFilter {
+	opacity:0;
+	-webkit-filter: hue-rotate(180deg);
+	width:1024px;
+	height:730px;
+	min-width: 1024px;
+	min-height: 730px;
+
+}
+
+#leftFilter {
+	opacity:0;
+	filter: grayscale(1);
+	-webkit-filter: grayscale(1);
+	-moz-filter: grayscale(1);
+	-o-filter: grayscale(1);
+	-ms-filter: grayscale(1);
+	width:1024px;
+	height:730px;
+	min-width: 1024px;
+	min-height: 730px;
+
+
+}
+
+#topFilter {
+	opacity:0;
+	-webkit-filter:brightness(200%);
+	width:1024px;
+	height:730px;
+	min-width: 1024px;
+	min-height: 730px;
+}
+
+#bottomFilter {
+	opacity:0;
+	-webkit-filter: sepia(100%);
+	width:1024px;
+	height:730px;
+	min-width: 1024px;
+	min-height: 730px;
+
+}
+
+
+#topInfo {
+	margin-left:300px;
+	margin-top:20px;
+	background-color:black;
+}

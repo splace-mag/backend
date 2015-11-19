@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<title>RedAndBlue</title>
+<link rel="stylesheet" href="redAndBlue.css" />
+<script src="redAndBlue.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="Chart.js"></script>
+
+
+</head>
+<body>
+	<div id="splaceApp" style="height: 730px; width: 1024px;">
+		<div id="leftPanel" class="leftPanel">
+			<img id="img1" src="img/pink.jpg" class="img" draggable="false" /> <img
+				id="img2" src="img/indigo.jpg" class="img" draggable="false" /> <img
+				id="img3" src="img/lilac.jpg" class="img" draggable="false" /> <img
+				id="img4" src="img/magenta.jpg" class="img" draggable="false" /> <img
+				id="img5" src="img/purple.jpg" class="img" draggable="false" /> <img
+				id="img6" src="img/violet.jpg" class="img" draggable="false" /><img
+				id="img7" src="img/darkpurple.jpg" class="img" draggable="false" />
+			<img id="img8" src="img/lightpurple.jpg" class="img"
+				draggable="false" /> <img id="img9" src="img/whitenedmagenta.jpg"
+				class="img" draggable="false" />
+		</div>
+		<div class="accordion rightPanel">
+			<div id='sec1' class="accordion-section opensection">
+				<a class="accordion-section-title" href="#choose">1. Choose red
+					and blue</a>
+
+				<div id="choose" class="accordion-section-content">
+					<p class="textWhite">Please choose a color on the left side.</p>
+				</div>
+			</div>
+
+			<div id='sec2' class="accordion-section" disabled="disabled">
+				<a class="accordion-section-title" href="#feelings">2. Feelings</a>
+
+				<div id="feelings" class="accordion-section-content">
+					<p id="info2Panel" class="visible textWhite">You haven't
+						selected a color!</p>
+
+					<div id="feelingsPanel" class="hidden">
+						<h1 id="colorLabel" class="textWhite">This is</h1>
+						<h2 id="redAmountLabel" style="color: red;" class="textWhite"></h2>
+						<h2 id="blueAmountLabel" style="color: blue;" class="textWhite"></h2>
+						<!-- <select id="answerSelect"
+							style="height: 30px; width: 98%; margin-left: 1%;">
+							<option value="" disabled selected>How do you feel?</option>
+							<option value="happy">Happy</option>
+							<option value="sad">Sad</option>
+							<option value="uncertain">Uncertain</option>
+							<option value="neutral">Neutral</option>
+						</select> -->
+						<button value="happy" onclick="saveVote('happy')" style="height: 30px; width: 100%; margin-top: 10px;">Happy</option>
+						<button value="sad" onclick="saveVote('sad')" style="height: 30px; width: 100%; margin-top: 10px;">Sad</option>
+						<button value="uncertain" onclick="saveVote('uncertain')" style="height: 30px; width: 100%; margin-top: 10px;">Uncertain</option>
+						<button value="neutral" onclick="saveVote('neutral')" style="height: 30px; width: 100%; margin-top: 10px;">Neutral</option>
+						
+						<!-- <button id="saveButton"
+							style="height: 30px; width: 100%; margin-top: 10px;">Save</button> -->
+					</div>
+				</div>
+			</div>
+
+			<div id='sec3' class="accordion-section">
+				<a class="accordion-section-title" href="#results">3. Results</a>
+
+				<div id="results" class="accordion-section-content">
+					<p id="info3Panel" class="textWhite">Execute steps 1 and 2
+						first!</p>
+
+					<h1 id="colorResultLabel" class="textWhite hidden">Results for
+					</h1>
+					<canvas id="myChart">
+					
+					</canvas>
+				</div>
+			</div>
+
+			<script>
+				redAndBlue_startup();
+				$('.accordion ' + '#choose').slideDown(300).addClass('open');
+				var openedImgElement = null;
+				var hasImgClass = true;
+				var duration = 500;
+				var selectedcolor;
+
+				$('leftPanel').on('click', function(e) {
+					id = $(e.target).attr('id');
+					alert(id);
+					if ($(e.target).is('img')) {
+						e.preventDefault();
+						return;
+					}
+					if (openedImgElement != null) {
+						closeSelection(openedImgElement);
+					}
+				});
+				$('img').on(
+						'click',
+						function() {
+							if (openedImgElement != null
+									&& openedImgElement.attr('id') == $(this)
+											.attr('id')) {
+								closeSelection(openedImgElement);
+							} else {
+								if (openedImgElement != null) {
+									showForm(openedImgElement);
+								}
+								openedImgElement = $(this);
+								hasImgClass = false;
+								showColor(openedImgElement);
+								close_accordion_section();
+								openaccordion('#feelings');
+								showFeelingsPanel(true);
+							}
+						});
+
+				function showFeelingsPanel(show) {
+					if (show) {
+						$('#info2Panel').addClass('hidden');
+						$('#info2Panel').removeClass('visible');
+						$('#feelingsPanel').removeClass('hidden');
+						$('#feelingsPanel').addClass('visible');
+						refreshColorInfo();
+					} else {
+						$('#info2Panel').addClass('visible');
+						$('#info2Panel').removeClass('hidden');
+						$('#feelingsPanel').removeClass('visible');
+						$('#feelingsPanel').addClass('hidden');
+						$('#colorLabel').text('This is ');
+					}
+				}
+
+				function refreshColorInfo() {
+					if (openedImgElement.attr('id') == 'img1') {
+						$('#colorLabel').append('Pink');
+						$('#redAmountLabel').text('47% red');
+						$('#blueAmountLabel').text('33% blue');
+					} else if (openedImgElement.attr('id') == 'img2') {
+						$('#colorLabel').append('Indigo');
+						$('#redAmountLabel').text('37% red');
+						$('#blueAmountLabel').text('63% blue');
+					} else if (openedImgElement.attr('id') == 'img3') {
+						$('#colorLabel').append('Lilac');
+						$('#redAmountLabel').text('35% red');
+						$('#blueAmountLabel').text('43% blue');
+					} else if (openedImgElement.attr('id') == 'img4') {
+						$('#colorLabel').append('Magenta');
+						$('#redAmountLabel').text('63% red');
+						$('#blueAmountLabel').text('37% blue');
+					} else if (openedImgElement.attr('id') == 'img5') {
+						$('#colorLabel').append('Purple');
+						$('#redAmountLabel').text('32% red');
+						$('#blueAmountLabel').text('45% blue');
+					} else if (openedImgElement.attr('id') == 'img6') {
+						$('#colorLabel').append('Violet');
+						$('#redAmountLabel').text('39% red');
+						$('#blueAmountLabel').text('61% blue');
+					} else if (openedImgElement.attr('id') == 'img7') {
+						$('#colorLabel').append('Darkpurple');
+						$('#redAmountLabel').text('33% red');
+						$('#blueAmountLabel').text('55% blue');
+					} else if (openedImgElement.attr('id') == 'img8') {
+						$('#colorLabel').append('Lightpurple');
+						$('#redAmountLabel').text('32% red');
+						$('#blueAmountLabel').text('40% blue');
+					} else if (openedImgElement.attr('id') == 'img9') {
+						$('#colorLabel').append('Whitened Magenta');
+						$('#redAmountLabel').text('41% red');
+						$('#blueAmountLabel').text('33% blue');
+					}
+				}
+
+				function closeSelection(imgElement) {
+					if (imgElement != null) {
+						showForm(imgElement);
+						openedImgElement = null;
+						showFeelingsPanel(false);
+
+						close_accordion_section();
+						openaccordion('#choose');
+						
+						var canvas = document.getElementById("myChart");
+						var context = document.getElementById("myChart").getContext(
+						"2d");
+						context.clearRect(0, 0, canvas.width, canvas.height);
+						$('#info3Panel').removeClass('hidden');
+						$('#info3Panel').addClass('visible');
+						$('#colorResultLabel').removeClass('visible');
+						$('#colorResultLabel').addClass('hidden');
+						$('#colorResultLabel').text('Results for ');
+					}
+				}
+
+				function showColor(imgElement) {
+					imgElement.addClass('showColorAnimation');
+					if (imgElement.attr('id') == 'img1') {
+						imgElement.attr("src", "img/animations/pink.gif");
+						imgElement.addClass('transitionUpperLeft');
+						selectedcolor = 'Pink';
+					} else if (imgElement.attr('id') == 'img2') {
+						imgElement.attr("src", "img/animations/indigo.gif");
+						imgElement.addClass('transitionUpperMiddle');
+						selectedcolor = 'Indigo';
+					} else if (imgElement.attr('id') == 'img3') {
+						imgElement.attr("src", "img/animations/lilac.gif");
+						imgElement.addClass('transitionUpperRight');
+						selectedcolor = 'Lilac';
+					} else if (imgElement.attr('id') == 'img4') {
+						imgElement.attr("src", "img/animations/magenta.gif");
+						imgElement.addClass('transitionMiddleLeft');
+						selectedcolor = 'Magenta';
+					} else if (imgElement.attr('id') == 'img5') {
+						imgElement.attr("src", "img/animations/purple.gif");
+						imgElement.addClass('transitionMiddleMiddle');
+						selectedcolor = 'Purple';
+					} else if (imgElement.attr('id') == 'img6') {
+						imgElement.attr("src", "img/animations/violet.gif");
+						imgElement.addClass('transitionMiddleRight');
+						selectedcolor = 'Violet';
+					} else if (imgElement.attr('id') == 'img7') {
+						imgElement.attr("src", "img/animations/darkpurple.gif");
+						imgElement.addClass('transitionLowerLeft');
+						selectedcolor = 'Darkpurple';
+					} else if (imgElement.attr('id') == 'img8') {
+						imgElement
+								.attr("src", "img/animations/lightpurple.gif");
+						imgElement.addClass('transitionLowerMiddle');
+						selectedcolor = 'Lightpurple';
+					} else if (imgElement.attr('id') == 'img9') {
+						imgElement.attr("src",
+								"img/animations/whitenedmagenta.gif");
+						imgElement.addClass('transitionLowerRight');
+						selectedcolor = 'Lightened magenta';
+					}
+				}
+
+				function showForm(imgElement) {
+					imgElement.removeClass('showColorAnimation');
+					if (imgElement.attr('id') == 'img1') {
+						imgElement.attr("src", "img/pink.jpg");
+						imgElement.removeClass('transitionUpperLeft');
+					} else if (imgElement.attr('id') == 'img2') {
+						imgElement.attr("src", "img/indigo.jpg");
+						imgElement.removeClass('transitionUpperMiddle');
+					} else if (imgElement.attr('id') == 'img3') {
+						imgElement.attr("src", "img/lilac.jpg");
+						imgElement.removeClass('transitionUpperRight');
+					} else if (imgElement.attr('id') == 'img4') {
+						imgElement.attr("src", "img/magenta.jpg");
+						imgElement.removeClass('transitionMiddleLeft');
+					} else if (imgElement.attr('id') == 'img5') {
+						imgElement.attr("src", "img/purple.jpg");
+						imgElement.removeClass('transitionMiddleMiddle');
+					} else if (imgElement.attr('id') == 'img6') {
+						imgElement.attr("src", "img/violet.jpg");
+						imgElement.removeClass('transitionMiddleRight');
+					} else if (imgElement.attr('id') == 'img7') {
+						imgElement.attr("src", "img/darkpurple.jpg");
+						imgElement.removeClass('transitionLowerLeft');
+					} else if (imgElement.attr('id') == 'img8') {
+						imgElement.attr("src", "img/lightpurple.jpg");
+						imgElement.removeClass('transitionLowerMiddle');
+					} else if (imgElement.attr('id') == 'img9') {
+						imgElement.attr("src", "img/whitenedmagenta.jpg");
+						imgElement.removeClass('transitionLowerRight');
+					}
+				}
+
+				function openaccordion(section) {
+					if (section == '#choose') {
+						$('#sec1').addClass('opensection');
+						$('#choose').slideDown(300).addClass('open');
+						closeSelection(openedImgElement);
+					} else if (section == '#feelings') {
+						$('#sec2').addClass('opensection');
+						$('#feelings').slideDown(300).addClass('open');
+					} else if (section == '#results') {
+						$('#sec3').addClass('opensection');
+						$('#results').slideDown(300).addClass('open');
+					}
+				}
+
+				function close_accordion_section() {
+					$('.accordion .accordion-section').removeClass(
+							'opensection');
+					$('.accordion .accordion-section-title').removeClass(
+							'active');
+					$('.accordion .accordion-section-content').slideUp(300)
+							.removeClass('open');
+				}
+
+				$(document).ready(function() {
+
+					$('.accordion-section-title').click(function(e) {
+						// Grab current anchor value
+						var currentAttrValue = $(this).attr('href');
+
+						if ($(e.target).is('.active')) {
+							close_accordion_section();
+						} else {
+							close_accordion_section();
+
+							openaccordion(currentAttrValue);
+						}
+
+						e.preventDefault();
+					});
+				});
+
+				$("#saveButton")
+						.click(
+								function() {
+									var answerval = $("#answerSelect").val();
+									if (answerval == null) {
+										alert('Select a feeling from the list first!');
+									} else {
+										saveVote(answerval);
+									}
+
+								});
+				
+				function saveVote(answerval){
+					close_accordion_section();
+					openaccordion('#results');
+					ajaxindicatorstart('loading data.. please wait..');
+					$.get(
+							'http://1-dot-redandblue-978.appspot.com/redandblue?color='
+									+ selectedcolor
+									+ '&answer='
+									+ answerval + "&time="
+									+ new Date().getTime(),
+							function(response) {
+								ajaxindicatorstop();
+								$('#colorResultLabel').removeClass('hidden');
+								$('#colorResultLabel').addClass('visible');
+								$('#colorResultLabel').append(selectedcolor);
+								showChart(response);
+								$('#info3Panel')
+										.removeClass(
+												'visible');
+								$('#info3Panel').addClass(
+										'hidden');
+							});
+				}
+
+				function showChart(data) {
+					var splitted = data.split(';');
+					var happyNr = '0';
+					var sadNr = '0'; 
+					var uncertainNr = '0'; 
+					var neutralNr = '0';
+				
+					for(i = 0; i < splitted.length; i++){
+						var splittedcolorvote = splitted[i].split(':');
+						if(splittedcolorvote[0] == 'happy'){
+							happyNr = splittedcolorvote[1];
+						}
+						else if(splittedcolorvote[0] == 'sad'){
+							sadNr = splittedcolorvote[1];
+						}
+						else if(splittedcolorvote[0] == 'uncertain'){
+							uncertainNr = splittedcolorvote[1];
+						}
+						else if(splittedcolorvote[0] == 'neutral'){
+							neutralNr = splittedcolorvote[1];
+						}
+					}
+					
+					var ctx = document.getElementById("myChart").getContext(
+							"2d");
+					var data = {
+						labels : [ "Happy", "Sad", "Uncertain", "Neutral" ],
+						datasets : [ {
+							label : "Result data",
+							fillColor : "rgba(220,220,220,0.5)",
+							strokeColor : "rgba(220,220,220,0.8)",
+							highlightFill : "rgba(220,220,220,0.75)",
+							highlightStroke : "rgba(220,220,220,1)",
+							data : [ happyNr * 1, sadNr * 1, uncertainNr * 1, neutralNr * 1 ]
+						} ]
+					};
+
+					var myBarChart = new Chart(ctx).Bar(data, {
+						barShowStroke : false,
+						responsive: true
+					});
+
+				}
+
+				function ajaxindicatorstop() {
+					jQuery('#resultLoading .bg').height('100%');
+					jQuery('#resultLoading').fadeOut(300);
+					jQuery('body').css('cursor', 'default');
+				}
+
+				function ajaxindicatorstart(text) {
+					if (jQuery('body').find('#resultLoading').attr('id') != 'resultLoading') {
+						jQuery('body')
+								.append(
+										'<div id="resultLoading" style="display:none"><div><img src="img/ajax-loader.gif"><div>'
+												+ text
+												+ '</div></div><div class="bg"></div></div>');
+					}
+
+					jQuery('#resultLoading').css({
+						'width' : '100%',
+						'height' : '100%',
+						'position' : 'fixed',
+						'z-index' : '10000000',
+						'top' : '0',
+						'left' : '0',
+						'right' : '0',
+						'bottom' : '0',
+						'margin' : 'auto'
+					});
+
+					jQuery('#resultLoading .bg').css({
+						'background' : '#000000',
+						'opacity' : '0.7',
+						'width' : '100%',
+						'height' : '100%',
+						'position' : 'absolute',
+						'top' : '0'
+					});
+
+					jQuery('#resultLoading>div:first').css({
+						'width' : '250px',
+						'height' : '75px',
+						'text-align' : 'center',
+						'position' : 'fixed',
+						'top' : '0',
+						'left' : '0',
+						'right' : '0',
+						'bottom' : '0',
+						'margin' : 'auto',
+						'font-size' : '16px',
+						'z-index' : '10',
+						'color' : '#ffffff'
+
+					});
+
+					jQuery('#resultLoading .bg').height('100%');
+					jQuery('#resultLoading').fadeIn(300);
+					jQuery('body').css('cursor', 'wait');
+				}
+			</script>
+</body>
+</html>

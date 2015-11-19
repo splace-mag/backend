@@ -1,0 +1,177 @@
+html {
+    height: 100%;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	height:100%;
+	width:100%;
+	background-color:black;
+}
+
+.leftPanel{
+	width:70%;
+	height:100%;
+	float:left;
+}
+
+.rightPanel {
+	float:left;
+	width:30%;
+	height:100%;
+}
+
+
+.img {
+	width:30%;
+	margin-top:2%;
+	margin-left:2%;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+
+.img-scale {
+	-moz-transition:all 1s;
+    -webkit-transition:all 1s;
+    -o-transition:all 1s;
+    transition:all 1s;
+    transform:scale(2);
+    -webkit-transform: scale(2);
+    -moz-transform-origin: 100 100;
+    border-style: solid;
+    border-width: 5px;
+}
+
+ 
+.showColorAnimation {
+   	transform:scale(3.1);
+    -webkit-transform: scale(3.1);
+
+    -moz-transition:all 1s;
+    -webkit-transition:all 1s;
+    -o-transition:all 1s;
+    transition:all 1s;
+    
+    -webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	
+	border-style: solid;
+    border-width: 5px;
+}
+
+.transitionUpperLeft {
+    -moz-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+}
+.transitionUpperMiddle{
+    -moz-transform-origin: 50% 0;
+    -webkit-transform-origin: 50% 0;
+}
+.transitionUpperRight{
+	-moz-transform-origin: 100% 0;
+	-webkit-transform-origin: 100% 0;
+}
+
+.transitionMiddleLeft {
+	-moz-transform-origin: 0 50%;
+	-webkit-transform-origin: 0 50%;
+}
+.transitionMiddleMiddle {
+	-moz-transform-origin: 50% 50%;
+	-webkit-transform-origin: 50% 50%;
+}
+.transitionMiddleRight {
+	-moz-transform-origin: 100% 50%;
+	-webkit-transform-origin: 100% 50%;
+}
+
+.transitionLowerLeft {
+	-moz-transform-origin: 0 100%;
+	-webkit-transform-origin: 0 100%;
+}.transitionLowerMiddle {
+	-moz-transform-origin: 50% 100%;
+	-webkit-transform-origin: 50% 100%;
+}.transitionLowerRight {
+	-moz-transform-origin: 100% 100%;
+	-webkit-transform-origin: 100% 100%;
+}
+
+
+--Accordion Panel
+/*----- Accordion -----*/
+.accordion, .accordion * {
+    -webkit-box-sizing:border-box; 
+    -moz-box-sizing:border-box; 
+    box-sizing:border-box;
+}
+ 
+.accordion {
+    overflow-y:auto;
+    box-shadow:0px 1px 3px rgba(1,1,1,0.75);
+    border-radius:3px;
+    border-color:#333;
+    border-width:3px;
+    background:black;
+}
+ 
+/*----- Section Titles -----*/
+.accordion-section-title {
+    width:100%;
+    padding:15px;
+    display:inline-block;
+    border-bottom:1px solid #1a1a1a;
+    background:#333;
+    transition:all linear 0.15s;
+    -webkit-transition:all linear 0.15s;
+    /* Type */
+    font-size:1.200em;
+    text-shadow:0px 1px 0px #1a1a1a;
+    color:#fff;
+}
+ 
+.accordion-section-title.active, .accordion-section-title:hover {
+    background:#4c4c4c;
+    /* Type */
+    text-decoration:none;
+}
+ 
+/* .accordion-section:last-child .accordion-section-title {
+    border-bottom:none;
+} */
+ 
+/*----- Section Content -----*/
+.accordion-section-content {
+    padding:15px;
+    display:none;
+}
+
+.opensection {
+	/* Firefox */
+	height: -moz-calc(100% - 60px - 2.400em);
+	/* WebKit */
+	height: -webkit-calc(100% - 60px - 2.400em);
+	
+	-moz-transition: all 0.5s ease-out;
+	-webkit-transition: all 0.5s ease-out;
+}
+
+/* Feelings */
+.hidden {
+	visibility:collapse;
+	height: 0;
+}
+visible{
+	visibility:visible;
+}
+
+.textWhite{
+	color:white;
+}
