@@ -119,16 +119,16 @@
 						
 						<div id="media-gallery" class="form-group media-type">
 							<h5>Bilder für Galerie</h5>
-							<input class="form-file" type="file" name="media-file-image-multiple" id="media-file-image-multiple" multiple/>
-							<div>
+							<input class="form-file" type="file" name="media-file-image-multiple" multiple/>
+							<div class="media-input-container">
 							@if($media['gallery'])
 								<h6>Aktuelle Bilder</h6>
 								@foreach($media['gallery-data'] as $gallery_item)
 								<div class="media-input">
 									<a href="/images/{{$gallery_item->file_name}}" target="_blank">{{$gallery_item->original_name}}</a>
 									<a class="link-color__red article-delete" href="/admin/media/delete/{{$section->section_id}}/{{ $gallery_item->file_name }}"><i class="fa fa-times"></i> Löschen</a>
-									<input name="media-descriptionDE" class="form-control media-descriptionDE" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
-									<input name="media-descriptionEN" class="form-control media-descriptionEN" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
+									<input name="media-descriptionDE" name="gallery-item-descriptionDE" class="form-control media-descriptionDE" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
+									<input name="media-descriptionEN" name="gallery-item-descriptionEN" class="form-control media-descriptionEN" data-key="{{$gallery_item->media_id}}" type="text" value="{{$gallery_item->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />
 								</div>
 								<br>
 								@endforeach

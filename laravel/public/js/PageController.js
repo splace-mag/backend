@@ -57,7 +57,7 @@ var splacePageController = (function($) {
       	mkup.filter('title'), url);
 
     	$('.portrait[data-url="'+url+'"]').append($(content).filter('.splace-portrait').children());
-    	adjustHead();
+    	adjustHead('.portrait[data-url="'+url+'"]');
   	
   		if($(content).filter('.splace-portrait').children().find('.splace-article-header__help-wrapper').length > 0) {
   			splaceOrientationController.setHelpSite(true);	
@@ -65,17 +65,17 @@ var splacePageController = (function($) {
   			splaceOrientationController.setHelpSite(false);
   		}
 
-  		var color = $('body').find('.splace-portrait').data('color');
-  		if(color.length !== 7) {
+  		var color = $(content).filter('.splace-portrait').data('color');
+  		if(typeof color === 'undefined' || color.length !== 7) {
   			color = '#00909f';
   		}
   		setPageColor(color);    
 
-  		setAppName();	
+  		setAppName($(content).filter('.splace-portrait').data('app-name'));	
 	}
 
-	function setAppName() {
-		splaceLandscapeAppController.setApp($('body').find('.splace-portrait').data('app-name'), $('body').find('.splace-portrait').data('app-folder'));
+	function setAppName(name) {
+		splaceLandscapeAppController.setApp(name);
 	}
 
 	function setPageColor(color) {
@@ -89,6 +89,12 @@ var splacePageController = (function($) {
 		    + ',' + parseInt(color.slice(-2),16)
 		    +',0.1)';
 		$('.splace-background-color-alpha').css('background-color', rgbaCol);
+
+		var rgbaCol2 = 'rgba(' + parseInt(color.slice(-6,-4),16)
+		    + ',' + parseInt(color.slice(-4,-2),16)
+		    + ',' + parseInt(color.slice(-2),16)
+		    +',0.2)';
+		$('.splace-background-color-alpha2').css('background-color', rgbaCol2);
 	}
 
 	//Creates an empty div container
@@ -114,13 +120,28 @@ var splacePageController = (function($) {
 					localStorage.setItem(url, data);
 				})
 				.fail(function(err) {
-					window.location.href = url;
+					fillPage(url, err.responseText);
+					//localStorage.setItem(url, data);
+					//window.location.href = url;
 				});
 		//}
 	}
 
-	function adjustHead() {
+	function adjustHead(selector) {
+
 		$('.splace-article-header').css('height', window.innerHeight-40);
+
+		$('.splace-article-header__marker').each(function() {
+			if($(this).text() === 'Editorial') {
+				$(this).parent().css('height', 'auto');
+				$(this).parent().parent().css('padding-bottom', 0);
+			}
+			if($(this).text().substr(0, 8) === 'splace –') {
+				$(this).parent().parent().css('padding-bottom', 0);	
+			}
+		})
+
+
 
 		$('.splace-paragraph__annotation-gallery').on('click', function(e) {
 			e.preventDefault();
@@ -132,7 +153,7 @@ var splacePageController = (function($) {
 		        	titleElement: 'h3',
 		        	youTubeClickToPlay: false
 		        },
-		        links = this.getElementsByTagName('a');
+		        links = $(e.delegateTarget)[0].getElementsByTagName('a');//this.getElementsByTagName('a');
 		    blueimp.Gallery(links, options);
 		});
 
@@ -156,6 +177,17 @@ var splacePageController = (function($) {
 
 			blueimp.Gallery([data], {youTubeClickToPlay: false, vimeoClickToPlay: false});
 		});
+
+		var currentH1 = $('.splace-article-header > h1');
+		var currentHeader = $('.splace-article-header');
+		var sideSpace = parseInt(currentH1.css('left'));
+		if(currentH1.css('left') === 'auto') {
+			sideSpace = parseInt(currentH1.css('right'));
+		}
+		var spaceForH1 = currentHeader.width() - sideSpace;
+		if(parseInt(currentH1.css('width')) > spaceForH1) {
+			currentH1.css('width', spaceForH1);
+		}
 	}
 
 	function orientationChanged(orientation) {
@@ -233,6 +265,7 @@ var splacePageController = (function($) {
 
 	function next() {
 		var currentIndex = getPageIndex(location.pathname);
+		setNothingActive();
 		
 		if(typeof splaceConfig.navigationItems[parseInt(currentIndex)+1] !== 'undefined') {
 			showPage(splaceConfig.navigationItems[parseInt(currentIndex)+1].url);
@@ -241,6 +274,7 @@ var splacePageController = (function($) {
 
 	function prev() {
 		var currentIndex = getPageIndex(location.pathname);
+		setNothingActive();
 			
 		if(typeof splaceConfig.navigationItems[parseInt(currentIndex)-1] !== 'undefined') {
 			showPage(splaceConfig.navigationItems[parseInt(currentIndex)-1].url);
@@ -305,8 +339,14 @@ var splacePageController = (function($) {
 		//if($('.splace-paragraph--annotation-active').length > 0) {
 		//	setNothingActive()
 		//} else {
-			setNothingActive();
 			var $target = $(e.target);
+			if($target.parents('.splace-paragraph').hasClass('splace-paragraph--annotation-active')) {
+				setNothingActive();
+				return;
+			}
+			setNothingActive();
+			
+
 
 			if($target.parents('.splace-paragraph').find('.splace-paragraph__annotation-gallery').length > 0) {
 				return;
@@ -324,7 +364,7 @@ var splacePageController = (function($) {
 	function commentClick(e) {
 		//e.preventDefault();
 		//e.stopPropagation();
-		console.log(e);
+		
 		if($('.splace-paragraph--comments-active').length > 0) {
 			setNothingActive();
 		} else {
@@ -356,24 +396,67 @@ var splacePageController = (function($) {
 
 	}
 
+	var isLangChanging = false;
 	function initLanguageSwitch() {
 		$('.splace-language-switcher').on('click', function(e) {
 			e.preventDefault();
+			e.stopPropagation();
 
-			var $target = $(e.target);
-			var newLang = 'DE';
-			if($target.text() === 'DE') {
-				newLang = 'EN';
+			if(isLangChanging) {
+				return;
 			}
 
+			isLangChanging = true;
+			var $target = $(e.target);
+			var newLang = '';
+			if($target.text() === 'DE') {
+				newLang = 'DE';
+				$target.text('EN');
+			} else {
+				newLang = 'EN';
+				$target.text('DE');
+			}
+			
 			$.get(_basePath+'/locale/'+newLang.toLowerCase())
 				.done(function(response) {
 					showPage(location.pathname, true);
-					$target.text(newLang);
-
+					
+					window.setTimeout(function() {
+						isLangChanging = false;
+					}, 500);
 				});
 
 		});
+	}
+
+	function webgl_detect(return_context)
+	{
+	    if (!!window.WebGLRenderingContext) {
+	        var canvas = document.createElement("canvas"),
+	             names = ["webgl", "experimental-webgl", "moz-webgl", "webkit-3d"],
+	           context = false;
+
+	        for(var i=0;i<4;i++) {
+	            try {
+	                context = canvas.getContext(names[i]);
+	                if (context && typeof context.getParameter == "function") {
+	                    // WebGL is enabled
+	                    if (return_context) {
+	                        // return WebGL object if the function's argument is present
+	                        return {name:names[i], gl:context};
+	                    }
+	                    // else, return just true
+	                    return true;
+	                }
+	            } catch(e) {}
+	        }
+
+	        // WebGL is supported, but disabled
+	        return false;
+	    }
+
+	    // WebGL not supported
+	    return false;
 	}
 
 	function init() {
@@ -391,10 +474,14 @@ var splacePageController = (function($) {
 		});
 
 		var color = $('.splace-portrait').data('color');
-  		if(color.length !== 7) {
+  		if(typeof color === 'undefined' || color.length !== 7) {
   			color = '#00909f';
   		}
   		setPageColor(color);
+
+  		if(!webgl_detect()) {
+  			$('body').addClass('no-webgl');
+  		}
 	}
 
 	init();

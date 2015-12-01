@@ -66,7 +66,7 @@
 
 							<div class="col-md-12">
 								Hintergrundfarbe (Format: #000000): 
-								<input class="form-control gradient-input" name="subtitle_backgroundcolor" value="{{ $article->subtitle_backgroundcolor }}" placeholder="Hintergrundfarbe"/>
+								<input class="form-control gradient-input" name="subtitle_backgroundcolor" value="{{ $article->subtitle_backgroundcolor or '' }}" placeholder="Hintergrundfarbe"/>
 							</div>
 
 							<div class="col-md-6">

@@ -27,10 +27,10 @@ class MainController extends Controller
 			$magazineList .= "{name: '#".$m->version." ".$m->title."', url: '/".$m->magazine_id."/splace'}, ";
 		}
 
-		$articleList = "{url: '/".Session::get('active')."/splace', title: 'Cover', subtitle: '', spitzmarke: ''},
+		$articleList = "{url: '/".Session::get('active', 2)."/splace', title: 'Cover', subtitle: '', spitzmarke: ''},
 				{url: '/help', title: 'Hilfe', subtitle: '', spitzmarke: ''},
-				{url: '/".Session::get('active')."/content', title: 'Inhaltsverzeichnis', subtitle: 'Index', spitzmarke: ''},
-				{url: '/".Session::get('active')."/editorial', title: 'Editorial', subtitle: 'Editorial', spitzmarke: ''},";
+				{url: '/".Session::get('active', 2)."/content', title: 'Inhaltsverzeichnis', subtitle: 'Index', spitzmarke: ''},
+				{url: '/".Session::get('active', 2)."/editorial', title: 'Editorial', subtitle: 'Editorial', spitzmarke: ''},";
 
 		foreach ($articles as $a) {
 			if(Session::get('language', 'de') == 'de') {

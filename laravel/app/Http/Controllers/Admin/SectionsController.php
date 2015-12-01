@@ -175,7 +175,7 @@ class SectionsController extends Controller {
 				$filename = time().$file->getClientOriginalName();
 				$file->move(public_path('images'), $filename);
 				
-				Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'gallery', '', '');
+				Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'gallery', Request::input('media-file-gallery-descriptionDE-'.$i, ''), Request::input('media-file-gallery-descriptionEN-'.$i, ''));
 			}
 		}
 		

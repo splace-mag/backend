@@ -118,34 +118,34 @@ function saveArticle(e) {
 
 		var element = editor[i].getElement('container');
 		if($(element).attr('data-markdown') == 'textDE') {
-			sectionsDE = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html());
+			sectionsDE = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href='));
 		}
 		else if($(element).attr('data-markdown') == 'textEN') {
-			sectionsEN = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html());
+			sectionsEN = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href='));
 		}
 		else if($(element).attr('data-markdown') == 'introductionDE') {
-			article['introductionDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+			article['introductionDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		else if($(element).attr('data-markdown') == 'introductionEN') {
-			article['introductionEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+			article['introductionEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		else if($(element).attr('data-markdown') == 'summaryDE') {
-			article['summaryDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+			article['summaryDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		else if($(element).attr('data-markdown') == 'summaryEN') {
-			article['summaryEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+			article['summaryEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		else if($(element).attr('data-markdown') == 'used_materialDE') {
-			article['used_materialDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+			article['used_materialDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		else if($(element).attr('data-markdown') == 'used_materialEN') {
-			article['used_materialEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+			article['used_materialEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		else if($(element).attr('data-markdown') == 'bio_textDE') {
-			article['bio_textDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+			article['bio_textDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		else if($(element).attr('data-markdown') == 'bio_textEN') {
-			article['bio_textEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html();
+			article['bio_textEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		
     }
@@ -244,12 +244,15 @@ function saveSection(e) {
 	//save Gallery Images
 	if($('[name="media-file-image-multiple"]')[0].files[0] != undefined) {
 		formdata = new FormData();
-		i = 0;
-		for(file in $('[name="media-file-image-multiple"]')[0].files) {
-			formdata.append('media-file-gallery-'+i, $('#media-file-image-multiple')[0].files[i]);
-			i++;
+		var files = $('[name="media-file-image-multiple"]')[0].files;
+
+		for(var i = 0; i < files.length; i++) {
+			formdata.append('media-file-gallery-'+i, $('[name="media-file-image-multiple"]')[0].files[i]);
+			formdata.append('media-file-gallery-descriptionDE-'+i, $('#media-input-new-'+i).children('[name="gallery-image-descriptionDE"]').val());
+			formdata.append('media-file-gallery-descriptionEN-'+i, $('#media-input-new-'+i).children('[name="gallery-image-descriptionEN"]').val());
 		}
 		formdata.append('gallery_items', i);
+		$('.media-input-new').removeClass();
 	
 		uploadMedia(section, formdata, token);
 	}
@@ -509,7 +512,6 @@ function initializeForms() {
 	else if($('form').hasClass('section-editor-form')) {
 		$('[name="media-file-image"]').change(function() {
 			if($('[name="media-file-image"]')[0].files[0] != undefined) {
-				$('#media-image > .media-input').removeClass('media-empty');
 				var html = 	'<input class="form-control" name="image-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
 						+  	'<input class="form-control" name="image-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />';
 				$('#media-image > .media-input').html(html);
@@ -518,7 +520,6 @@ function initializeForms() {
 
 		$('[name="media-youtube-video"]').keyup(function() {
 			if($('[name="media-youtube-video"]').val() != '') {
-				$('#media-youtube-video > .media-input').removeClass('media-empty');
 				var html = 	'<input class="form-control" name="youtube-video-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
 						+  	'<input class="form-control" name="youtube-video-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />';
 				$('#media-youtube-video > .media-input').html(html);
@@ -530,7 +531,6 @@ function initializeForms() {
 
 		$('[name="media-vimeo-video"]').keyup(function() {
 			if($('[name="media-vimeo-video"]').val() != '') {
-				$('#media-vimeo-video > .media-input').removeClass('media-empty');
 				var html = 	'<input class="form-control" name="vimeo-video-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
 						+  	'<input class="form-control" name="vimeo-video-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />';
 				$('#media-vimeo-video > .media-input').html(html);
@@ -542,10 +542,28 @@ function initializeForms() {
 
 		$('[name="media-file-image-cover"]').change(function() {
 			if($('[name="media-file-image-cover"]')[0].files[0] != undefined) {
-				$('#media-gallery-thumbnail > .media-input').removeClass('media-empty');
 				var html = 	'<input class="form-control" name="gallery-thumbnail-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
 						+  	'<input class="form-control" name="gallery-thumbnail-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />';
 				$('#media-gallery-thumbnail > .media-input').html(html);
+			}
+		});
+
+		$('[name="media-file-image-multiple"]').change(function() {
+			if($('[name="media-file-image-multiple"]')[0].files[0] != undefined) {
+
+				$('.media-input-new').remove();
+				var html = '';
+				var files = $('[name="media-file-image-multiple"]')[0].files;
+
+				for(var i = 0; i < files.length; i++) {
+					var html = html+'<div class="media-input-new" id="media-input-new-' + i + '">'
+						+ 	'<span>' + $('[name="media-file-image-multiple"]')[0].files[i].name + '</span>'
+						+ 	'<input class="form-control" name="gallery-image-descriptionDE" data-key="-1" type="text" placeholder="Bildbeschreibung Deutsch" />'
+						+  	'<input class="form-control" name="gallery-image-descriptionEN" data-key="-1" type="text" placeholder="Bildbeschreibung Englisch" />'
+						+   '</div>';
+				}
+					
+				$('#media-gallery > .media-input-container').append(html);
 			}
 		});
 	}

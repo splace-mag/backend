@@ -119,4 +119,5 @@ Route::get('{magazineid?}/help', 'Frontend\PagesController@showHelpPage');
 Route::get('{magazineid?}/content', 'Frontend\PagesController@showContents');
 Route::get('{magazineid?}/editorial', 'Frontend\PagesController@showEditorial');
 
+Route::get('help', 'Frontend\PagesController@showHelpPage');
 Route::get('{magazineid?}', 'Frontend\PagesController@index');

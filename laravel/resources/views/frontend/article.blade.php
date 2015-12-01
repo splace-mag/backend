@@ -24,6 +24,8 @@
 					{!!$article->page_titleEN!!}
 				@endif
 			</h1>
+			
+			@if($language == 'de' && $article->page_sub_titleDE || $language != 'de' && $article->page_sub_titleEN)
 			<h2 style="left: {{$article->page_sub_title_padding_left}}%; top: {{$article->page_sub_title_padding_top}}%; background-color: {{$article->subtitle_backgroundcolor}}">
 				@if($language == 'de')
 					{{$article->page_sub_titleDE}}
@@ -31,7 +33,11 @@
 					{{$article->page_sub_titleEN}}
 				@endif
 			</h2>
-			@if($article->cover_image) <img src="/images/{{$article->cover_image}}" alt="" style="left: {{$article->cover_image_padding_left}}%; top: {{$article->cover_image_padding_top}}%;"> @endif
+			@endif
+
+			@if($article->cover_image) 
+				<img src="/images/{{$article->cover_image}}" alt="" style="left: {{$article->cover_image_padding_left}}%; top: {{$article->cover_image_padding_top}}%;"> 
+			@endif
 		</div>
 
 		<div class="splace-paragraph">
@@ -139,6 +145,7 @@
 				
 				@if($section->media['gallery'] != false)
 					<div class="splace-paragraph__annotation-gallery">
+						<span>{{$section->media['cover']}}</span>
 						@if($section->media['cover'] != false)
 							<img src="/images/{{ $section->media['cover-data']->file_name }}" />
 						@endif
@@ -154,10 +161,12 @@
 							@endif
 					    @endforeach
 
-					    @if($language == 'de')
-							<p class="splace-paragraph__annotation-info">{{ $section->media['cover-data']->descriptionDE }}</p>
-						@else
-							<p class="splace-paragraph__annotation-info">{{ $section->media['cover-data']->descriptionEN }}</p>
+						@if($section->media['cover'] != false)
+						    @if($language == 'de')
+								<p class="splace-paragraph__annotation-info">{{ $section->media['cover-data']->descriptionDE }}</p>
+							@else
+								<p class="splace-paragraph__annotation-info">{{ $section->media['cover-data']->descriptionEN }}</p>
+							@endif
 						@endif
 					</div>
 				@endif

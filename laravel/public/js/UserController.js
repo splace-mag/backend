@@ -102,7 +102,7 @@ var splaceUserController = (function() {
 			return false;
 		}
 
-		$.get('/signout', {})
+		$.get('/signout')
 			.done(function(response) {
 				loggedin = false;
 				$('body').removeClass('loggedin');
@@ -403,6 +403,7 @@ var splaceUserActionController = (function() {
 
 			if(response.success) {
 				close();	
+				splaceProfileActionController.init();
 				return;
 			}
 
@@ -447,6 +448,11 @@ var splaceUserActionController = (function() {
 		visible = false;
 	}
 
+	function open() {
+		userInterface.addClass('active');
+		visible = true;
+	}
+
 	function toggleUserInterface(e) {
 		e.preventDefault();
 
@@ -482,7 +488,8 @@ var splaceUserActionController = (function() {
 	init();
 
 	return {
-		close: close
+		close: close,
+		open: open
 	}
 
 })();
