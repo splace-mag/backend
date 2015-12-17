@@ -118,10 +118,10 @@ function saveArticle(e) {
 
 		var element = editor[i].getElement('container');
 		if($(element).attr('data-markdown') == 'textDE') {
-			sectionsDE = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href='));
+			sectionsDE = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html());
 		}
 		else if($(element).attr('data-markdown') == 'textEN') {
-			sectionsEN = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href='));
+			sectionsEN = parseSections($(editor[i].getElement('previewer')).find('#epiceditor-preview').html());
 		}
 		else if($(element).attr('data-markdown') == 'introductionDE') {
 			article['introductionDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
@@ -174,10 +174,8 @@ function saveArticle(e) {
 
 	$.post(article['id'], { _token: token, article: article, sectionsDE: sectionsDE, sectionsEN: sectionsEN, links: links, booktips: booktips })
         .success(function(response){
+        	$('[name="id"]').val(response['articleId']);
         	showSuccess('article');
-        	//setTimeout(function() { 
-        	//	history.back();
-        	//}, 2500);
         })
         .error(function(response){
             showError('article');
@@ -218,6 +216,14 @@ function saveSection(e) {
 
 	uploadMedia(section, formdata, token);
 
+	//save Youtube Video Cover
+	if($('[name="media-file-youtube-cover"]')[0].files[0] != undefined) {
+		formdata = new FormData();
+		formdata.append('media-file-youtube-cover', $('[name="media-file-youtube-cover"]')[0].files[0]);
+
+		uploadMedia(section, formdata, token);
+	}
+
 	//save Vimeo Video Link
 	formdata = new FormData();
 	if($('[name="media-vimeo-video"]').val() == '') {
@@ -230,6 +236,14 @@ function saveSection(e) {
 	formdata.append('vimeo-video-descriptionEN', $('[name="vimeo-video-descriptionEN"]').val());
 	
 	uploadMedia(section, formdata, token);
+
+	//save Vimeo Video Cover
+	if($('[name="media-file-vimeo-cover"]')[0].files[0] != undefined) {
+		formdata = new FormData();
+		formdata.append('media-file-vimeo-cover', $('[name="media-file-vimeo-cover"]')[0].files[0]);
+
+		uploadMedia(section, formdata, token);
+	}
 	
 	//save Gallery Cover Image
 	if($('[name="media-file-image-cover"]')[0].files[0] != undefined) {

@@ -10,7 +10,7 @@
 <body class="splace-orientation--portrait">
 	
 	<div class="splace-portrait">
-		<div class="splace-article-header" style="background-image: linear-gradient(-60deg, rgb(171, 197, 86), rgb(140, 176, 110)); height: auto !important;">
+		<div class="splace-article-header splace-article-header--no-shadow" style="background-image: linear-gradient(90deg, rgb(255, 242, 47), rgb(244, 110, 35)); height: auto !important; overflow: auto;">
 			<div class="splace-article-header__marker">@if($language == 'de') Inhaltsverzeichnis @else Contents @endif </div>
 				<div class="splace-index-wrapper">
 
@@ -87,7 +87,7 @@
 			</div>
 			<div class="splace-footer-links">
 				<a @if($language == 'de') href="/locale/en" @else href="/locale/de" @endif class="splace-language-switcher splace-footer-links__item">@if($language == 'de') EN @else DE @endif</a>
-				<a href="#" class="splace-footer-links__item">INFO</a>
+				<a href="/2/article/14" class="splace-footer-links__item">INFO</a>
 				<div class="splace-footer-links__item splace-external-links__wrapper">
 					<i class="icon-external-link"></i>
 					<ul class="splace-external-links__list">
@@ -96,7 +96,7 @@
 						<li><a href="mailto:redaktion@splace-magazine.at" target="_blank"><i class="icon-mail"></i></a></li>
 					</ul>
 				</div>
-				<a href="hilfe.html" class="splace-footer-links__item">?</a>
+				<a href="/help" class="splace-footer-links__item">?</a>
 				<div class="splace-footer-links__item splace-user-links__wrapper">
 					<!--<i class="icon-user-link"></i>-->*
 					<ul class="splace-user-links__list">

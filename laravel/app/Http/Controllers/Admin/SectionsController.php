@@ -62,7 +62,7 @@ class SectionsController extends Controller {
 	 * @return Response
 	 */
 	public function showArticleSections($article_id) {
-		$sections = Section::getByArticle($article_id);
+		$sections = Section::getAllByArticle($article_id);
 		if(count($sections) == '0') {
 			$warning = 'nosectionexists';
 		}
@@ -152,15 +152,34 @@ class SectionsController extends Controller {
 			
 			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'image', Request::input('image-descriptionDE', ''), Request::input('image-descriptionEN', ''));
 		}
+
 		if(Request::has('media-youtube-video')) {
 			$name = Request::input('media-youtube-video', '-');
 			\Log::info('Youtube: X'.$name.'X');
 			Section::saveMedia($id, '', $name, 'youtube-video', Request::input('youtube-video-descriptionDE', ''), Request::input('youtube-video-descriptionEN', ''));
 		}
+
+		if(Request::hasFile('media-file-youtube-cover')) {
+			$file = Request::file('media-file-youtube-cover');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('images'), $filename);
+			
+			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'youtube-cover', '', '');
+		}
+
 		if(Request::has('media-vimeo-video')) {
 			$name = Request::input('media-vimeo-video', '-');
 			Section::saveMedia($id, '', $name, 'vimeo-video', Request::input('vimeo-video-descriptionDE', ''), Request::input('vimeo-video-descriptionEN', ''));
 		}
+
+		if(Request::hasFile('media-file-vimeo-cover')) {
+			$file = Request::file('media-file-vimeo-cover');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('images'), $filename);
+			
+			Section::saveMedia($id, $filename, $file->getClientOriginalName(), 'vimeo-cover', '', '');
+		}
+
 		if(Request::hasFile('media-file-image-cover')) {
 			$file = Request::file('media-file-image-cover');
 			$filename = time().$file->getClientOriginalName();

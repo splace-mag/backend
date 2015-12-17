@@ -87,6 +87,19 @@
 							@endif
 							</div>
 						</div>
+
+						<div id="media-youtube-thumbnail" class="form-group media-type">
+							<input class="form-file" type="file" name="media-file-youtube-cover"/>
+							<div class="media-input">
+							@if($media['youtube-cover'])
+								<h6>Thumbnail</h6>
+								<a href="/admin/media/delete/{{$section->section_id}}/{{$media['youtube-cover-data']->file_name}}" class="link-color__red article-delete"><i class="fa fa-times"></i> Löschen</a>
+								<a href="/images/{{$media['youtube-cover-data']->file_name}}" target="_blank">{{$media['youtube-cover-data']->original_name}}</a>
+							@else
+								Derzeit kein Bild vorhanden!
+							@endif
+							</div>
+						</div>
 						<hr>
 
 						<div id="media-vimeo-video" class="form-group media-type">
@@ -96,6 +109,19 @@
 							@if($media['vimeo-video'] && $media['vimeo-video'] != '') 
 								<input class="form-control" name="vimeo-video-descriptionDE" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->descriptionDE}}" placeholder="Bildbeschreibung Deutsch" />
 								<input class="form-control" name="vimeo-video-descriptionEN" data-key="{{$media['vimeo-video-data']->media_id}}" type="text" value="{{$media['vimeo-video-data']->descriptionEN}}" placeholder="Bildbeschreibung Englisch" />						
+							@endif
+							</div>
+						</div>
+
+						<div id="media-vimeo-thumbnail" class="form-group media-type">
+							<input class="form-file" type="file" name="media-file-vimeo-cover"/>
+							<div class="media-input">
+							@if($media['vimeo-cover'])
+								<h6>Thumbnail</h6>
+								<a href="/admin/media/delete/{{$section->section_id}}/{{$media['vimeo-cover-data']->file_name}}" class="link-color__red article-delete"><i class="fa fa-times"></i> Löschen</a>
+								<a href="/images/{{$media['vimeo-cover-data']->file_name}}" target="_blank">{{$media['vimeo-cover-data']->original_name}}</a>
+							@else
+								Derzeit kein Bild vorhanden!
 							@endif
 							</div>
 						</div>

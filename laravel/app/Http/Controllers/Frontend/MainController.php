@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Contracts\Auth\Registrar;
 use Request;
+use Auth;
 use App\Splace\Magazines;
 use App\Splace\Article;
 
@@ -41,7 +42,8 @@ class MainController extends Controller
 			}
 		}
 
-		$user = \Auth::user();
+		$user = Auth::user();
+		
 		$userData = '';
 		if($user) {
 			$userData = "user: {id: ".$user->id.", name: '".$user->name."', email: '".$user->email."', image: '".$user->picture."'}";

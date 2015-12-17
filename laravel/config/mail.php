@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'ehrenmueller@applics.at', 'name' => 'splace Magazin'],
+	'from' => ['address' => 'redaktion@splace-magazine.at', 'name' => 'splace Magazin'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 	|
 	*/
 
-	'username' => 'ehrenmueller@applics.at',
+	'username' => env('MAIL_USER', ''),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
 	|
 	*/
 
-	'password' => 'zfvdndysmlryjbvl',
+	'password' => env('MAIL_PASSWORD', ''),
 
 	/*
 	|--------------------------------------------------------------------------

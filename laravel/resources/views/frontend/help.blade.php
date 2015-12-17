@@ -11,11 +11,55 @@
 <body class="splace-orientation--portrait">
 	
 	<div class="splace-portrait">
-		<div class="splace-article-header" style="background-image: linear-gradient(-60deg, rgb(73,137,124), rgb(112,198,215));">
+		<div class="splace-article-header splace-article-header--no-shadow" style=":after: box-shadow: none; background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(255, 242, 47));">
 			<div class="splace-article-header__marker">Hilfe</div>
 			<div class="splace-article-header__marker down">^ swipe up</div>
 
 			<div class="splace-article-header__help-wrapper">
+				<div class="splace-article-header__help-row">
+					<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 91.229 73.252" enable-background="new 0 0 91.229 73.252" xml:space="preserve" style="margin-left: -4%;">
+					<g>
+						<defs>
+							<rect id="SVGID_47_" y="0" width="91.229" height="73.252"/>
+						</defs>
+						<clipPath id="SVGID_2_">
+							<use xlink:href="#SVGID_47_"  overflow="visible"/>
+						</clipPath>
+						<path clip-path="url(#SVGID_2_)" fill="none" stroke="#FFFFFF" stroke-width="0.781" stroke-miterlimit="10" d="M18.887,23.707
+							v46.09c0,1.691,1.377,3.064,3.071,3.064h65.81c1.693,0,3.071-1.373,3.071-3.064v-46.09c0-1.689-1.378-3.064-3.071-3.064h-65.81
+							C20.264,20.643,18.887,22.018,18.887,23.707z"/>
+					</g>
+					<rect x="24.642" y="24.754" fill="none" stroke="#FFFFFF" stroke-width="0.781" stroke-miterlimit="10" width="57.152" height="43.996"/>
+					<g>
+						<defs>
+							<rect id="SVGID_49_" y="0" width="91.229" height="73.252"/>
+						</defs>
+						<clipPath id="SVGID_4_">
+							<use xlink:href="#SVGID_49_"  overflow="visible"/>
+						</clipPath>
+						
+							<circle clip-path="url(#SVGID_4_)" fill="none" stroke="#FFFFFF" stroke-width="0.781" stroke-miterlimit="10" cx="85.696" cy="46.752" r="1.443"/>
+					</g>
+					<rect x="31.17" y="31.25" fill="#FFFFFF" width="44.097" height="31.004"/>
+					<rect x="31.17" y="31.25" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" width="44.097" height="31.004"/>
+					<polygon fill="#B9ADAC" points="56.381,46.016 50.055,42.824 50.055,44.664 54.41,46.766 50.055,48.871 50.055,50.68 56.381,47.486 
+						"/>
+					<g>
+						<defs>
+							<rect id="SVGID_51_" y="0" width="91.229" height="73.252"/>
+						</defs>
+						<clipPath id="SVGID_6_">
+							<use xlink:href="#SVGID_51_"  overflow="visible"/>
+						</clipPath>
+						
+							<path clip-path="url(#SVGID_6_)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" d="
+							M17.825,5.736c0,0-2.121-4.736-7.353-4.736S1,5.241,1,10.472c0,5.232,4.241,9.473,9.473,9.473"/>
+						<polygon clip-path="url(#SVGID_6_)" fill="#FFFFFF" points="20.655,12.056 19.835,0.676 12.713,3.865 	"/>
+					</g>
+					</svg>
+
+					<span><b>Turn & Play!</b>	</span>
+				</div>
 				<div class="splace-article-header__help-row">
 					<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 70" enable-background="new 0 0 60 70" xml:space="preserve">
 					<g>
@@ -402,50 +446,6 @@
 					</svg>
 
 					<span><b>Add your notes</b>	</span>
-				</div>
-				<div class="splace-article-header__help-row">
-					<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 91.229 73.252" enable-background="new 0 0 91.229 73.252" xml:space="preserve" style="margin-left: -4%;">
-					<g>
-						<defs>
-							<rect id="SVGID_47_" y="0" width="91.229" height="73.252"/>
-						</defs>
-						<clipPath id="SVGID_2_">
-							<use xlink:href="#SVGID_47_"  overflow="visible"/>
-						</clipPath>
-						<path clip-path="url(#SVGID_2_)" fill="none" stroke="#FFFFFF" stroke-width="0.781" stroke-miterlimit="10" d="M18.887,23.707
-							v46.09c0,1.691,1.377,3.064,3.071,3.064h65.81c1.693,0,3.071-1.373,3.071-3.064v-46.09c0-1.689-1.378-3.064-3.071-3.064h-65.81
-							C20.264,20.643,18.887,22.018,18.887,23.707z"/>
-					</g>
-					<rect x="24.642" y="24.754" fill="none" stroke="#FFFFFF" stroke-width="0.781" stroke-miterlimit="10" width="57.152" height="43.996"/>
-					<g>
-						<defs>
-							<rect id="SVGID_49_" y="0" width="91.229" height="73.252"/>
-						</defs>
-						<clipPath id="SVGID_4_">
-							<use xlink:href="#SVGID_49_"  overflow="visible"/>
-						</clipPath>
-						
-							<circle clip-path="url(#SVGID_4_)" fill="none" stroke="#FFFFFF" stroke-width="0.781" stroke-miterlimit="10" cx="85.696" cy="46.752" r="1.443"/>
-					</g>
-					<rect x="31.17" y="31.25" fill="#FFFFFF" width="44.097" height="31.004"/>
-					<rect x="31.17" y="31.25" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" width="44.097" height="31.004"/>
-					<polygon fill="#B9ADAC" points="56.381,46.016 50.055,42.824 50.055,44.664 54.41,46.766 50.055,48.871 50.055,50.68 56.381,47.486 
-						"/>
-					<g>
-						<defs>
-							<rect id="SVGID_51_" y="0" width="91.229" height="73.252"/>
-						</defs>
-						<clipPath id="SVGID_6_">
-							<use xlink:href="#SVGID_51_"  overflow="visible"/>
-						</clipPath>
-						
-							<path clip-path="url(#SVGID_6_)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" d="
-							M17.825,5.736c0,0-2.121-4.736-7.353-4.736S1,5.241,1,10.472c0,5.232,4.241,9.473,9.473,9.473"/>
-						<polygon clip-path="url(#SVGID_6_)" fill="#FFFFFF" points="20.655,12.056 19.835,0.676 12.713,3.865 	"/>
-					</g>
-					</svg>
-
-					<span><b>Turn & Play!</b>	</span>
 				</div>
 			</div>
 		</div>
@@ -919,7 +919,7 @@
 			</div>
 			<div class="splace-footer-links">
 				<a @if($language == 'de') href="/locale/en" @else href="/locale/de" @endif class="splace-language-switcher splace-footer-links__item">@if($language == 'de') EN @else DE @endif</a>
-				<a href="#" class="splace-footer-links__item">INFO</a>
+				<a href="/2/article/14" class="splace-footer-links__item">INFO</a>
 				<div class="splace-footer-links__item splace-external-links__wrapper">
 					<i class="icon-external-link"></i>
 					<ul class="splace-external-links__list">
@@ -928,7 +928,7 @@
 						<li><a href="mailto:redaktion@splace-magazine.at" target="_blank"><i class="icon-mail"></i></a></li>
 					</ul>
 				</div>
-				<a href="hilfe.html" class="splace-footer-links__item">?</a>
+				<a href="/help" class="splace-footer-links__item">?</a>
 				<div class="splace-footer-links__item splace-user-links__wrapper">
 					<!--<i class="icon-user-link"></i>-->*
 					<ul class="splace-user-links__list">

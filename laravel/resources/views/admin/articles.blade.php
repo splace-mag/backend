@@ -29,7 +29,7 @@
 						</li>
 						@endforeach
 
-						<li class="important link-color__green"><a href="article/create"><i class="fa fa-plus"></i> Neuen Artikel erstellen</a></li>
+						<li class="important link-color__green"><a href="/admin/article/create"><i class="fa fa-plus"></i> Neuen Artikel erstellen</a></li>
 
 						<li class="important">
 							<div class="col-xs-4 col-xs-push-4 article-pagination">

@@ -27,21 +27,6 @@
 							<a class="article-delete link-color__red" href="/admin/sections/delete/{{ $section->section_id }}"><i class="fa fa-times"></i> Löschen</a>
 						</li>
 						@endforeach
-
-						<li class="important">
-							<div class="col-xs-4 col-xs-push-4 article-pagination">
-							@if ( $sections->currentPage() > 1 )
-							<a class="show-prev-page" href="{{ $sections->previousPageUrl() }}"><i class="fa fa-chevron-left fa-2x"></i></a>
-							@endif
-							
-							<span class="article-counter">Seite {{ $sections->currentPage() }} von {{ $sections->lastPage() }}</span>
-							
-							@if ( $sections->hasMorePages() )
-							<a class="show-next-page" href="{{ $sections->nextPageUrl() }}"><i class="fa fa-chevron-right fa-2x"></i></a>
-							@endif
-							</div>
-						</li>
-
 					</ul>
 				</div>
 			</div>

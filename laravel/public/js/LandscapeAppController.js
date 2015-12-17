@@ -22,13 +22,15 @@ var splaceLandscapeAppController = (function($) {
 			url: '/apps/' + app.name + '/' + app.name + '.html', 
 			async: false,
 			success: function(content) {
-				var app = $(content).filter('#splaceApp');
-				splaceApp.append(app);
+				var appContent = $(content).filter('#splaceApp');
+				splaceApp.append(appContent);
 			},
 			error: function() {
 				console.log('There was an error loading your app called \'' + name + '\' please check the name again.');
 			}
 		});
+
+		$('#appscript').remove();
 
 		var buf = [];
 		buf.push('<script id="appscript" src="');
@@ -39,6 +41,8 @@ var splaceLandscapeAppController = (function($) {
 		buf.push('"></script>');
 
 		$('body').append(buf.join(''));
+
+		$('#appstyle').remove();
 
 		buf = [];
 		buf.push('<link id="appstyle" rel="stylesheet" href="');

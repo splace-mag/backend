@@ -121,7 +121,11 @@
 				@if($section->media['youtube-video'] != false)
 					<div class="splace-paragraph__annotation-video">
 						<a href="https://www.youtube.com/watch?v={{ $section->media['youtube-video-data']->original_name }}" data-youtube="{{ $section->media['youtube-video-data']->original_name }}" class="splace-video splace-video__youtube">
-							<img src="https://i.ytimg.com/vi_webp/{{ $section->media['youtube-video-data']->original_name }}/mqdefault.webp">
+							@if($section->media['youtube-cover'] != false)
+							<img src="/images/{{ $section->media['youtube-cover-data']->file_name }}" />
+							@else
+							<img src="/assets/youtube_logo.jpg">
+							@endif
 						</a>
 						@if($language == 'de')
 							<p class="splace-paragraph__annotation-info">{{ $section->media['youtube-video-data']->descriptionDE }}</p>
@@ -132,8 +136,12 @@
 				@endif
 				@if($section->media['vimeo-video'] != false)
 					<div class="splace-paragraph__annotation-video">
-						<a href="https://www.youtube.com/watch?v={{ $section->media['vimeo-video-data']->original_name }}" data-vimeo="{{ $section->media['vimeo-video-data']->original_name }}" class="splace-video splace-video__vimeo">
-							<img src="https://i.vimeocdn.com/video/{{ $section->media['vimeo-video-data']->original_name }}.webp">
+						<a href="https://vimeo.com/{{ $section->media['vimeo-video-data']->original_name }}" data-vimeo="{{ $section->media['vimeo-video-data']->original_name }}" class="splace-video splace-video__vimeo">
+							@if($section->media['vimeo-cover'] != false)
+							<img src="/images/{{ $section->media['vimeo-cover-data']->file_name }}" />
+							@else
+							<img src="/assets/vimeo_logo.jpg">
+							@endif
 						</a>
 						@if($language == 'de')
 							<p class="splace-paragraph__annotation-info">{{ $section->media['vimeo-video-data']->descriptionDE }}</p>
@@ -145,7 +153,6 @@
 				
 				@if($section->media['gallery'] != false)
 					<div class="splace-paragraph__annotation-gallery">
-						<span>{{$section->media['cover']}}</span>
 						@if($section->media['cover'] != false)
 							<img src="/images/{{ $section->media['cover-data']->file_name }}" />
 						@endif
@@ -279,7 +286,7 @@
 			</div>
 			<div class="splace-footer-links">
 				<a @if($language == 'de') href="/locale/en" @else href="/locale/de" @endif class="splace-language-switcher splace-footer-links__item">@if($language == 'de') EN @else DE @endif</a>
-				<a href="#" class="splace-footer-links__item">INFO</a>
+				<a href="/2/article/14" class="splace-footer-links__item">INFO</a>
 				<div class="splace-footer-links__item splace-external-links__wrapper">
 					<i class="icon-external-link"></i>
 					<ul class="splace-external-links__list">
@@ -288,7 +295,7 @@
 						<li><a href="mailto:redaktion@splace-magazine.at" target="_blank"><i class="icon-mail"></i></a></li>
 					</ul>
 				</div>
-				<a href="hilfe.html" class="splace-footer-links__item">?</a>
+				<a href="/help" class="splace-footer-links__item">?</a>
 				<div class="splace-footer-links__item splace-user-links__wrapper">
 					<!--<i class="icon-user-link"></i>-->*
 					<ul class="splace-user-links__list">

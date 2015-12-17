@@ -84,7 +84,7 @@ var splaceMenuController = (function($) {
 
 		$navList = $('.splace-navigation__list');
 		for(var i in splaceConfig.navigationItems) {
-			$navList.append('<li class="spalce-navigation-item"><a href="'+splaceConfig.navigationItems[i].url+'"><span class="splace-navigation-item__subtitle">'+splaceConfig.navigationItems[i].spitzmarke+'</span><span class="spalce-navigation-item__title">'+splaceConfig.navigationItems[i].title+'</span></a></li>');
+			$navList.append('<li class="splace-navigation-item"><a href="'+splaceConfig.navigationItems[i].url+'"><span class="splace-navigation-item__subtitle">'+splaceConfig.navigationItems[i].spitzmarke+'</span><span class="spalce-navigation-item__title">'+splaceConfig.navigationItems[i].title+'</span></a></li>');
 		}
 
 		setMenuListWidth();

@@ -59,7 +59,7 @@ class Section extends Model implements AuthenticatableContract {
 				if(Section::where('article_id', $article_id)->where('key', $section['id'])->count() >= '1') {
 					Section::where('article_id', $article_id)->where('key', $section['id'])
 						->update([
-							'textDE' => $section['html'], 
+							'textDE' => str_replace(' href=', ' target="_blank" href=', $section['html']), 
 							'updated_at' => Carbon::now()]);
 				}
 				else {
@@ -67,7 +67,7 @@ class Section extends Model implements AuthenticatableContract {
 						'article_id' => $article_id, 
 						'magazine_id' => $magazine, 
 						'key' => $section['id'], 
-						'textDE' => $section['html'], 
+						'textDE' => str_replace(' href=', ' target="_blank" href=', $section['html']), 
 						'created_at' => Carbon::now(), 
 						'updated_at' => Carbon::now()]);
 				}
@@ -78,7 +78,7 @@ class Section extends Model implements AuthenticatableContract {
 				if(Section::where('article_id', $article_id)->where('key', $section['id'])->count() >= '1') {
 					Section::where('article_id', $article_id)->where('key', $section['id'])
 						->update([
-							'textEN' => $section['html'], 
+							'textEN' => str_replace(' href=', ' target="_blank" href=', $section['html']), 
 							'updated_at' => Carbon::now()]);
 				}
 				else {
@@ -86,7 +86,7 @@ class Section extends Model implements AuthenticatableContract {
 						'article_id' => $article_id, 
 						'magazine_id' => $magazine, 
 						'key' => $section['id'], 
-						'textEN' => $section['html'], 
+						'textEN' => str_replace(' href=', ' target="_blank" href=', $section['html']), 
 						'created_at' => Carbon::now(), 
 						'updated_at' => Carbon::now()]);
 				}
@@ -126,7 +126,9 @@ class Section extends Model implements AuthenticatableContract {
 		$section = array(
 			'image' => false, 
 			'youtube-video' => false, 
+			'youtube-cover' => false, 
 			'vimeo-video' => false, 
+			'vimeo-cover' => false, 
 			'cover' => false, 
 			'gallery' => false);
 
@@ -140,9 +142,17 @@ class Section extends Model implements AuthenticatableContract {
 				$section['youtube-video'] = true;
 				$section['youtube-video-data'] = $m;
 			}
+			else if($m->media_type == 'youtube-cover') {
+				$section['youtube-cover'] = true;
+				$section['youtube-cover-data'] = $m;
+			}
 			else if($m->media_type == 'vimeo-video') {
 				$section['vimeo-video'] = true;
 				$section['vimeo-video-data'] = $m;
+			}
+			else if($m->media_type == 'vimeo-cover') {
+				$section['vimeo-cover'] = true;
+				$section['vimeo-cover-data'] = $m;
 			}
 			else if($m->media_type == 'cover') {
 				$section['cover'] = true;

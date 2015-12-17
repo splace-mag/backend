@@ -51,6 +51,8 @@
 				</span>
 			</div>
 
+			<img src="/assets/portraitLogo.png" alt="Splace Logo" class="splace-cover-logo">
+
 		</div>
 	</div>
 
@@ -76,7 +78,7 @@
 			</div>
 			<div class="splace-footer-links">
 				<a @if($language == 'de') href="/locale/en" @else href="/locale/de" @endif class="splace-language-switcher splace-footer-links__item">@if($language == 'de') EN @else DE @endif</a>
-				<a href="#" class="splace-footer-links__item">INFO</a>
+				<a href="/2/article/14" class="splace-footer-links__item">INFO</a>
 				<div class="splace-footer-links__item splace-external-links__wrapper">
 					<i class="icon-external-link"></i>
 					<ul class="splace-external-links__list">
@@ -85,7 +87,7 @@
 						<li><a href="mailto:redaktion@splace-magazine.at" target="_blank"><i class="icon-mail"></i></a></li>
 					</ul>
 				</div>
-				<a href="hilfe.html" class="splace-footer-links__item">?</a>
+				<a href="/help" class="splace-footer-links__item">?</a>
 				<div class="splace-footer-links__item splace-user-links__wrapper">
 					<!--<i class="icon-user-link"></i>-->*
 					<ul class="splace-user-links__list">

@@ -147,10 +147,9 @@ class AccountController extends Controller {
 			'fb-token' => $token
 		);
 
-		\Log::info($user->getId().': '.$user->getName());
-
-		//return redirect('home')->send();
-		return response()->json($response);
+		\Log::info($user->getId().': '.$user->getName().', SystemId: '.$userId);
+		return redirect(\URL::previous())->with('user', $response['user']);
+		//return response()->json($response);
 	}
 
 	/*

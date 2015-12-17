@@ -23,6 +23,7 @@ class Comments extends Model implements AuthenticatableContract {
 		return Comments::join('articles', 'comments.article_id', '=', 'articles.article_id')
 			->join('sections', 'comments.section_id', '=', 'sections.section_id')
 			->join('users', 'comments.user_id', '=', 'users.id')
+			->orderby('comments.created_at', 'desc')
 			->select('comments.comment_id', 'users.name', 'articles.article_id', 'articles.titleDE', 'sections.section_id', 'sections.key', 'comments.user_id', 'comments.text', 'comments.read', 'comments.marked', 'comments.created_at')
 			->paginate(15);
 	}
@@ -49,6 +50,7 @@ class Comments extends Model implements AuthenticatableContract {
 			->join('articles', 'comments.article_id', '=', 'articles.article_id')
 			->join('sections', 'comments.section_id', '=', 'sections.section_id')
 			->join('users', 'comments.user_id', '=', 'users.id')
+			->orderby('comments.created_at', 'desc')
 			->select('comments.comment_id', 'users.name', 'articles.article_id', 'articles.titleDE', 'sections.section_id', 'sections.key', 'comments.user_id', 'comments.text', 'comments.read', 'comments.marked', 'comments.created_at')
 			->paginate(15);
 	}
