@@ -11,7 +11,7 @@
 <body class="splace-orientation--portrait">
 	
 	<div class="splace-portrait">
-		<div class="splace-article-header splace-article-header--no-shadow" style=":after: box-shadow: none; background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(255, 242, 47));">
+		<div class="splace-article-header splace-article-header--no-shadow" style=":after: box-shadow: none; background-image: linear-gradient(90deg, rgb(0, 0, 0), rgb(250, 166, 30));">
 			<div class="splace-article-header__marker">Hilfe</div>
 			<div class="splace-article-header__marker down">^ swipe up</div>
 

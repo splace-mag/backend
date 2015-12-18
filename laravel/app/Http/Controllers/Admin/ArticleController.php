@@ -173,6 +173,14 @@ class ArticleController extends Controller {
 			Article::saveBioImage($id, $filename, $file->getClientOriginalName());
 		}
 		
+		if(Request::hasFile('bio_image_big')) {
+			$file = Request::file('bio_image_big');
+			$filename = time().$file->getClientOriginalName();
+			$file->move(public_path('images'), $filename);
+			
+			Article::saveBioImageBig($id, $filename, $file->getClientOriginalName());
+		}
+
 		return response()->json(['success' => 'true']);
 	}
 

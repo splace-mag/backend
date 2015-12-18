@@ -10,7 +10,7 @@
 <body class="splace-orientation--portrait">
 	
 	<div class="splace-portrait">
-		<div class="splace-article-header splace-article-header--no-shadow" style="background-image: linear-gradient(90deg, rgb(244, 110, 35), rgb(138, 57, 95)); height: auto !important; ">
+		<div class="splace-article-header splace-article-header--no-shadow" style="background-image: linear-gradient(90deg, rgb(246, 65, 30), rgb(138, 57, 95)); height: auto !important; ">
 			<div class="splace-article-header__marker">Editorial</div>
 
 			<p class="splace-editorial__heading">

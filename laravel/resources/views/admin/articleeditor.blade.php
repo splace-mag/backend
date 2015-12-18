@@ -157,11 +157,21 @@
 							<h5>Bild Autor</h5>
 							<input class="form-file " type="file" name="bio_image" id="bio_image"/>
 							@if(!$new)
-							@if($article->bio_image)
-								Aktuelles Bild: <a href="/images/{{$article->bio_image}}" target="_blank">{{$article->bio_image_name}}</a>
-							@else
-								Derzeit kein Bild vorhanden!
+								@if($article->bio_image)
+									Aktuelles Bild: <a href="/images/{{$article->bio_image}}" target="_blank">{{$article->bio_image_name}}</a>
+								@else
+									Derzeit kein Bild vorhanden!
+								@endif
 							@endif
+
+							<h5>Bild Autor (groß)</h5>
+							<input class="form-file " type="file" name="bio_image_big" id="bio_image_big"/>
+							@if(!$new)
+								@if($article->bio_image)
+									Aktuelles Bild: <a href="/images/{{$article->bio_image_big}}" target="_blank">{{$article->bio_image_big_name}}</a>
+								@else
+									Derzeit kein Bild vorhanden!
+								@endif
 							@endif
 							
 							<h5>Biografie Kurztext</h5>

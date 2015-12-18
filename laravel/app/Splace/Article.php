@@ -193,4 +193,11 @@ class Article extends Model implements AuthenticatableContract {
 				'bio_image_name' => $originalname]);
 	}
 
+	public static function saveBioImageBig($article_id, $name, $originalname) {
+		Article::where('article_id', $article_id)
+			->update([
+				'bio_image_big' => $name, 
+				'bio_image_big_name' => $originalname]);
+	}
+
 }

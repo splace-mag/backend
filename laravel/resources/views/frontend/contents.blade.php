@@ -10,7 +10,7 @@
 <body class="splace-orientation--portrait">
 	
 	<div class="splace-portrait">
-		<div class="splace-article-header splace-article-header--no-shadow" style="background-image: linear-gradient(90deg, rgb(255, 242, 47), rgb(244, 110, 35)); height: auto !important; overflow: auto;">
+		<div class="splace-article-header splace-article-header--no-shadow" style="background-image: linear-gradient(90deg, rgb(250, 166, 30), rgb(246, 65, 30)); height: auto !important; overflow: auto;">
 			<div class="splace-article-header__marker">@if($language == 'de') Inhaltsverzeichnis @else Contents @endif </div>
 				<div class="splace-index-wrapper">
 

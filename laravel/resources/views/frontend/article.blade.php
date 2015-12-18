@@ -40,6 +40,7 @@
 			@endif
 		</div>
 
+		
 		<div class="splace-paragraph">
 			<div class="splace-paragraph__text splace-paragraph__text--heading splace-color">
 				<p>
@@ -233,7 +234,7 @@
 
 				<div class="splace-paragraph__author-full">
 					<i class="close splace-color">×</i>
-					@if($article->bio_image) <img src="/images/{{$article->bio_image}}" alt=""> @endif
+					@if($article->bio_image_big) <img src="/images/{{$article->bio_image_big}}" alt=""> @endif
 					<p>
 						@if($language == 'de') 
 							{!!$article->bio_textDE!!}

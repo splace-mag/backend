@@ -23,7 +23,8 @@
 
 							<div class="form-group">
 								<h4>Notizen (Text rechte Seite)</h4>
-								<textarea class="form-control section-area" name="noteDE" placeholder="Notiz (vollständig)">{{ $section->noteDE or '' }}</textarea>
+								<div class="epiceditor" data-markdown="noteDE"></div>
+								<input id="noteDE" name="noteDE" class="hidden" value="{{ $section->markdown_noteDE or '' }}" />
 							</div>
 
 							<div class="form-group">
@@ -37,7 +38,8 @@
 							
 							<div class="form-group">
 								<h4>Notizen (Text rechte Seite)</h4>
-								<textarea class="form-control section-area" name="noteEN" placeholder="Notiz (vollständig)">{{ $section->noteEN or '' }}</textarea>
+								<div class="epiceditor" data-markdown="noteEN"></div>
+								<input id="noteEN" name="noteEN" class="hidden" value="{{ $section->markdown_noteEN or '' }}"/>
 							</div>
 
 							<div class="form-group">
@@ -181,4 +183,6 @@
 	</div>
 </div>
 
+<script src="/epiceditor/js/epiceditor.min.js"></script>
+<script src="/epiceditor/js/epiceditor_config.js"></script>
 @endsection

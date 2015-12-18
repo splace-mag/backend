@@ -100,6 +100,8 @@ class Section extends Model implements AuthenticatableContract {
 			->update([ 
 				'noteDE' => $section['noteDE'], 
 				'noteEN' => $section['noteEN'], 
+				'markdown_noteDE' => $section['markdown_noteDE'], 
+				'markdown_noteEN' => $section['markdown_noteEN'], 
 				'media_type' => 'multiple',
 				'updated_at' => Carbon::now()]);
 	}

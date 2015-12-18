@@ -41,8 +41,8 @@
 
 			<div class="splace-cover-fat">
 				<span class="splace-cover-fat__lang">
-					<a href="#">Deutsch</a>
-					<a href="#">English</a>
+					<a href="/locale/de">Deutsch</a>
+					<a href="/locale/en">English</a>
 				</span>
 				<span class="splace-cover-fat__color">
 					<a href="#">Farbe</a>
