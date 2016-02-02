@@ -91,7 +91,7 @@ class AccountController extends Controller {
 
 		User::editUser($user);
 
-		return response()->json(array('success' => true));
+		return response()->json(array('success' => true, 'user' => ['id' => $user['id'], 'name' => $user['name'], 'email' => $user['email'], 'image' => $user['image']]));
 	}
 
 	public function logout() {
@@ -101,16 +101,19 @@ class AccountController extends Controller {
 	public function resetPassword() {
 		$user['mail'] = Request::input('email');
 
-		if(!User::findUser($user['mail'])) {
+		$u = User::where('email', $user['mail'])->first();
+
+		if(!$u) {
 			return response()->json(array('success' => false, 'error' => 'email not found'));
 		}
 
 		$user['password'] = str_random(12);
+		$user['language'] = Session::get('language', 'de');
 		
 		User::changePassword($user['mail'], \Hash::make($user['password']));
-		\Mail::send('emails.resetPassword', $user, function($message)
+		\Mail::send('emails.resetPassword', $user, function($message) use ($user)
 		{
-		    $message->to('s@applics.at')->subject('Password Reset');
+		    $message->to($user['mail'])->subject('Password Reset');
 		});
 
 		return response()->json(array('success' => true));

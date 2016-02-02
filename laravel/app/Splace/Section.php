@@ -24,7 +24,7 @@ class Section extends Model implements AuthenticatableContract {
 		}
 		return Section::join('articles', 'articles.article_id', '=', 'sections.article_id')
 			->where('sections.magazine_id', $magazine)
-			->select('sections.section_id', 'sections.article_id', 'articles.spitzmarke', 'articles.titleDE', 'sections.key', 'sections.textDE', 'sections.textEN', 'sections.noteDE', 'sections.noteEN', 'sections.media_type')
+			->select('sections.section_id', 'sections.article_id', 'articles.spitzmarkeDE', 'articles.spitzmarkeEN', 'articles.titleDE', 'sections.key', 'sections.textDE', 'sections.textEN', 'sections.noteDE', 'sections.noteEN', 'sections.media_type')
 			->orderBy('article_id', 'asc')
 			->paginate(15);
 	}

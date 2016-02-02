@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>App</title>
+	<link rel="stylesheet" href="eastman.css">
+</head>
+<body>
+	<div id="splaceApp">
+		<div id="imageViewport">
+			<div id="splashscreen">
+				<div id="splashscreenimg">
+				</div>
+				<div id="cambutton">
+				</div>
+
+				<div id="splashscreentext">
+
+					<div id="title">
+					</div>
+
+					<div id="chooser">
+
+					</div>
+					<div id="splashscreentext2">
+					</div>
+					<input id='filegal' name="asdf" type='file' />
+					<div id="choosefromgal">
+					</div>
+					<div id="choosefromcam">
+					</div>
+				</div>
+			</div>
+
+
+			<div class="filterImage" id="noFilter">
+			</div>
+			<div class="filterImage" id="rightFilter">
+			</div>
+			<div class="filterImage" id="leftFilter">
+			</div>
+			<div class="filterImage" id="topFilter">
+			</div>
+			<div class="filterImage" id="bottomFilter">
+			</div>
+			<div id="filterText">
+
+				
+			</div>
+
+
+			<div class="info" id="left_info">
+			</div>
+			<div class="info" id="right_info">
+			</div>
+			<div class="info" id="top_info">
+			</div>
+			<div class="info" id="bottom_info">
+			</div>
+
+			<div class="fresh"  id="save">
+				<a id="downloadImgLink" onclick="$('#downloadImgLink').attr('href', mergeCanvas() );" download="MyImage.png" href="#" target="_blank">Download</a>
+			</div>
+			
+			<div id="hiddencontainer">
+			</div>
+		</div>
+	</div>	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="CamanJS-4.1.1\dist\caman.full.min.js"></script>
+	<script src="eastman.js"></script>
+	<script>
+		eastman_startup();
+	</script>
+</body>
+</html>

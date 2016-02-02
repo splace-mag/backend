@@ -16,15 +16,15 @@
 <body>
 	<div id="splaceApp" style="height: 730px; width: 1024px;">
 		<div id="leftPanel" class="leftPanel">
-			<img id="img1" src="img/pink.jpg" class="img" draggable="false" /> <img
-				id="img2" src="img/indigo.jpg" class="img" draggable="false" /> <img
-				id="img3" src="img/lilac.jpg" class="img" draggable="false" /> <img
-				id="img4" src="img/magenta.jpg" class="img" draggable="false" /> <img
-				id="img5" src="img/purple.jpg" class="img" draggable="false" /> <img
-				id="img6" src="img/violet.jpg" class="img" draggable="false" /><img
-				id="img7" src="img/darkpurple.jpg" class="img" draggable="false" />
-			<img id="img8" src="img/lightpurple.jpg" class="img"
-				draggable="false" /> <img id="img9" src="img/whitenedmagenta.jpg"
+			<img id="img1" src="/apps/redAndBlue/img/pink.jpg" class="img" draggable="false" /> <img
+				id="img2" src="/apps/redAndBlue/img/indigo.jpg" class="img" draggable="false" /> <img
+				id="img3" src="/apps/redAndBlue/img/lilac.jpg" class="img" draggable="false" /> <img
+				id="img4" src="/apps/redAndBlue/img/magenta.jpg" class="img" draggable="false" /> <img
+				id="img5" src="/apps/redAndBlue/img/purple.jpg" class="img" draggable="false" /> <img
+				id="img6" src="/apps/redAndBlue/img/violet.jpg" class="img" draggable="false" /><img
+				id="img7" src="/apps/redAndBlue/img/darkpurple.jpg" class="img" draggable="false" />
+			<img id="img8" src="/apps/redAndBlue/img/lightpurple.jpg" class="img"
+				draggable="false" /> <img id="img9" src="/apps/redAndBlue/img/whitenedmagenta.jpg"
 				class="img" draggable="false" />
 		</div>
 		<div class="accordion rightPanel">
@@ -83,7 +83,7 @@
 			</div>
 
 			<script>
-				redAndBlue_startup();
+				// redAndBlue_startup();
 				$('.accordion ' + '#choose').slideDown(300).addClass('open');
 				var openedImgElement = null;
 				var hasImgClass = true;
@@ -201,41 +201,40 @@
 				function showColor(imgElement) {
 					imgElement.addClass('showColorAnimation');
 					if (imgElement.attr('id') == 'img1') {
-						imgElement.attr("src", "img/animations/pink.gif");
+						imgElement.attr("src", "/apps/redAndBlue/img/animations/pink.gif");
 						imgElement.addClass('transitionUpperLeft');
 						selectedcolor = 'Pink';
 					} else if (imgElement.attr('id') == 'img2') {
-						imgElement.attr("src", "img/animations/indigo.gif");
+						imgElement.attr("src", "/apps/redAndBlue/img/animations/indigo.gif");
 						imgElement.addClass('transitionUpperMiddle');
 						selectedcolor = 'Indigo';
 					} else if (imgElement.attr('id') == 'img3') {
-						imgElement.attr("src", "img/animations/lilac.gif");
+						imgElement.attr("src", "/apps/redAndBlue/img/animations/lilac.gif");
 						imgElement.addClass('transitionUpperRight');
 						selectedcolor = 'Lilac';
 					} else if (imgElement.attr('id') == 'img4') {
-						imgElement.attr("src", "img/animations/magenta.gif");
+						imgElement.attr("src", "/apps/redAndBlue/img/animations/magenta.gif");
 						imgElement.addClass('transitionMiddleLeft');
 						selectedcolor = 'Magenta';
 					} else if (imgElement.attr('id') == 'img5') {
-						imgElement.attr("src", "img/animations/purple.gif");
+						imgElement.attr("src", "/apps/redAndBlue/img/animations/purple.gif");
 						imgElement.addClass('transitionMiddleMiddle');
 						selectedcolor = 'Purple';
 					} else if (imgElement.attr('id') == 'img6') {
-						imgElement.attr("src", "img/animations/violet.gif");
+						imgElement.attr("src", "/apps/redAndBlue/img/animations/violet.gif");
 						imgElement.addClass('transitionMiddleRight');
 						selectedcolor = 'Violet';
 					} else if (imgElement.attr('id') == 'img7') {
-						imgElement.attr("src", "img/animations/darkpurple.gif");
+						imgElement.attr("src", "/apps/redAndBlue/img/animations/darkpurple.gif");
 						imgElement.addClass('transitionLowerLeft');
 						selectedcolor = 'Darkpurple';
 					} else if (imgElement.attr('id') == 'img8') {
 						imgElement
-								.attr("src", "img/animations/lightpurple.gif");
+								.attr("src", "/apps/redAndBlue/img/animations/lightpurple.gif");
 						imgElement.addClass('transitionLowerMiddle');
 						selectedcolor = 'Lightpurple';
 					} else if (imgElement.attr('id') == 'img9') {
-						imgElement.attr("src",
-								"img/animations/whitenedmagenta.gif");
+						imgElement.attr("src", "/apps/redAndBlue/img/animations/whitenedmagenta.gif");
 						imgElement.addClass('transitionLowerRight');
 						selectedcolor = 'Lightened magenta';
 					}
@@ -244,31 +243,31 @@
 				function showForm(imgElement) {
 					imgElement.removeClass('showColorAnimation');
 					if (imgElement.attr('id') == 'img1') {
-						imgElement.attr("src", "img/pink.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/pink.jpg");
 						imgElement.removeClass('transitionUpperLeft');
 					} else if (imgElement.attr('id') == 'img2') {
-						imgElement.attr("src", "img/indigo.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/indigo.jpg");
 						imgElement.removeClass('transitionUpperMiddle');
 					} else if (imgElement.attr('id') == 'img3') {
-						imgElement.attr("src", "img/lilac.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/lilac.jpg");
 						imgElement.removeClass('transitionUpperRight');
 					} else if (imgElement.attr('id') == 'img4') {
-						imgElement.attr("src", "img/magenta.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/magenta.jpg");
 						imgElement.removeClass('transitionMiddleLeft');
 					} else if (imgElement.attr('id') == 'img5') {
-						imgElement.attr("src", "img/purple.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/purple.jpg");
 						imgElement.removeClass('transitionMiddleMiddle');
 					} else if (imgElement.attr('id') == 'img6') {
-						imgElement.attr("src", "img/violet.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/violet.jpg");
 						imgElement.removeClass('transitionMiddleRight');
 					} else if (imgElement.attr('id') == 'img7') {
-						imgElement.attr("src", "img/darkpurple.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/darkpurple.jpg");
 						imgElement.removeClass('transitionLowerLeft');
 					} else if (imgElement.attr('id') == 'img8') {
-						imgElement.attr("src", "img/lightpurple.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/lightpurple.jpg");
 						imgElement.removeClass('transitionLowerMiddle');
 					} else if (imgElement.attr('id') == 'img9') {
-						imgElement.attr("src", "img/whitenedmagenta.jpg");
+						imgElement.attr("src", "/apps/redAndBlue/img/whitenedmagenta.jpg");
 						imgElement.removeClass('transitionLowerRight');
 					}
 				}
@@ -404,7 +403,7 @@
 					if (jQuery('body').find('#resultLoading').attr('id') != 'resultLoading') {
 						jQuery('body')
 								.append(
-										'<div id="resultLoading" style="display:none"><div><img src="img/ajax-loader.gif"><div>'
+										'<div id="resultLoading" style="display:none"><div><img src="/apps/redAndBlue/img/ajax-loader.gif"><div>'
 												+ text
 												+ '</div></div><div class="bg"></div></div>');
 					}

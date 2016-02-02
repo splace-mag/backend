@@ -4,6 +4,12 @@
 
 /*LAYOUT*/
 
+div#splaceApp {
+	width: 1024px;
+	height: 100%;
+	position:fixed;
+}
+
 /*Transitions*/
 div {
 transition-timing-function: ease-out;
@@ -27,12 +33,15 @@ transition-timing-function: ease-out;
 
 #wrapper {
 	width: 90%;
-	height: 90%;
+	height: 100%;
 	margin-left: auto;
-    margin-right: auto;
+    	margin-right: auto;
+	margin-top: auto;
+	margin-bottom: auto;
 	padding: 120px 10px 120px 10px;
 	visibility: hidden;
 	/*border: 1px solid #cfcfcf;*/
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 
 }
 #box_top {
@@ -131,8 +140,8 @@ transition-timing-function: ease-out;
 
 /*STATEMENTS*/
 .stmtContainer {
-	visibility = 'visible';
-	opacity = '0';
+	visibility: visible;
+	opacity: 0;
 	font-family: 'CircularStd-Book';
 	font-size: 0.7em; /* 14px/16=0.875em */
 	/*border: 1px solid #cfcfcf;*/

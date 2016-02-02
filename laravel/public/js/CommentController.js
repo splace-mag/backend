@@ -19,7 +19,9 @@ var splaceCommentController = (function() {
 		var html = getCommentHTML(comment, tmpCommentId);
 		$lastComment = $target.parents('.splace-paragraph__comments').find('.splace-paragraph__comment').last();
 
-		$(html).insertAfter($lastComment);
+		$target.parents('.splace-paragraph__comments').find('.splace-paragraph__comment-netiquette--1').removeClass('hidden');
+
+		//$(html).insertAfter($lastComment);
 
 		$.post('/addComment', {paragraphId: paragraphId, comment: comment, _token: splaceConfig.token})
 			.done(function(response) {
@@ -76,6 +78,9 @@ var splaceCommentController = (function() {
 		$target.siblings('form').addClass('active').on('submit', submitComment);
 		$target.addClass('hidden');
 		$target.siblings('form').find('.splace-add-comment-cancel').on('click', disableCommentInputByClick);
+
+		$target.siblings('.splace-paragraph__comment-netiquette--1').addClass('hidden');
+		//$target.siblings('form').find('.splace-paragraph__comment-netiquette--2').removeClass('hidden');
 	}
 
 	function disableCommentInput($target) {

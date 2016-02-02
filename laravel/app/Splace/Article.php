@@ -32,7 +32,7 @@ class Article extends Model implements AuthenticatableContract {
 		}
 		return Article::where('magazine_id', $magazine)
 			->orderBy('number', 'asc')
-			->select('magazine_id', 'article_id', 'number', 'titleDE', 'titleEN', 'page_titleDE', 'page_titleEN', 'page_sub_titleDE', 'page_sub_titleEN', 'summaryDE', 'summaryEN', 'spitzmarke')
+			->select('magazine_id', 'article_id', 'number', 'titleDE', 'titleEN', 'page_titleDE', 'page_titleEN', 'page_sub_titleDE', 'page_sub_titleEN', 'summaryDE', 'summaryEN', 'spitzmarkeDE', 'spitzmarkeEN')
 			->get();
 	}
 	public static function getFirst($count, $magazine = 'active') {
@@ -81,7 +81,8 @@ class Article extends Model implements AuthenticatableContract {
 			'titleDE' => $article['titleDE'], 
 			'titleEN' => $article['titleEN'], 
 			'number' => ($number+1), 
-			'spitzmarke' => $article['spitzmarke'], 
+			'spitzmarkeDE' => $article['spitzmarkeDE'], 
+			'spitzmarkeEN' => $article['spitzmarkeEN'], 
 			'page_titleDE' => $article['page_titleDE'], 
 			'page_titleEN' => $article['page_titleEN'], 
 			'page_title_padding_left' => $article['page_title_padding_left'], 
@@ -128,7 +129,8 @@ class Article extends Model implements AuthenticatableContract {
 			->update([
 				'titleDE' => $article['titleDE'], 
 				'titleEN' => $article['titleEN'], 
-				'spitzmarke' => $article['spitzmarke'], 
+				'spitzmarkeDE' => $article['spitzmarkeDE'], 
+				'spitzmarkeEN' => $article['spitzmarkeEN'], 
 				'page_titleDE' => $article['page_titleDE'], 
 				'page_titleEN' => $article['page_titleEN'], 
 				'page_title_padding_left' => $article['page_title_padding_left'], 

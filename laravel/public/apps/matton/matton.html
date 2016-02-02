@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+		<link href="matton.css" rel="stylesheet"/>
+		<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script src="matton.js"></script>
+	</head>
+	<body>
+		<div id="splaceApp">
+			<div id="mattonTypo"></div>
+			<div id="mattonPreview"></div>
+			<div id="mattonDoubt">Doubt</div>
+			<div id="mattonInstructions">
+				<div id="mattonInstructionsStep1" class="mattonInstructionsText">
+					Cut a CD cover<br/>
+					into four pieces
+				</div>
+				<div id="mattonInstructionsStep2" class="mattonInstructionsText">
+					We recommend<br/>
+				       	this size
+				</div>
+				<div id="mattonInstructionsStep3" class="mattonInstructionsText">
+					Stick them together<br/>
+					to a prism
+				</div>
+			</div>
+			<div id="mattonVideoBackground" class="mattonVideoPosition"></div>
+			<div id="mattonVideoPreview" class="mattonVideoPosition">
+				<div id="mattonVideoPlay"></div>
+				<div id="mattonInfoMessage">
+					Finished?<br/>
+					Place your prism here.
+				</div>
+			</div>
+			<div id="mattonVideoFrame" class="mattonVideoPosition">
+				<iframe src="https://player.vimeo.com/video/152011601" width="450" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+			</div>
+		</div>
+		<script type="text/javascript">
+			matton_startup();
+		</script>
+	</body>
+</html>

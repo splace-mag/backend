@@ -1,0 +1,85 @@
+.splace-article-header--cover {
+  background: #000;
+  min-height: 850px; }
+  @media (max-width: 550px) {
+    .splace-article-header--cover {
+      min-height: 1000px; } }
+  .no-webgl .splace-article-header--cover {
+    background: url("/assets/fallbackCover.png") no-repeat center;
+    background-size: cover; }
+
+.splace-article-header--cover:after {
+  display: none; }
+  
+.splace-article-header__marker {
+  position: relative;
+  font-family: 'Circular';
+  font-size: .8rem;
+  padding: 1rem;
+  font-weight: 600;
+  z-index: 112;
+  color: white;
+  text-align: center; }
+  .splace-article-header__marker.annotated {
+    position: absolute;
+    -webkit-transform-origin: top;
+        -ms-transform-origin: top;
+            transform-origin: top;
+    -webkit-transform: translate(-50%) rotate(270deg);
+        -ms-transform: translate(-50%) rotate(270deg);
+            transform: translate(-50%) rotate(270deg);
+    left: 0;
+    top: 50%;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    z-index: 150; }
+  .splace-article-header__marker.down {
+    font-family: 'Circular';
+    position: absolute;
+    width: 100%;
+    bottom: 5%;
+    z-index: 150; }
+    
+    
+.splace-cover-links {
+  left: 10%;
+  top: 20%;
+  position: absolute;
+  color: #fff;
+  z-index: 10; }
+  
+.splace-cover-links__block { margin-bottom: 40px; }
+.splace-cover-links__block > a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 1.4rem;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 2rem; }
+
+.splace-cover-links__author {
+  display: block;
+  text-transform: uppercase;
+  font-size: .95rem; }
+
+.splace-cover-logo {
+  z-index: 2 !important;
+  max-height: 100%;
+  max-width: 100%;
+  opacity: .8; }
+
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */ }
+
+/**
+ * Remove default margin.
+ */
+body {
+  margin: 0; }
+

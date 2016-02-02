@@ -28,7 +28,7 @@
 	}
 	
 	#page1{
-		background-image: url("back1.jpg");
+		background-image: url("/apps/architect/back1.jpg");
 		background-repeat: no-repeat;
 		background-size: 1024px 730px;
 		z-index: -11;
@@ -37,7 +37,7 @@
 	/* Seite2 */	
 	#page2{
 		display: none;
-		background-image: url("back2.jpg");
+		background-image: url("/apps/architect/back2.jpg");
 		background-repeat: no-repeat;
 		background-size: 1024px 730px;
 		z-index: -11;

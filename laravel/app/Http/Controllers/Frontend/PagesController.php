@@ -75,6 +75,10 @@ class PagesController extends MainController {
 			$s->media = Section::getMedia($s->section_id);
 		}
 
+		$backgroundHexColor = $article->subtitle_backgroundcolor;
+		list($r, $g, $b) = sscanf($backgroundHexColor, "#%02x%02x%02x");
+		$backgroundRgbColor = ['r' => $r, 'g' => $g, 'b' => $b];
+
 		return view('frontend/article')
 			->with('article', $article)
 			->with('magazine', Magazines::getById(Session::get('active', Magazines::getActive())))
@@ -82,6 +86,7 @@ class PagesController extends MainController {
 			->with('sections', $sections)
 			->with('links', Links::getByArticle($article->article_id))
 			->with('booktips', Booktips::getByArticle($article->article_id))
-			->with('language', Session::get('language', 'de'));
+			->with('language', Session::get('language', 'de'))
+			->with('backgroundRGB', $backgroundRgbColor);
 	}
 }

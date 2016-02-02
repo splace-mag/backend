@@ -113,7 +113,12 @@
 							</div>
 						
 							<h5>Spitzmarke</h5>
-							<input class="form-control" name="spitzmarke" value="{{ $article->spitzmarke or '' }}" placeholder="Spitzmarke" />
+							<div class="language-de">
+								<input class="form-control" name="spitzmarkeDE" value="{{ $article->spitzmarkeDE or '' }}" placeholder="Spitzmarke" />
+							</div>
+							<div class="language-en hidden">
+								<input class="form-control" name="spitzmarkeEN" value="{{ $article->spitzmarkeEN or '' }}" placeholder="Spitzmarke" />
+							</div>
 							
 							<h5>Lesezeit</h5>
 							<input class="form-control" name="reading_time" value="{{ $article->reading_time or '' }}" placeholder="Lesezeit" />

@@ -87,7 +87,7 @@
 	            break;
 	        default:
 	    }
-	    $("#character").attr('src', a + '_transparent2.png');
+	    $("#character").attr('src', '/apps/architect/' + a + '_transparent2.png');
 	    resetDIV("#topDIV");
 	    resetDIV("#bottomDIV");
 

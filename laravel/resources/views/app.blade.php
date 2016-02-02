@@ -10,7 +10,8 @@
 	<link href="{{ asset('/css/splace.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/jquery.fileupload.css') }}" rel="stylesheet">
-
+	
+	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 	<script src="/js/jquery.min.js"></script>

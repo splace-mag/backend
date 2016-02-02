@@ -4,11 +4,13 @@
  */
 var HELSINKI = HELSINKI || {};
 
+var HELSINKI_PICTURE_BASE_PATH = '/apps/helsinki/img/gallery/';
+
 /**
  * This is called by the framework after widget was successfully loaded
  */ 
 function helsinki_startup() {
-	HELSINKI.gallery = new Gallery('img/gallery/');
+	HELSINKI.gallery = new Gallery(HELSINKI_PICTURE_BASE_PATH);
 	HELSINKI.registerDeviceMotion();
 	HELSINKI.registerClickEvents();
 	console.log('Helsinki started');
@@ -116,6 +118,11 @@ var OrientationHandler = function() {
 	/** update the data and fire events if necessary */
 	this.update = function(tilt, orientation) {
 		tilt = HELSINKI.round(tilt);
+		var reversed = false;
+		if(tilt < 0) {
+			reversed = true;
+		}
+		tilt = HELSINKI.abs(tilt);
 		/* if the 360° view is not shown no need to compute it */
 		if(!this.active) return;
 		this.orientation = 360 - HELSINKI.round(orientation);
@@ -155,6 +162,7 @@ var OrientationHandler = function() {
 
 	/** switch the UI according to current tilt */
 	this.updateUi = function() {
+		console.log('in update UI');
 		if(this.tilt > 0) {
 			$('#instructions').hide();
 			$('.elementItem').show();
@@ -220,6 +228,17 @@ HELSINKI.round = function (val) {
 	var amt = 10;
 	return Math.round(val * amt) /  amt;
 };
+
+/**
+  * Helper for computing absolutes
+  */
+HELSINKI.abs = function (val) {
+	if(val < 0) {
+		return val * -1;
+	}else{
+		return val;
+	}
+}
 
 /**
  * Displays the gallery

@@ -12,11 +12,37 @@ var splaceOrientationController = (function($) {
 		callbacks = [];
 
 	function getActiveOrientation() {
+		checkOrientation();
 		return activeOrientation;
 	}
 
-	function setActiveOrientation(mode) {
+	function isNonLandscapeSite() {
+		var allowedPaths = [
+		'/',
+		'/2/splace',
+		'/help',
+		'/2/help',
+		'/2/article/14',
+		'/2/editorial',
+		'/editorial',
+		'/2/content',
+		'/content'];
+		if(allowedPaths.indexOf(location.pathname) !== -1) {
+			return true;
+		}
+		if(typeof splaceLandscapeAppController === 'undefined') {
+			return false;
+		}
+		if(splaceLandscapeAppController.getApp() === 'index') {
+			return true;
+		}
+		return false;
+	}
 
+	function setActiveOrientation(mode) {
+		if(isNonLandscapeSite()) {
+			mode = 'portrait';
+		}
 		if(mode === 'landscape') {
 			$('body').removeClass('splace-orientation--portrait');
 			$('body').addClass('splace-orientation--landscape');
@@ -40,7 +66,8 @@ var splaceOrientationController = (function($) {
 		    $('body').addClass('desktop')
 		    return;
 		}
-
+		
+		console.log('checking orientation innerHeight: ' + window.innerHeight + ' innerWidth: ' + window.innerWidth);	
 		if(window.innerHeight > window.innerWidth){
 		    setActiveOrientation('portrait');
 		    notifyListeners('portrait');
@@ -71,7 +98,12 @@ var splaceOrientationController = (function($) {
 	function initOrientationWatcher() {
 		
 		window.addEventListener("resize", function() {
-			checkOrientation();
+			window.setTimeout(function() {
+				checkOrientation();	
+			}, 10);
+			window.setTimeout(function() {
+				checkOrientation();	
+			}, 100);
 		}, false);
 		checkOrientation();
 	}

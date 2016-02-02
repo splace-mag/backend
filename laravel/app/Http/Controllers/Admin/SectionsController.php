@@ -155,7 +155,6 @@ class SectionsController extends Controller {
 
 		if(Request::has('media-youtube-video')) {
 			$name = Request::input('media-youtube-video', '-');
-			\Log::info('Youtube: X'.$name.'X');
 			Section::saveMedia($id, '', $name, 'youtube-video', Request::input('youtube-video-descriptionDE', ''), Request::input('youtube-video-descriptionEN', ''));
 		}
 

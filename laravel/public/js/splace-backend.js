@@ -55,7 +55,8 @@ function saveArticle(e) {
 		'id': $('[name="id"]').val(), 
 		'titleDE': $('[name="titleDE"]').val(), 
 		'titleEN': $('[name="titleEN"]').val(), 
-		'spitzmarke': $('[name="spitzmarke"]').val(), 
+		'spitzmarkeDE': $('[name="spitzmarkeDE"]').val(),
+		'spitzmarkeEN': $('[name="spitzmarkeEN"]').val(), 
 		'page_titleDE': $('[name="page_titleDE"]').val(), 
 		'page_titleEN': $('[name="page_titleEN"]').val(), 
 		'page_title_padding_left': $('[name="page_title_padding_left"]').val(), 
@@ -142,10 +143,16 @@ function saveArticle(e) {
 			article['used_materialEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
 		}
 		else if($(element).attr('data-markdown') == 'bio_textDE') {
-			article['bio_textDE'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
+			var bio = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
+			bio = bio.replace('<p>', '<p><span>');
+			bio = bio.replace('</p>', '</span></p>');
+			article['bio_textDE'] = bio;
 		}
 		else if($(element).attr('data-markdown') == 'bio_textEN') {
-			article['bio_textEN'] = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
+			var bio = $(editor[i].getElement('previewer')).find('#epiceditor-preview').html().replace('href=', 'target="_blank" href=');
+			bio = bio.replace('<p>', '<p><span>');
+			bio = bio.replace('</p>', '</span></p>');
+			article['bio_textEN'] = bio;
 		}
 		
     }

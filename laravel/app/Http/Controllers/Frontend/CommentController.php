@@ -37,7 +37,7 @@ class CommentController extends Controller {
 		$id = Comments::createComment($comment);
 		\Mail::send('emails.newComment', array('id' => $id), function($message)
 		{
-		    $message->to('s.ehrenmueller@gmail.com')->subject('splace - neues Kommentar');
+		    $message->to('redaktion@splace-magazine.at')->subject('splace - neues Kommentar');
 		});
 
 		$response['success'] = true;

@@ -23,22 +23,38 @@ class MainController extends Controller
 
 	protected function navigationList($articles, $magazines) {
 		$magazineList = "";
-		$magazineList .= "{name: '#1 Farbe', url: '/1'}, ";
+		$magazineList .= "{name: '#1 Raum', url: '/1'}, ";
 		foreach($magazines as $m) {
 			$magazineList .= "{name: '#".$m->version." ".$m->title."', url: '/".$m->magazine_id."/splace'}, ";
 		}
 
-		$articleList = "{url: '/".Session::get('active', 2)."/splace', title: 'Cover', subtitle: '', spitzmarke: ''},
+		$language =  Session::get('language', 'de');
+		if($language === 'de') {
+			$articleList = "{url: '/".Session::get('active', 2)."/splace', title: 'Cover', subtitle: '', spitzmarke: ''},
 				{url: '/help', title: 'Hilfe', subtitle: '', spitzmarke: ''},
 				{url: '/".Session::get('active', 2)."/content', title: 'Inhaltsverzeichnis', subtitle: 'Index', spitzmarke: ''},
 				{url: '/".Session::get('active', 2)."/editorial', title: 'Editorial', subtitle: 'Editorial', spitzmarke: ''},";
+		}
+		else {
+			$articleList = "{url: '/".Session::get('active', 2)."/splace', title: 'Cover', subtitle: '', spitzmarke: ''},
+				{url: '/help', title: 'Help', subtitle: '', spitzmarke: ''},
+				{url: '/".Session::get('active', 2)."/content', title: 'Index', subtitle: 'Index', spitzmarke: ''},
+				{url: '/".Session::get('active', 2)."/editorial', title: 'Editorial', subtitle: 'Editorial', spitzmarke: ''},";
+		}
+			
 
 		foreach ($articles as $a) {
 			if(Session::get('language', 'de') == 'de') {
-				$articleList .= "\n {url: '/".$a->magazine_id."/article/".$a->number."', title: '".$a->titleDE."', subtitle: '".$a->page_sub_titleDE."', spitzmarke: '".$a->spitzmarke."'},";
+				$articleList .= "\n {url: '/".$a->magazine_id."/article/".$a->number."', title: '".$a->titleDE."', subtitle: '".$a->page_sub_titleDE."', spitzmarke: '".$a->spitzmarkeDE."'},";
 			}
 			else {
-				$articleList .= "\n {url: '/".$a->magazine_id."/article/".$a->number."', title: '".$a->titleEN."', subtitle: '".$a->page_sub_titleEN."', spitzmarke: '".$a->spitzmarke."'},";
+				if(isset($a->spitzmarkeEN) && $a->spitzmarkeEN != '') {
+					$spitzmarke = $a->spitzmarkeEN;
+				}
+				else {
+					$spitzmarke = $a->spitzmarkeDE;
+				}
+				$articleList .= "\n {url: '/".$a->magazine_id."/article/".$a->number."', title: '".$a->titleEN."', subtitle: '".$a->page_sub_titleEN."', spitzmarke: '".$spitzmarke."'},";
 			}
 		}
 

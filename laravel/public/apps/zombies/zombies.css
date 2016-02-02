@@ -1,0 +1,129 @@
+html, body, #splaceApp, .background {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(89, 148, 148);
+    overflow: hidden;
+}
+
+.background{
+    background: url(/apps/zombies/images/tilesandtable2.png) center no-repeat;
+    min-height:100%;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    background-position: 0px 0px;
+    width: 1024px;
+    height: 730px;
+}
+
+.thebody{
+    background: url(/apps/zombies/images/body2.png) no-repeat center;
+    background-size: contain;
+    width: 659px;
+    height: 595px;
+    position: absolute;
+    left: 184px;
+    top: 30px;
+}
+
+.thehead{
+    background: url(/apps/zombies/images/head.png) no-repeat center;
+    background-size: contain;
+    width: 170px;
+    height: 170px;
+    position: absolute;
+    margin-left: -50px;
+    margin-top: 208px;
+    z-index: 100;
+}
+
+.rightArm{
+    background: url(/apps/zombies/images/rightarm.png) no-repeat center;
+    background-size: contain;
+    width: 255px;
+    height: 112px;
+    position: absolute;
+    margin-left: 180px;
+    margin-top: 373px;
+    z-index: 100;
+}
+
+.leftArm{ 
+    background: url(/apps/zombies/images/leftarm.png) no-repeat center;
+    background-size: contain;
+    width: 250px;
+    height: 105px;
+    position: absolute;
+    margin-left: 193px;
+    margin-top: 107px;
+    z-index: 100;
+}
+
+.rightHand{
+    background: url(/apps/zombies/images/righthand.png) no-repeat center;
+    background-size: contain;
+    width: 85px;
+    height: 85px;
+    position: absolute;
+    margin-left: 400px;
+    margin-top: 382px;
+    z-index:100;
+}
+
+.leftLegFoot{
+    width: 270px;
+    height: 130px;
+    position: absolute;
+    margin-left: 509px;
+    margin-top: 155px;
+}
+
+.rightLegFoot{
+    width: 270px;
+    height: 130px;
+    position: absolute;
+    margin-left: 353px;
+    margin-top: 273px;
+}
+
+.leftFoot{
+    background: url(/apps/zombies/images/leftfoot.png) no-repeat center;
+    background-size: contain;
+    margin-top: 40px;
+    margin-left: 159px;
+}
+
+.rightFoot{
+    background: url(/apps/zombies/images/rightfoot.png) no-repeat center;
+    background-size: contain;
+    margin-top: 73px;
+    margin-left: 312px;
+}
+
+.limb{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 200 !important;
+}
+
+.rightLeg{
+    background: url(/apps/zombies/images/rightleg.png) no-repeat center;
+    background-size: cover;
+    width: 190px;
+    height: 100px;
+    position: absolute;
+    margin-left: 147px;
+    margin-top: 55px
+}
+
+.leftLeg{
+    background: url(/apps/zombies/images/leftleg.png) no-repeat center;
+    background-size: cover;
+    width: 227px;
+    height: 100px;
+    position: absolute;
+    margin-left: -41px;
+    margin-top: 55px;
+}

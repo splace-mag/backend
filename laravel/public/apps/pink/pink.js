@@ -24,7 +24,7 @@ function pink_startup() {
 	}
 	setTimeout(launch_event_loop, 3000);
 	function launch_event_loop() {
-		setInterval(event_loop, 200);
+		setInterval(event_loop, 1200);
 	}
 	
 	/*
@@ -62,7 +62,7 @@ function event_loop(){
 		stmt_botLeft.style.opacity = '0';
 		stmt_botCenter.style.opacity = '0';
 		stmt_botRight.style.opacity = '0';
-		return;
+		activityValue -= 1;
 	}
 	else if(activityValue - 1 >= 0)
 		activityValue -= 1;
@@ -129,8 +129,8 @@ function event_loop(){
 			markerBarG = (kG_west * activityValue) + dG_west;
 			markerBarB = (kB_west * activityValue) + dB_west;
 		}	
-	console.log(markerBarG);
-	console.log(markerBarB);
+	// console.log(markerBarG);
+	// console.log(markerBarB);
 	
 	//assigning the color to markerBar:
 	var markerBar = document.getElementById('markerBar');
@@ -350,7 +350,7 @@ $(document).ready(function()
 		
 		increase_activity();
 		var animationArray = ["objA_ slide_normal.gif", "objB_spiral_normal.gif", "objC_color_normal.gif", "objD_zentrifugal_normal.gif", "objE_rotation_normal.gif", "objF_pulse_normal.gif", "objG_shift_normal.gif", "objH_diagonal_normal.gif", "objI_bounce_normal.gif", "objJ_flipper_normal.gif"];
-		var animationString = "anim/" + animationArray[Math.floor(Math.random() * animationArray.length)];
+		var animationString = "/apps/pink/anim/" + animationArray[Math.floor(Math.random() * animationArray.length)];
 		//new img element is getting appended to the wrapper element:
 		$('#wrapper').append($('<img>', {			
 			src : animationString,
